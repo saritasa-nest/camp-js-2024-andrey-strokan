@@ -183,11 +183,6 @@ footer
   gap: var(--gap-24);
 }
 
-.filters-container > *
-{
-  width: 100%;
-}
-
 .filter-search-string-container
 {
   position: relative;
