@@ -11,10 +11,9 @@
   --filter-field-height: 48px;
 }
 
-.default-layout {
+.page {
   margin: 0 auto;
-
-  --default-layout-width: 93.75%;
+  width: 93.75%;
 }
 
 header {
@@ -309,8 +308,8 @@ footer {
 }
 
 @media (min-width: 1310px) {
-  .default-layout {
-    --default-layout-width: 65%;
+  .page {
+    width: 65%;
   }
 }
 
