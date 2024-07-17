@@ -2,10 +2,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
 
 :root {
-  --checkbox-color: rgb(241, 89, 36);
-  --filter-field-background-color: rgba(0,0,0,0.05);
-  --filter-field-placeholder-color: rgba(0,0,0,0.5);
-  --dividing-line-style: 1px solid rgba(0,0,0,0.15);
+  --checkbox-color: #f15924;
+  --filter-field-background-color: #0000000d;
+  --filter-field-placeholder-color: #00000080;
+  --dividing-line-style: 1px solid #00000026;
   --gap-24: 24px;
   --filter-field-background-radius: 16px;
   --filter-field-height: 48px;
@@ -13,14 +13,14 @@
 
 .default-layout {
   --default-layout-width: 93.75%;
-  margin: 0px auto;
+  margin: 0 auto;
 }
 
 header {
   height: 64px;
   border-bottom: var(--dividing-line-style);
   display: flex;
-  align-items:center;
+  align-items: center;
 }
 
 .application-name {
@@ -219,7 +219,7 @@ footer {
 
 .magnifying-glass-icon {
   background-image: url("../assets/images/magnifying-glass.svg");
-  
+
   width: 24px;
   height: 24px;
   left: 16px;
@@ -309,7 +309,7 @@ footer {
 }
 
 @media (min-width: 1310px) {
-  .default-layout { 
+  .default-layout {
     --default-layout-width: 65%;
   }
 }
