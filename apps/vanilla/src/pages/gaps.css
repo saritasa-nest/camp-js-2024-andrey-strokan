@@ -1,0 +1,8 @@
+:root {
+  /* gap is 8px */
+  --gap-2: 16px;
+  --gap-3: 24px;
+  --gap-4: 32px;
+  --gap-5: 40px;
+  --gap-6: 48px;
+}
