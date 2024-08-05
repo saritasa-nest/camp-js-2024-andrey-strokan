@@ -21,6 +21,11 @@ header {
   align-items: center;
 }
 
+.header__application-name {
+  font: var(--logo-font);
+  user-select: none;
+}
+
 .title {
   color: var(--heading-color-1);
 }
@@ -277,18 +282,18 @@ footer {
   border-radius: 2px;
 }
 
-#filters__checkbox {
+.filters__checkbox {
   position: absolute;
   opacity: 0;
   height: 0;
   width: 0;
 }
 
-#filters__checkbox:checked + label i {
+.filters__checkbox:checked + i {
   border-color: var(--primary-color);
 }
 
-#filters__checkbox:checked + label i i {
+.filters__checkbox:checked + i i {
   background-color: var(--primary-color);
 }
 
