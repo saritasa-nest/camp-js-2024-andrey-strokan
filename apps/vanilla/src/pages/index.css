@@ -11,7 +11,7 @@
 
 .page {
   margin: 0 auto;
-  width: 93.75%;
+  max-width: 93.75%;
 }
 
 /* header */
@@ -315,7 +315,7 @@
 
 @media (min-width: 1310px) {
   .page {
-    width: 65%;
+    max-width: 65%;
   }
 }
 
