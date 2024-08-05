@@ -50,14 +50,14 @@
 
 .footer {
   height: 128px;
-  margin-top: var(--gap-3);
-  border-top: var(--dividing-line-style);
 }
 
 .footer__container {
+  border-top: var(--dividing-line-style);
+  margin-top: var(--gap-3);
+  padding-top: var(--gap-3);
   display: flex;
   justify-content: space-between;
-  margin-top: var(--gap-3);
   height: 32px;
 }
 
