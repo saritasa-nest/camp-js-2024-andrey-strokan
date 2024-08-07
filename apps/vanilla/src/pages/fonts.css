@@ -1,0 +1,8 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap");
+
+:root {
+  --subtitle-font: 600 18px "Inter", sans-serif;
+  --body-font: 400 20px "Inter", sans-serif;
+  --body-small-font: 500 16px "Inter", sans-serif;
+  --logo-font: 700 20px "Inter", sans-serif;
+}

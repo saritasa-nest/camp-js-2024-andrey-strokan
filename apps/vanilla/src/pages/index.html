@@ -1,16 +1,112 @@
 <!DOCTYPE html>
+
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="./index.css" />
-    <title>Vite App</title>
+    <title>Books app</title>
   </head>
-  <body class="default-layout">
-    <h1 class="title">Main page ⚡</h1>
-    <div class="links">
-      <a href="example/">Go to example page</a>
-    </div>
+  <body class="page">
+    <header class="header">
+      <h1 class="header__application-name">📚 Books app</h1>
+    </header>
+    <main class="main">
+      <section class="content">
+        <div class="category">
+          <div class="category__name">
+            <h2 class="category__title">2020 Year</h2>
+          </div>
+          <div class="category__content">
+            <div class="book-card">
+              <img class="book-card__image" alt="Refactoring UI" src="assets/images/2020-refactoring-ui.png"></img>
+              <h3 class="book-card__name">Refactoring UI</h3>
+            </div>
+            <div class="book-card">
+              <img class="book-card__image" alt="Master the Skill of Debugging CSS" src="assets/images/2020-masters-the-skill-of-debugging-css.png"></img>
+              <h3 class="book-card__name">Master the Skill of Debugging CSS</h3>
+            </div>
+            <div class="book-card">
+              <img class="book-card__image" alt="Blue Period" src="assets/images/2020-blue-period.png"></img>
+              <h3 class="book-card__name">Blue Period</h3>
+            </div>
+          </div>
+        </div>
+        <div class="category">
+          <div class="category__name">
+            <h2 class="category__title">1980 Year</h2>
+          </div>
+          <div class="category__content">
+            <div class="book-card">
+              <img class="book-card__image" alt="Yokohama Kaidashi Kikou" src="assets/images/1980-yokohama-kaidashi-kikou.png"></img>
+              <h3 class="book-card__name">Yokohama Kaidashi Kikou</h3>
+            </div>
+            <div class="book-card">
+              <img class="book-card__image" alt="Learning JavaScript Design Patterns" src="assets/images/1980-learning-java-script-design-patterns.png"></img>
+              <h3 class="book-card__name">Learning JavaScript Design Patterns</h3>
+            </div>
+            <div class="book-card">
+              <img class="book-card__image" alt="Yotsuba to!" src="assets/images/1980-yotsuba-to.png"></img>
+              <h3 class="book-card__name">Yotsuba to!</h3>
+            </div>
+            <div class="book-card">
+              <img class="book-card__image" alt="Domain-Driven Design" src="assets/images/1980-domain-driven-design.png"></img>
+              <h3 class="book-card__name">Domain-Driven Design</h3>
+            </div>
+            <div class="book-card">
+              <img class="book-card__image" alt="Implementing Domain-Driven Design" src="assets/images/1980-implementing-domain-driven.png"></img>
+              <h3 class="book-card__name">Implementing Domain-Driven Design</h3>
+            </div>
+            <div class="book-card">
+              <img class="book-card__image" alt="7 Навыков высокэффективных людей" src="assets/images/1980-7-habits-of-highly-effective-people.png"></img>
+              <h3 class="book-card__name">7 Навыков высокэффективных людей</h3>
+            </div>
+          </div>
+        </div>
+      </section>
+      <aside class="aside">
+        <div class="filters">
+          <h2 class="filters__title">Filters</h2>
+          <div class="filters__controls">
+            <div class="filters__search-container">
+              <i class="filters__icon filters__icon--magnifying-glass"></i>
+              <input type="search" class="filters__search-string" placeholder="e.g. &#34;Refactoring&#34;"></input>
+            </div>
+            <div class="filters__sort-field-container">
+              <select class="filters__sort-field">
+                <option class="filters__sort-field-option filters__sort-field-option--default" value="" selected disabled hidden>Choose sort field</option>
+                <option class="filters__sort-field-option" value="item-2">Item 2</option>
+                <option class="filters__sort-field-option" value="item-1">Item 1</option>
+                <option class="filters__sort-field-option" value="item-3">Item 3</option>
+              </select>
+              <i class="filters__icon filters__icon--arrow"></i>
+            </div>
+            <div class="filters__checkbox-container">
+              <label>
+              	<input type="checkbox" class="filters__checkbox"></input>
+                <i class="filters__checkbox-background">
+                  <i class="filters__checkbox-flag"></i>
+                </i>
+                Show comics
+              </label>
+            </div>
+          </div>
+        </div>
+      </aside>
+    </main>
+    <footer class="footer">
+      <div class="footer__container">
+        <div class="footer__copyright-info">
+          <p class="footer__application-name">Books app</p>
+          <p class="footer__copyright-symbol">&copy;</p>
+          <p class="footer__copyright-year">2024</p>
+          <a href="https://github.com/saritasa-nest/camp-js-2024-andrey-strokan" class="footer__github-link">GitHub</a>
+        </div>
+        <div class="footer__go-to-top-container">
+          <a href="#" class="footer__go-to-top-anchor-link">Go to top &uarr;</a>
+        </div>
+      </div>
+    </footer>
     <script type="module" src="./index.ts"></script>
   </body>
 </html>
