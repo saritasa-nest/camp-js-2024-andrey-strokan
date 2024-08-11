@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>TypeScript Dom Manipulation</title>
+    <link rel="stylesheet" href="./index.css" />
+		<link rel="stylesheet" href="./player.css" />
+  </head>
+  <body>
+		<div class="game-view">
+			<h1>Lesson 1</h1>
+      <h2>Take me to main page</h2>
+      <div class="players">
+
+			</div>
+			<button id="throw-dice">Throw</button>
+			<button id="pass">Pass</button>
+    </div>
+		<script src="./observer/baseEventData.ts"></script>
+		<script src="./ui/events/throwButtonClickedEventData.ts"></script>
+		<script src="./ui/events/passButtonClickedEventData.ts"></script>
+		<script src="./game/events/diceThrownEventData.ts"></script>
+		<script src="./game/events/playerScoreUpdatedEventData.ts"></script>
+		<script src="./game/events/playerWonEventData.ts"></script>
+		<script src="./game/enums/playerType.ts"></script>
+		<script src="./game/enums/playerState.ts"></script>
+
+		<script src="./observer/subject.ts"></script>
+		<script src="./game/dice.ts"></script>
+		<script src="./game/gameSession.ts"></script>
+		<script src="./game/player.ts"></script>
+		<script src="./ui/playerView.ts"></script>
+		<script src="./ui/gameView.ts"></script>
+		<script src="./index.ts"></script>
+  </body>
+</html>
