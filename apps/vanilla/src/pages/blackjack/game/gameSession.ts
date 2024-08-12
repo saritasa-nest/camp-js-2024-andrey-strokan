@@ -9,6 +9,8 @@ namespace Game {
 
 		private readonly gameView: UI.GameView;
 
+		private readonly debugInfo: Game.Debug.DebugInfo;
+
 		private readonly players: Player[];
 
 		private readonly dice: Dice;
@@ -19,6 +21,9 @@ namespace Game {
 
 		public constructor(players: Player[]) {
 			this.dice = new Game.Dice(6);
+
+			this.debugInfo = new Game.Debug.DebugInfo();
+			this.dice.observersRegistrar.attach(this.debugInfo);
 
 			this.gameView = new UI.GameView();
 			this.gameView.throwButtonClickedEventObserverRegistrar.attach(this.dice);

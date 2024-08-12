@@ -4,32 +4,32 @@
   margin: auto;
 }
 
-.dice-cap {
+.debug-info {
   border-bottom: 2px solid black;
   border-top: 2px solid black;
 }
 
-.dice-cap__name,
-.dice-cap__name-score-separator,
-.dice-cap__current-score {
+.debug-info__name,
+.debug-info__name-score-separator,
+.debug-info__current-score {
   margin: 0;
   display: flex;
   align-items: center;
   text-align: center;
 }
 
-.dice-cap__history-of-dice-values {
+.debug-info__history-of-dice-values {
   display: flex;
   align-items: center;
   height: 24px;
   gap: 8px;
 }
 
-.dice-cap__dice-value {
+.debug-info__dice-value {
   margin: 0;
 }
 
-.dice-cap__general-info {
+.debug-info__general-info {
   display: flex;
   height: 24px;
   gap: 8px;

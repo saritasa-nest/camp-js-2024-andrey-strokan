@@ -9,13 +9,13 @@
     <div class="game-view">
       <h1>Lesson 1</h1>
 
-      <div class="dice-cap">
-        <div class="dice-cap__general-info">
-          <h3 class="dice-cap__name">Dice cap</h3>
-          <p class="dice-cap__name-score-separator">-</p>
-          <p class="dice-cap__current-score">0</p>
+      <div class="debug-info">
+        <div class="debug-info__general-info">
+          <h3 class="debug-info__name">Dice cap</h3>
+          <p class="debug-info__name-score-separator">-</p>
+          <p class="debug-info__current-score">0</p>
         </div>
-        <div class="dice-cap__history-of-dice-values">
+        <div class="debug-info__history-of-dice-values">
         </div>
       </div>
 
@@ -34,6 +34,8 @@
     <script src="./game/enums/playerType.ts"></script>
     <script src="./game/enums/playerState.ts"></script>
 
+    <script src="./game/debug/debugInfo.ts"></script>
+    <script src="./ui/debug/debugInfoView.ts"></script>
     <script src="./observer/notifier.ts"></script>
     <script src="./game/dice.ts"></script>
     <script src="./game/gameSession.ts"></script>
