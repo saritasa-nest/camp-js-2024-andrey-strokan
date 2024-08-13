@@ -1,8 +1,6 @@
 namespace ObserverCore {
 
-	/**
-	 * Observer.
-	 */
+	/** Observer. */
 	export type Observer<T extends BaseEventData> = {
 
 		/**

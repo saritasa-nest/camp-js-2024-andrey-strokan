@@ -1,8 +1,6 @@
 namespace Game {
 
-	/**
-	 * Player.
-	 */
+	/** Player. */
 	export class Player implements ObserverCore.Observer<DiceThrownEventData> {
 
 		private readonly view: UI.PlayerView;
@@ -17,21 +15,15 @@ namespace Game {
 		private readonly playerWonEventNotifier: ObserverCore.Notifier<PlayerWonEventData> =
 			new ObserverCore.Notifier<PlayerWonEventData>();
 
-		/**
-		 * Observer registrar of playerScoreUpdatedEvent.
-		 */
+		/** Observer registrar of playerScoreUpdatedEvent. */
 		public playerScoreUpdatedEventObserversRegistrar: ObserverCore.ObserversRegistrar<PlayerScoreUpdatedEventData> =
 			this.playerScoreUpdatedEventNotifier;
 
-		/**
-		 * Observer registrar of playerWonEvent.
-		 */
+		/** Observer registrar of playerWonEvent. */
 		public playerWonEventObserversRegistrar: ObserverCore.ObserversRegistrar<PlayerWonEventData> =
 			this.playerWonEventNotifier;
 
-		/**
-		 * Player type.
-		 */
+		/** Player type. */
 		public readonly playerType: PlayerType;
 
 		private constructor(view: UI.PlayerView, playerType: PlayerType) {
@@ -41,9 +33,7 @@ namespace Game {
 			this.playerType = playerType;
 		}
 
-		/**
-		 * @inheritdoc
-		 */
+		/** @inheritdoc */
 		public update(message: DiceThrownEventData): void {
 			this.addScore(message.diceValue);
 

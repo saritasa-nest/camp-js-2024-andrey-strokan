@@ -1,18 +1,12 @@
 namespace Game {
 
-	/**
-	 * Called when Dice thrown.
-	 */
+	/**  Called when Dice thrown. */
 	export class DiceThrownEventData extends ObserverCore.BaseEventData {
 
-		/**
-		 * @inheritdoc
-		 */
+		/**  @inheritdoc */
 		public override eventName: 'DiceThrown' = 'DiceThrown';
 
-		/**
-		 * Dice value.
-		 */
+		/** Dice value. */
 		public readonly diceValue: number;
 
 		public constructor(diceValue: number) {

@@ -1,8 +1,6 @@
 namespace ObserverCore {
 
-	/**
-	 * Base Event type.
-	 */
+	/** Base Event type. */
 	export class Notifier<T extends BaseEventData> implements ObserversRegistrar<T> {
 
 		private readonly observers: ObserverCore.Observer<T>[] = [];

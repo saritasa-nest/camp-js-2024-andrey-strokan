@@ -1,8 +1,6 @@
 namespace UI {
 
-	/**
-	 * Game view.
-	 */
+	/** Game view. */
 	export class GameView {
 
 		private throwButtonClickedEventNotifier: ObserverCore.Notifier<UI.ThrowButtonClickedEventData> =
@@ -11,15 +9,11 @@ namespace UI {
 		private passButtonClickedEventNotifier: ObserverCore.Notifier<UI.PassButtonClickedEventData> =
 			new ObserverCore.Notifier<UI.PassButtonClickedEventData>();
 
-		/**
-		 * ObserversRegistrar of throwButtonClickedEventNotifier.
-		 */
+		/** ObserversRegistrar of throwButtonClickedEventNotifier. */
 		public readonly throwButtonClickedEventObserverRegistrar:
 		ObserverCore.ObserversRegistrar<UI.ThrowButtonClickedEventData> = this.throwButtonClickedEventNotifier;
 
-		/**
-		 * ObserversRegistrar of passButtonClickedEventNotifier.
-		 */
+		/** ObserversRegistrar of passButtonClickedEventNotifier. */
 		public readonly passButtonClickedEventObserverRegistrar:
 		ObserverCore.ObserversRegistrar<UI.PassButtonClickedEventData> = this.passButtonClickedEventNotifier;
 
@@ -39,9 +33,7 @@ namespace UI {
 			}
 		}
 
-		/**
-		 * Finish game.
-		 */
+		/** Finish game. */
 		public finishGame(): void {
 			const throwDiceButtonElement = document.getElementById('throw-dice') as HTMLButtonElement;
 			if (throwDiceButtonElement) {

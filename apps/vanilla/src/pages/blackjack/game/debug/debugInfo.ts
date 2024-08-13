@@ -1,8 +1,6 @@
 namespace Game.Debug {
 
-	/**
-	 * Debug info.
-	 */
+	/**  Debug info. */
 	export class DebugInfo implements ObserverCore.Observer<DiceThrownEventData> {
 
 		private readonly view: UI.Debug.DebugInfoView;
@@ -15,9 +13,7 @@ namespace Game.Debug {
 			this.view.updateScore(this.currentScore);
 		}
 
-		/**
-		 * @inheritdoc
-		 */
+		/** @inheritdoc */
 		public update(message: DiceThrownEventData): void {
 			this.addScore(message.diceValue);
 		}

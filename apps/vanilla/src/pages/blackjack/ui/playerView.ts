@@ -1,8 +1,6 @@
 namespace UI {
 
-	/**
-	 * Player view.
-	 */
+	/** Player view. */
 	export class PlayerView {
 
 		private readonly playerId: string;

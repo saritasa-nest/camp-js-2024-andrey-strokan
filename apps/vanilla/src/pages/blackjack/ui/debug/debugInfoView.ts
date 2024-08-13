@@ -1,8 +1,6 @@
 namespace UI.Debug {
 
-	/**
-	 * Debug info view.
-	 */
+	/** Debug info view. */
 	export class DebugInfoView {
 
 		/**

@@ -1,8 +1,6 @@
 namespace Game {
 
-	/**
-	 * Game session.
-	 */
+	/** Game session. */
 	export class GameSession implements ObserverCore.Observer<PlayerScoreUpdatedEventData>,
 	ObserverCore.Observer<UI.PassButtonClickedEventData>,
 	ObserverCore.Observer<Game.PlayerWonEventData> {
@@ -46,9 +44,7 @@ namespace Game {
 			}
 		}
 
-		/**
-		 * @inheritdoc
-		 */
+		/** @inheritdoc */
 		public update(message: Game.PlayerScoreUpdatedEventData |
 		UI.PassButtonClickedEventData |
 		Game.PlayerWonEventData): void {

@@ -1,8 +1,6 @@
 namespace Game {
 
-	/**
-	 * Game dice.
-	 */
+	/** Game dice. */
 	export class Dice implements ObserverCore.Observer<UI.ThrowButtonClickedEventData> {
 
 		private readonly minValue: number = 1;
@@ -12,18 +10,14 @@ namespace Game {
 		private readonly diceThrownEventNotifier: ObserverCore.Notifier<Game.DiceThrownEventData> =
 			new ObserverCore.Notifier<Game.DiceThrownEventData>();
 
-		/**
-		 * @inheritdoc
-		 */
+		/** @inheritdoc */
 		public readonly observersRegistrar: ObserverCore.ObserversRegistrar<DiceThrownEventData> = this.diceThrownEventNotifier;
 
 		public constructor(maxValue: number) {
 			this.maxValue = maxValue;
 		}
 
-		/**
-		 * Throw dice.
-		 */
+		/** Throw dice. */
 		public throw(): void {
 			const minCeiled = Math.ceil(this.minValue);
 			const maxFloored = Math.floor(this.maxValue);
@@ -32,11 +26,8 @@ namespace Game {
 			this.diceThrownEventNotifier.notify(new Game.DiceThrownEventData(newDiceValue));
 		}
 
-		/**
-		 * @inheritdoc
-		 */
-		// eslint-disable-next-line @typescript-eslint/no-unused-vars
-		public update(_message: UI.ThrowButtonClickedEventData): void {
+		/** @inheritdoc */
+		public update(): void {
 			this.throw();
 		}
 	}

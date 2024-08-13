@@ -1,13 +1,9 @@
 namespace UI {
 
-	/**
-	 * Pass button clicked event.
-	 */
+	/** Pass button clicked event. */
 	export class PassButtonClickedEventData extends ObserverCore.BaseEventData {
 
-		/**
-		 * @inheritdoc
-		 */
+		/** @inheritdoc */
 		public override eventName: 'PassButtonClicked' = 'PassButtonClicked';
 	}
 }

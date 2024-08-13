@@ -1,13 +1,9 @@
 namespace UI {
 
-	/**
-	 * Throw button clicked event.
-	 */
+	/** Throw button clicked event. */
 	export class ThrowButtonClickedEventData extends ObserverCore.BaseEventData {
 
-		/**
-		 * @inheritdoc
-		 */
+		/** @inheritdoc */
 		public override eventName: 'ThrowButtonClicked' = 'ThrowButtonClicked';
 	}
 }
