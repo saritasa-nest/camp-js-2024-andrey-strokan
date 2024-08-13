@@ -25,9 +25,9 @@
 }
 
 .winner {
-  background-color: #ffcaca;
+  background-color: var(--winner-color);
 }
 
 .makes_a_move {
-  background-color: #f2f2f2;
+  background-color: var(--makes-a-move-player-color);
 }
