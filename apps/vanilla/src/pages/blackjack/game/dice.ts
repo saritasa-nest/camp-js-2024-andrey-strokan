@@ -7,8 +7,7 @@ namespace Game {
 
 		private readonly maxValue: number;
 
-		private readonly diceThrownEventNotifier: ObserverCore.Notifier<Game.DiceThrownEventData> =
-			new ObserverCore.Notifier<Game.DiceThrownEventData>();
+		private readonly diceThrownEventNotifier = new ObserverCore.Notifier<Game.DiceThrownEventData>();
 
 		/** @inheritdoc */
 		public readonly observersRegistrar: ObserverCore.ObserversRegistrar<DiceThrownEventData> = this.diceThrownEventNotifier;

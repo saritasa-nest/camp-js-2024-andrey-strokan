@@ -9,11 +9,9 @@ namespace Game {
 
 		private currentScore: number;
 
-		private readonly playerScoreUpdatedEventNotifier: ObserverCore.Notifier<PlayerScoreUpdatedEventData> =
-			new ObserverCore.Notifier<PlayerScoreUpdatedEventData>();
+		private readonly playerScoreUpdatedEventNotifier = new ObserverCore.Notifier<PlayerScoreUpdatedEventData>();
 
-		private readonly playerWonEventNotifier: ObserverCore.Notifier<PlayerWonEventData> =
-			new ObserverCore.Notifier<PlayerWonEventData>();
+		private readonly playerWonEventNotifier = new ObserverCore.Notifier<PlayerWonEventData>();
 
 		/** Observer registrar of playerScoreUpdatedEvent. */
 		public playerScoreUpdatedEventObserversRegistrar: ObserverCore.ObserversRegistrar<PlayerScoreUpdatedEventData> =

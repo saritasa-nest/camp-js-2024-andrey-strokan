@@ -3,10 +3,10 @@ namespace UI {
 	/** Game view. */
 	export class GameView {
 
-		private throwButtonClickedEventNotifier: ObserverCore.Notifier<UI.ThrowButtonClickedEventData> =
+		private throwButtonClickedEventNotifier =
 			new ObserverCore.Notifier<UI.ThrowButtonClickedEventData>();
 
-		private passButtonClickedEventNotifier: ObserverCore.Notifier<UI.PassButtonClickedEventData> =
+		private passButtonClickedEventNotifier =
 			new ObserverCore.Notifier<UI.PassButtonClickedEventData>();
 
 		/** ObserversRegistrar of throwButtonClickedEventNotifier. */
