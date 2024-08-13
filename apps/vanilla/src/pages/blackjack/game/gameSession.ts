@@ -1,3 +1,19 @@
+import { Observer } from '../observer/observer';
+
+import { PassButtonClickedEventData } from '../ui/events/passButtonClickedEventData';
+import { GameView } from '../ui/gameView';
+
+import { PlayerState } from './enums/playerState';
+import { PlayerType } from './enums/playerType';
+
+import { PlayerScoreUpdatedEventData } from './events/playerScoreUpdatedEventData';
+import { PlayerWonEventData } from './events/playerWonEventData';
+
+import { Dice } from './dice';
+import { Player } from './player';
+
+import { DebugInfo } from './debug/debugInfo';
+
 /** Game session. */
 export class GameSession implements Observer<PlayerScoreUpdatedEventData>,
 Observer<PassButtonClickedEventData>,
@@ -21,7 +37,7 @@ Observer<PlayerWonEventData> {
 		this.debugInfo = new DebugInfo();
 		this.dice.observersRegistrar.attach(this.debugInfo);
 
-		this.gameView = new UI.GameView();
+		this.gameView = new GameView();
 		this.gameView.throwButtonClickedEventObserverRegistrar.attach(this.dice);
 		this.gameView.passButtonClickedEventObserverRegistrar.attach(this);
 

@@ -1,3 +1,13 @@
+import { ThrowButtonClickedEventData } from '../ui/events/throwButtonClickedEventData';
+
+import { Notifier } from '../observer/notifier';
+import { ObserversRegistrar } from '../observer/observersRegistrar';
+import { Observer } from '../observer/observer';
+
+import { DiceThrownEventData } from './events/diceThrownEventData';
+
+import '../extensions/mathExtensions';
+
 /** Game dice. */
 export class Dice implements Observer<ThrowButtonClickedEventData> {
 

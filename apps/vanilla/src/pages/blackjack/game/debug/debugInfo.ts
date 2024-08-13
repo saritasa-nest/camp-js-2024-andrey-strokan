@@ -1,3 +1,7 @@
+import { Observer } from '../../observer/observer';
+import { DebugInfoView } from '../../ui/debug/debugInfoView';
+import { DiceThrownEventData } from '../events/diceThrownEventData';
+
 /**  Debug info. */
 export class DebugInfo implements Observer<DiceThrownEventData> {
 

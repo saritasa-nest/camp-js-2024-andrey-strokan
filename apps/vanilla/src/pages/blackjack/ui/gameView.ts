@@ -1,3 +1,9 @@
+import { ObserversRegistrar } from '../observer/observersRegistrar';
+import { Notifier } from '../observer/notifier';
+
+import { PassButtonClickedEventData } from './events/passButtonClickedEventData';
+import { ThrowButtonClickedEventData } from './events/throwButtonClickedEventData';
+
 /** Game view. */
 export class GameView {
 
