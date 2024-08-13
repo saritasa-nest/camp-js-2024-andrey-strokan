@@ -27,4 +27,3 @@ export class DebugInfo implements Observer<DiceThrownEventData> {
 		this.view.addDiceValueToHistory(score);
 	}
 }
-
