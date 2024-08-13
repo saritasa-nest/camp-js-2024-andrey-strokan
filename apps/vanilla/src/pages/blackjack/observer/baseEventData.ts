@@ -1,9 +1,6 @@
-namespace ObserverCore {
+/** Base event. */
+export abstract class BaseEventData {
 
-	/** Base event. */
-	export abstract class BaseEventData {
-
-		/** Event name. */
-		public readonly abstract eventName: string;
-	}
+	/** Event name. */
+	public readonly abstract eventName: string;
 }

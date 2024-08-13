@@ -1,95 +1,92 @@
-namespace Game {
+/** Game session. */
+export class GameSession implements Observer<PlayerScoreUpdatedEventData>,
+Observer<PassButtonClickedEventData>,
+Observer<PlayerWonEventData> {
 
-	/** Game session. */
-	export class GameSession implements ObserverCore.Observer<PlayerScoreUpdatedEventData>,
-	ObserverCore.Observer<UI.PassButtonClickedEventData>,
-	ObserverCore.Observer<Game.PlayerWonEventData> {
+	private readonly gameView: GameView;
 
-		private readonly gameView: UI.GameView;
+	private readonly debugInfo: DebugInfo;
 
-		private readonly debugInfo: Game.Debug.DebugInfo;
+	private readonly players: readonly Player[];
 
-		private readonly players: readonly Player[];
+	private readonly dice: Dice;
 
-		private readonly dice: Dice;
+	private currentPlayerIndex: number;
 
-		private currentPlayerIndex: number;
+	private isGameFinished = false;
 
-		private isGameFinished = false;
+	public constructor(players: readonly Player[]) {
+		this.dice = new Dice(6);
 
-		public constructor(players: readonly Player[]) {
-			this.dice = new Game.Dice(6);
+		this.debugInfo = new DebugInfo();
+		this.dice.observersRegistrar.attach(this.debugInfo);
 
-			this.debugInfo = new Game.Debug.DebugInfo();
-			this.dice.observersRegistrar.attach(this.debugInfo);
+		this.gameView = new UI.GameView();
+		this.gameView.throwButtonClickedEventObserverRegistrar.attach(this.dice);
+		this.gameView.passButtonClickedEventObserverRegistrar.attach(this);
 
-			this.gameView = new UI.GameView();
-			this.gameView.throwButtonClickedEventObserverRegistrar.attach(this.dice);
-			this.gameView.passButtonClickedEventObserverRegistrar.attach(this);
+		this.players = players;
+		this.currentPlayerIndex = 0;
 
-			this.players = players;
+		players.forEach(player => {
+			player.playerWonEventObserversRegistrar.attach(this);
+			this.players[this.currentPlayerIndex].setState(PlayerState.Waiting);
+		});
+
+		this.dice.observersRegistrar.attach(this.players[this.currentPlayerIndex]);
+		this.players[this.currentPlayerIndex].playerScoreUpdatedEventObserversRegistrar.attach(this);
+		this.players[this.currentPlayerIndex].setState(PlayerState.MakesAMove);
+
+		if (this.players[this.currentPlayerIndex].playerType === PlayerType.Computer) {
+			this.dice.throw();
+		}
+	}
+
+	/** @inheritdoc */
+	public update(message: PlayerScoreUpdatedEventData |
+	PassButtonClickedEventData |
+	PlayerWonEventData): void {
+
+		if (this.isGameFinished) {
+			return;
+		}
+
+		if (message instanceof PlayerWonEventData) {
+			this.finishGame();
+			return;
+		}
+
+		this.next();
+	}
+
+	private finishGame(): void {
+		this.gameView.finishGame();
+		this.isGameFinished = true;
+
+		this.players[this.currentPlayerIndex].playerScoreUpdatedEventObserversRegistrar.detach(this);
+		this.dice.observersRegistrar.detach(this.players[this.currentPlayerIndex]);
+	}
+
+	private next(): void {
+		if (this.isGameFinished) {
+			return;
+		}
+
+		this.players[this.currentPlayerIndex].setState(PlayerState.Waiting);
+		this.players[this.currentPlayerIndex].playerScoreUpdatedEventObserversRegistrar.detach(this);
+		this.dice.observersRegistrar.detach(this.players[this.currentPlayerIndex]);
+
+		this.currentPlayerIndex++;
+		if (this.currentPlayerIndex === this.players.length) {
 			this.currentPlayerIndex = 0;
-
-			players.forEach(player => {
-				player.playerWonEventObserversRegistrar.attach(this);
-				this.players[this.currentPlayerIndex].setState(Game.PlayerState.Waiting);
-			});
-
-			this.dice.observersRegistrar.attach(this.players[this.currentPlayerIndex]);
-			this.players[this.currentPlayerIndex].playerScoreUpdatedEventObserversRegistrar.attach(this);
-			this.players[this.currentPlayerIndex].setState(Game.PlayerState.MakesAMove);
-
-			if (this.players[this.currentPlayerIndex].playerType === Game.PlayerType.Computer) {
-				this.dice.throw();
-			}
 		}
 
-		/** @inheritdoc */
-		public update(message: Game.PlayerScoreUpdatedEventData |
-		UI.PassButtonClickedEventData |
-		Game.PlayerWonEventData): void {
+		this.dice.observersRegistrar.attach(this.players[this.currentPlayerIndex]);
+		this.players[this.currentPlayerIndex].playerScoreUpdatedEventObserversRegistrar.attach(this);
+		this.players[this.currentPlayerIndex].setState(PlayerState.MakesAMove);
 
-			if (this.isGameFinished) {
-				return;
-			}
-
-			if (message instanceof Game.PlayerWonEventData) {
-				this.finishGame();
-				return;
-			}
-
-			this.next();
-		}
-
-		private finishGame(): void {
-			this.gameView.finishGame();
-			this.isGameFinished = true;
-
-			this.players[this.currentPlayerIndex].playerScoreUpdatedEventObserversRegistrar.detach(this);
-			this.dice.observersRegistrar.detach(this.players[this.currentPlayerIndex]);
-		}
-
-		private next(): void {
-			if (this.isGameFinished) {
-				return;
-			}
-
-			this.players[this.currentPlayerIndex].setState(Game.PlayerState.Waiting);
-			this.players[this.currentPlayerIndex].playerScoreUpdatedEventObserversRegistrar.detach(this);
-			this.dice.observersRegistrar.detach(this.players[this.currentPlayerIndex]);
-
-			this.currentPlayerIndex++;
-			if (this.currentPlayerIndex === this.players.length) {
-				this.currentPlayerIndex = 0;
-			}
-
-			this.dice.observersRegistrar.attach(this.players[this.currentPlayerIndex]);
-			this.players[this.currentPlayerIndex].playerScoreUpdatedEventObserversRegistrar.attach(this);
-			this.players[this.currentPlayerIndex].setState(Game.PlayerState.MakesAMove);
-
-			if (this.players[this.currentPlayerIndex].playerType === Game.PlayerType.Computer) {
-				this.dice.throw();
-			}
+		if (this.players[this.currentPlayerIndex].playerType === PlayerType.Computer) {
+			this.dice.throw();
 		}
 	}
 }

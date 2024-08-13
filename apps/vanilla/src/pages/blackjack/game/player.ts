@@ -1,72 +1,82 @@
-namespace Game {
+import { Observer } from '../observer/observer';
+import { Notifier } from '../observer/notifier';
+import { ObserversRegistrar } from '../observer/observersRegistrar';
 
-	/** Player. */
-	export class Player implements ObserverCore.Observer<DiceThrownEventData> {
+import { PlayerView } from '../ui/playerView';
 
-		private readonly view: UI.PlayerView;
+import { PlayerType } from './enums/playerType';
+import { PlayerState } from './enums/playerState';
 
-		private readonly scoreToWin = 21;
+import { DiceThrownEventData } from './events/diceThrownEventData';
+import { PlayerScoreUpdatedEventData } from './events/playerScoreUpdatedEventData';
+import { PlayerWonEventData } from './events/playerWonEventData';
 
-		private currentScore: number;
+/** Player. */
+export class Player implements Observer<DiceThrownEventData> {
 
-		private readonly playerScoreUpdatedEventNotifier = new ObserverCore.Notifier<PlayerScoreUpdatedEventData>();
+	private readonly view: PlayerView;
 
-		private readonly playerWonEventNotifier = new ObserverCore.Notifier<PlayerWonEventData>();
+	private readonly scoreToWin = 21;
 
-		/** Observer registrar of playerScoreUpdatedEvent. */
-		public playerScoreUpdatedEventObserversRegistrar: ObserverCore.ObserversRegistrar<PlayerScoreUpdatedEventData> =
-			this.playerScoreUpdatedEventNotifier;
+	private currentScore: number;
 
-		/** Observer registrar of playerWonEvent. */
-		public playerWonEventObserversRegistrar: ObserverCore.ObserversRegistrar<PlayerWonEventData> =
-			this.playerWonEventNotifier;
+	private readonly playerScoreUpdatedEventNotifier = new Notifier<PlayerScoreUpdatedEventData>();
 
-		/** Player type. */
-		public readonly playerType: PlayerType;
+	private readonly playerWonEventNotifier = new Notifier<PlayerWonEventData>();
 
-		private constructor(view: UI.PlayerView, playerType: PlayerType) {
-			this.view = view;
-			this.currentScore = 0;
-			this.view.updateScore(this.currentScore);
-			this.playerType = playerType;
+	/** Observer registrar of playerScoreUpdatedEvent. */
+	public playerScoreUpdatedEventObserversRegistrar: ObserversRegistrar<PlayerScoreUpdatedEventData> =
+		this.playerScoreUpdatedEventNotifier;
+
+	/** Observer registrar of playerWonEvent. */
+	public playerWonEventObserversRegistrar: ObserversRegistrar<PlayerWonEventData> =
+		this.playerWonEventNotifier;
+
+	/** Player type. */
+	public readonly playerType: PlayerType;
+
+	private constructor(view: PlayerView, playerType: PlayerType) {
+		this.view = view;
+		this.currentScore = 0;
+		this.view.updateScore(this.currentScore);
+		this.playerType = playerType;
+	}
+
+	/** @inheritdoc */
+	public update(message: DiceThrownEventData): void {
+		this.addScore(message.diceValue);
+
+		if (this.currentScore >= this.scoreToWin) {
+			this.view.setState(PlayerState.Winner);
+			this.playerWonEventNotifier.notify(new PlayerWonEventData());
 		}
 
-		/** @inheritdoc */
-		public update(message: DiceThrownEventData): void {
-			this.addScore(message.diceValue);
+		this.playerScoreUpdatedEventNotifier.notify(new PlayerScoreUpdatedEventData());
+	}
 
-			if (this.currentScore >= this.scoreToWin) {
-				this.view.setState(Game.PlayerState.Winner);
-				this.playerWonEventNotifier.notify(new Game.PlayerWonEventData());
-			}
+	/**
+	 * Set state.
+	 * @param newState New State.
+	 */
+	public setState(newState: PlayerState): void {
+		this.view.setState(newState);
+	}
 
-			this.playerScoreUpdatedEventNotifier.notify(new Game.PlayerScoreUpdatedEventData());
-		}
+	/**
+	 * Create player.
+	 * @param playerName Player name.
+	 * @param playerType Player type.
+	 */
+	public static async create(playerName: string, playerType: PlayerType): Promise<Player> {
+		const view = await PlayerView.create(playerName, playerType);
+		const player = new Player(view, playerType);
+		return player;
+	}
 
-		/**
-		 * Set state.
-		 * @param newState New State.
-		 */
-		public setState(newState: Game.PlayerState): void {
-			this.view.setState(newState);
-		}
+	private addScore(score: number): void {
+		this.currentScore += score;
+		this.view.updateScore(this.currentScore);
 
-		/**
-		 * Create player.
-		 * @param playerName Player name.
-		 * @param playerType Player type.
-		 */
-		public static async create(playerName: string, playerType: PlayerType): Promise<Player> {
-			const view = await UI.PlayerView.create(playerName, playerType);
-			const player = new Player(view, playerType);
-			return player;
-		}
-
-		private addScore(score: number): void {
-			this.currentScore += score;
-			this.view.updateScore(this.currentScore);
-
-			this.view.addDiceValueToHistory(score);
-		}
+		this.view.addDiceValueToHistory(score);
 	}
 }

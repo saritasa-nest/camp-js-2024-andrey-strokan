@@ -1,10 +1,14 @@
+import { GameSession } from './game/gameSession';
+import { Player } from './game/player';
+import { PlayerType } from './game/enums/playerType';
+
 document.addEventListener('DOMContentLoaded', async() => {
 
-	const gameSession = new Game.GameSession([
-		await Game.Player.create('Avdey', Game.PlayerType.RealPlayer),
-		await Game.Player.create('E12XR', Game.PlayerType.Computer),
-		await Game.Player.create('Denis', Game.PlayerType.RealPlayer),
-		await Game.Player.create('Andrey', Game.PlayerType.RealPlayer),
-		await Game.Player.create('mr. Robot', Game.PlayerType.Computer),
+	const gameSession = new GameSession([
+		await Player.create('Avdey', PlayerType.RealPlayer),
+		await Player.create('E12XR', PlayerType.Computer),
+		await Player.create('Denis', PlayerType.RealPlayer),
+		await Player.create('Andrey', PlayerType.RealPlayer),
+		await Player.create('mr. Robot', PlayerType.Computer),
 	]);
 });

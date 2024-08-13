@@ -1,12 +1,11 @@
-namespace ObserverCore {
+import { BaseEventData } from './baseEventData';
 
-	/** Observer. */
-	export type Observer<T extends BaseEventData> = {
+/** Observer. */
+export type Observer<T extends BaseEventData> = {
 
-		/**
-		 * Update subjects.
-		 * @param message
-		 */
-		update(message: T): void;
-	};
-}
+	/**
+	 * Update subjects.
+	 * @param message
+	 */
+	update(message: T): void;
+};

@@ -1,13 +1,8 @@
-namespace Game {
+import { BaseEventData } from '../../observer/baseEventData';
 
-	/**
-	 * Called when Player score updated.
-	 */
-	export class PlayerScoreUpdatedEventData extends ObserverCore.BaseEventData {
+/** Called when Player score updated. */
+export class PlayerScoreUpdatedEventData extends BaseEventData {
 
-		/**
-		 * @inheritdoc
-		 */
-		public override eventName: 'PlayerScoreUpdated' = 'PlayerScoreUpdated';
-	}
+	/** @inheritdoc */
+	public override eventName: 'PlayerScoreUpdated' = 'PlayerScoreUpdated';
 }
