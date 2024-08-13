@@ -18,10 +18,7 @@ namespace Game {
 
 		/** Throw dice. */
 		public throw(): void {
-			const minCeiled = Math.ceil(this.minValue);
-			const maxFloored = Math.floor(this.maxValue);
-			const newDiceValue = Math.floor(Math.random() * (maxFloored - minCeiled + 1) + minCeiled);
-
+			const newDiceValue = Math.randomRange(this.minValue, this.maxValue);
 			this.diceThrownEventNotifier.notify(new Game.DiceThrownEventData(newDiceValue));
 		}
 
