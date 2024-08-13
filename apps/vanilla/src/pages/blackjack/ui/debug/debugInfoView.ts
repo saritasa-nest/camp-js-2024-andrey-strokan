@@ -9,13 +9,7 @@ namespace UI.Debug {
 		 * @returns Void.
 		 */
 		public updateScore(newScore: number): void {
-			const selector = '.debug-info__current-score';
-			const playerScoreElement = document.querySelector(selector);
-
-			if (!playerScoreElement) {
-				return console.error(`${selector} not found.`);
-			}
-
+			const playerScoreElement = document.getElementBySelector('.debug-info__current-score');
 			playerScoreElement.textContent = newScore.toString();
 		}
 
@@ -24,12 +18,7 @@ namespace UI.Debug {
 		 * @param diceValue Dice value.
 		 */
 		public addDiceValueToHistory(diceValue: number): void {
-			const selector = '.debug-info__history-of-dice-values';
-			const historyOfDiceValuesElement = document.querySelector(selector);
-
-			if (!historyOfDiceValuesElement) {
-				return console.error(`${selector} not found.`);
-			}
+			const historyOfDiceValuesElement = document.getElementBySelector('.debug-info__history-of-dice-values');
 
 			const newElement = document.createElement('p');
 			newElement.textContent = diceValue.toString();

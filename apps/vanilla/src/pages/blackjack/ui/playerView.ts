@@ -30,13 +30,7 @@ namespace UI {
 		 * @returns Void.
 		 */
 		public updateScore(newScore: number): void {
-			const selector = `#${this.playerId}.player__current-score`;
-			const playerScoreElement = document.querySelector(selector);
-
-			if (!playerScoreElement) {
-				return console.error(`${selector} not found.`);
-			}
-
+			const playerScoreElement = document.getElementBySelector(`#${this.playerId}.player__current-score`);
 			playerScoreElement.textContent = newScore.toString();
 		}
 
@@ -45,20 +39,12 @@ namespace UI {
 		 * @param diceValue Dice value.
 		 */
 		public addDiceValueToHistory(diceValue: number): void {
-			const selector = `#${this.playerId}.player__history-of-dice-values`;
-			const historyOfDiceValuesElement = document.querySelector(selector);
-
-			if (!historyOfDiceValuesElement) {
-				return console.error(`${selector} not found.`);
-			}
-
 			const newElement = document.createElement('p');
 			newElement.textContent = diceValue.toString();
-
 			newElement.classList.add('player__dice-value');
 
+			const historyOfDiceValuesElement = document.getElementBySelector(`#${this.playerId}.player__history-of-dice-values`);
 			historyOfDiceValuesElement.appendChild(newElement);
-
 		}
 
 		/**
@@ -67,12 +53,7 @@ namespace UI {
 		 * @returns Void.
 		 */
 		public setState(newState: Game.PlayerState): void {
-			const selector = `#${this.playerId}.player`;
-			const playerElement = document.querySelector(selector);
-
-			if (!playerElement) {
-				return console.error(`${selector} not found.`);
-			}
+			const playerElement = document.getElementBySelector(`#${this.playerId}.player`);
 
 			playerElement.classList.remove(Game.PlayerState.Winner);
 			playerElement.classList.remove(Game.PlayerState.MakesAMove);
@@ -105,45 +86,23 @@ namespace UI {
 				const tempDiv = document.createElement('div');
 				tempDiv.innerHTML = data;
 
-				const templateElement = tempDiv.querySelector<HTMLTemplateElement>('#player-template');
-				if (!templateElement) {
-					throw new Error('Template with id="player-template" not found in loaded HTML.');
-				}
+				const templateElement = tempDiv.getElementBySelector<HTMLTemplateElement>('#player-template');
 
 				const templateContent = templateElement.content;
-				const playerNameElement = templateContent.querySelector('.player__name');
-				if (playerNameElement) {
-					playerNameElement.textContent = playerName;
-				} else {
-					console.error('Element with class="player__name" not found in templateContent.');
-				}
+				const playerNameElement = templateContent.getElementBySelector('.player__name');
+				playerNameElement.textContent = playerName;
 
 				// Current player.
-				const playerElement = templateContent.querySelector('.player');
-
-				if (playerElement) {
-					playerElement.id = playerId;
-				} else {
-					console.error('Element with class="player" not found in templateContent.');
-				}
+				const playerElement = templateContent.getElementBySelector('.player');
+				playerElement.id = playerId;
 
 				// Current score.
-				const playerCurrentScoreElement = templateContent.querySelector('.player__current-score');
-
-				if (playerCurrentScoreElement) {
-					playerCurrentScoreElement.id = playerId;
-				} else {
-					console.error('Element with class="player__current-score" not found in templateContent.');
-				}
+				const playerCurrentScoreElement = templateContent.getElementBySelector('.player__current-score');
+				playerCurrentScoreElement.id = playerId;
 
 				// History of dice values.
-				const playerHistoryOfDiceValuesElement = templateContent.querySelector('.player__history-of-dice-values');
-
-				if (playerHistoryOfDiceValuesElement) {
-					playerHistoryOfDiceValuesElement.id = playerId;
-				} else {
-					console.error('Element with class="player__history-of-dice-values" not found in templateContent.');
-				}
+				const playerHistoryOfDiceValuesElement = templateContent.getElementBySelector('.player__history-of-dice-values');
+				playerHistoryOfDiceValuesElement.id = playerId;
 
 				const contentDiv = document.getElementsByClassName('players')[0];
 				if (contentDiv) {
