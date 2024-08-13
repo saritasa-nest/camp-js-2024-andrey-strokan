@@ -55,7 +55,6 @@ namespace Game {
 		 * Create player.
 		 * @param playerName Player name.
 		 * @param playerType Player type.
-		 * @returns Player.
 		 */
 		public static async create(playerName: string, playerType: PlayerType): Promise<Player> {
 			const view = await UI.PlayerView.create(playerName, playerType);

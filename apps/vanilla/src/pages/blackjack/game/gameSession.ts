@@ -9,7 +9,7 @@ namespace Game {
 
 		private readonly debugInfo: Game.Debug.DebugInfo;
 
-		private readonly players: Player[];
+		private readonly players: readonly Player[];
 
 		private readonly dice: Dice;
 
@@ -17,7 +17,7 @@ namespace Game {
 
 		private isGameFinished = false;
 
-		public constructor(players: Player[]) {
+		public constructor(players: readonly Player[]) {
 			this.dice = new Game.Dice(6);
 
 			this.debugInfo = new Game.Debug.DebugInfo();
