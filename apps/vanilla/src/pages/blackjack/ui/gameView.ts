@@ -31,7 +31,7 @@ namespace UI {
 
 		/** Finish game. */
 		public finishGame(): void {
-			const throwDiceButtonElement = document.getElementBySelector<HTMLButtonElement>('throw-dice');
+			const throwDiceButtonElement = document.getElementBySelector<HTMLButtonElement>('.throw-dice');
 			throwDiceButtonElement.disabled = true;
 
 			const passButtonElement = document.getElementBySelector<HTMLButtonElement>('.pass');

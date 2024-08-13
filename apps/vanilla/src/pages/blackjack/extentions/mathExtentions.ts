@@ -1,5 +1,5 @@
 
-// eslint-disable-next-line @typescript-eslint/consistent-type-definitions
+// eslint-disable-next-line @typescript-eslint/consistent-type-definitions, @typescript-eslint/no-unused-vars
 interface Math {
 
 	/** Random random value from range. */

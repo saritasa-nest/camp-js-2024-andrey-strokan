@@ -1,11 +1,12 @@
-interface Document {
+// eslint-disable-next-line @typescript-eslint/consistent-type-definitions, @typescript-eslint/no-unused-vars
+interface ParentNode {
 
 	/** Get element by selector. */
 	getElementBySelector<E extends Element = Element>(selector: string): E;
 }
 
-Document.prototype.getElementBySelector = function<E extends Element = Element>(selector: string): E {
-	const element = document.querySelector(selector);
+Element.prototype.getElementBySelector = function<E extends Element = Element>(selector: string): E {
+	const element = this.querySelector(selector);
 
 	if (!element) {
 		throw new Error(`${selector} not found.`);
@@ -14,18 +15,5 @@ Document.prototype.getElementBySelector = function<E extends Element = Element>(
 	return element as E;
 };
 
-interface DocumentFragment {
-
-	/** Get HTMLTemplateElement by selector. */
-	getElementBySelector<E extends Element = Element>(selector: string): E;
-}
-
-DocumentFragment.prototype.getElementBySelector = Document.prototype.getElementBySelector;
-
-interface HTMLDivElement {
-
-	/** Get HTMLTemplateElement by selector. */
-	getElementBySelector<E extends Element = Element>(selector: string): E;
-}
-
-HTMLDivElement.prototype.getElementBySelector = Document.prototype.getElementBySelector;
+Document.prototype.getElementBySelector = Element.prototype.getElementBySelector;
+DocumentFragment.prototype.getElementBySelector = Element.prototype.getElementBySelector;
