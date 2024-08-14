@@ -4,11 +4,11 @@ import { PlayerType } from './game/enums/playerType';
 
 document.addEventListener('DOMContentLoaded', async() => {
 
-	const gameSession = new GameSession([
-		await Player.create('Avdey', PlayerType.RealPlayer),
-		await Player.create('E12XR', PlayerType.Computer),
-		await Player.create('Denis', PlayerType.RealPlayer),
-		await Player.create('Andrey', PlayerType.RealPlayer),
-		await Player.create('mr. Robot', PlayerType.Computer),
-	]);
+	const gameSession = new GameSession(await Promise.all([
+		Player.create('Avdey', PlayerType.RealPlayer),
+		Player.create('E12XR', PlayerType.Computer),
+		Player.create('Denis', PlayerType.RealPlayer),
+		Player.create('Andrey', PlayerType.RealPlayer),
+		Player.create('mr. Robot', PlayerType.Computer),
+	]));
 });
