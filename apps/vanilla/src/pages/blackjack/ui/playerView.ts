@@ -1,6 +1,6 @@
 import { PlayerType } from '../game/enums/playerType';
 import { PlayerState } from '../game/enums/playerState';
-import '../extensions/documentExtensions';
+import { getElementBySelector } from '../extensions/documentExtensions';
 
 /** Player view. */
 export class PlayerView {
@@ -32,7 +32,7 @@ export class PlayerView {
 	 * @returns Void.
 	 */
 	public updateScore(newScore: number): void {
-		const playerScoreElement = document.getElementBySelector(`#${this.playerId}.player__current-score`);
+		const playerScoreElement = getElementBySelector(document, `#${this.playerId}.player__current-score`);
 		playerScoreElement.textContent = newScore.toString();
 	}
 
@@ -45,7 +45,7 @@ export class PlayerView {
 		newElement.textContent = diceValue.toString();
 		newElement.classList.add('player__dice-value');
 
-		const historyOfDiceValuesElement = document.getElementBySelector(`#${this.playerId}.player__history-of-dice-values`);
+		const historyOfDiceValuesElement = getElementBySelector(document, `#${this.playerId}.player__history-of-dice-values`);
 		historyOfDiceValuesElement.appendChild(newElement);
 	}
 
@@ -55,7 +55,7 @@ export class PlayerView {
 	 * @returns Void.
 	 */
 	public setState(newState: PlayerState): void {
-		const playerElement = document.getElementBySelector(`#${this.playerId}.player`);
+		const playerElement = getElementBySelector(document, `#${this.playerId}.player`);
 
 		playerElement.classList.remove(PlayerState.Winner);
 		playerElement.classList.remove(PlayerState.MakesAMove);
@@ -88,22 +88,22 @@ export class PlayerView {
 			const tempDiv = document.createElement('div');
 			tempDiv.innerHTML = data;
 
-			const templateElement = tempDiv.getElementBySelector<HTMLTemplateElement>('#player-template');
+			const templateElement = getElementBySelector<HTMLTemplateElement>(tempDiv, '#player-template');
 
 			const templateContent = templateElement.content;
-			const playerNameElement = templateContent.getElementBySelector('.player__name');
+			const playerNameElement = getElementBySelector(templateContent, '.player__name');
 			playerNameElement.textContent = playerName;
 
 			// Current player.
-			const playerElement = templateContent.getElementBySelector('.player');
+			const playerElement = getElementBySelector(templateContent, '.player');
 			playerElement.id = playerId;
 
 			// Current score.
-			const playerCurrentScoreElement = templateContent.getElementBySelector('.player__current-score');
+			const playerCurrentScoreElement = getElementBySelector(templateContent, '.player__current-score');
 			playerCurrentScoreElement.id = playerId;
 
 			// History of dice values.
-			const playerHistoryOfDiceValuesElement = templateContent.getElementBySelector('.player__history-of-dice-values');
+			const playerHistoryOfDiceValuesElement = getElementBySelector(templateContent, '.player__history-of-dice-values');
 			playerHistoryOfDiceValuesElement.id = playerId;
 
 			const contentDiv = document.getElementsByClassName('players')[0];

@@ -1,3 +1,5 @@
+import { getElementBySelector } from '../../extensions/documentExtensions';
+
 /** Debug info view. */
 export class DebugInfoView {
 
@@ -7,7 +9,7 @@ export class DebugInfoView {
 	 * @returns Void.
 	 */
 	public updateScore(newScore: number): void {
-		const playerScoreElement = document.getElementBySelector('.debug-info__current-score');
+		const playerScoreElement = getElementBySelector(document, '.debug-info__current-score');
 		playerScoreElement.textContent = newScore.toString();
 	}
 
@@ -16,7 +18,7 @@ export class DebugInfoView {
 	 * @param diceValue Dice value.
 	 */
 	public addDiceValueToHistory(diceValue: number): void {
-		const historyOfDiceValuesElement = document.getElementBySelector('.debug-info__history-of-dice-values');
+		const historyOfDiceValuesElement = getElementBySelector(document, '.debug-info__history-of-dice-values');
 
 		const newElement = document.createElement('p');
 		newElement.textContent = diceValue.toString();

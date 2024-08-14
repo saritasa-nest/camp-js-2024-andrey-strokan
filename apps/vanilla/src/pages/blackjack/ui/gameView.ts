@@ -1,6 +1,8 @@
 import { ObserversRegistrar } from '../observer/observersRegistrar';
 import { Notifier } from '../observer/notifier';
 
+import { getElementBySelector } from '../extensions/documentExtensions';
+
 import { PassButtonClickedEventData } from './events/passButtonClickedEventData';
 import { ThrowButtonClickedEventData } from './events/throwButtonClickedEventData';
 
@@ -22,12 +24,12 @@ export class GameView {
 	ObserversRegistrar<PassButtonClickedEventData> = this.passButtonClickedEventNotifier;
 
 	public constructor() {
-		const throwDiceButtonElement = document.getElementBySelector('.throw-dice');
+		const throwDiceButtonElement = getElementBySelector(document, '.throw-dice');
 		throwDiceButtonElement.addEventListener('click', () => {
 			this.throwButtonClickedEventNotifier.notify(new ThrowButtonClickedEventData());
 		});
 
-		const passButtonElement = document.getElementBySelector('.pass');
+		const passButtonElement = getElementBySelector(document, '.pass');
 		passButtonElement.addEventListener('click', () => {
 			this.passButtonClickedEventNotifier.notify(new PassButtonClickedEventData());
 		});
@@ -35,10 +37,10 @@ export class GameView {
 
 	/** Finish game. */
 	public finishGame(): void {
-		const throwDiceButtonElement = document.getElementBySelector<HTMLButtonElement>('.throw-dice');
+		const throwDiceButtonElement = getElementBySelector<HTMLButtonElement>(document, '.throw-dice');
 		throwDiceButtonElement.disabled = true;
 
-		const passButtonElement = document.getElementBySelector<HTMLButtonElement>('.pass');
+		const passButtonElement = getElementBySelector<HTMLButtonElement>(document, '.pass');
 		passButtonElement.disabled = true;
 	}
 }
