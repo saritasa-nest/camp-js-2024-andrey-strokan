@@ -1,12 +1,13 @@
 import { ThrowButtonClickedEventData } from '../ui/events/throwButtonClickedEventData';
 
+import { randomRange } from '../extensions/mathExtensions';
+
 import { Notifier } from '../observer/notifier';
 import { ObserversRegistrar } from '../observer/observersRegistrar';
 import { Observer } from '../observer/observer';
 
 import { DiceThrownEventData } from './events/diceThrownEventData';
 
-import '../extensions/mathExtensions';
 
 /** Game dice. */
 export class Dice implements Observer<ThrowButtonClickedEventData> {
@@ -26,7 +27,7 @@ export class Dice implements Observer<ThrowButtonClickedEventData> {
 
 	/** Throw dice. */
 	public throw(): void {
-		const newDiceValue = Math.randomRange(this.minValue, this.maxValue);
+		const newDiceValue = randomRange(this.minValue, this.maxValue);
 		this.diceThrownEventNotifier.notify(new DiceThrownEventData(newDiceValue));
 	}
 

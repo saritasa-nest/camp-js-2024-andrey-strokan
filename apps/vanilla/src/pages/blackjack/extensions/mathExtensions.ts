@@ -1,14 +1,12 @@
-
-// eslint-disable-next-line @typescript-eslint/consistent-type-definitions, @typescript-eslint/no-unused-vars
-interface Math {
-
-	/** Random random value from range. */
-	randomRange(minValue: number, maxValue: number): number;
-}
-
-Math.randomRange = function(minValue: number, maxValue: number): number {
+/**
+ * Return random value from range [minValue, maxValue].
+ * @param minValue Min value.
+ * @param maxValue Max value.
+ * @returns Random value.
+ */
+export function randomRange(minValue: number, maxValue: number): number {
 	const minCeiled = Math.ceil(minValue);
 	const maxFloored = Math.floor(maxValue);
 	const result = Math.floor(Math.random() * (maxFloored - minCeiled + 1) + minCeiled);
 	return result;
-};
+}
