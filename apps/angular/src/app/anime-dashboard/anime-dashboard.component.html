@@ -1,1 +1,38 @@
-<p>Hello !!!</p>
+<table mat-table [dataSource]="animeFilms">
+	<!-- Image -->
+	<ng-container matColumnDef="imageSourceURL">
+		<th mat-header-cell *matHeaderCellDef>Image</th>
+		<td mat-cell *matCellDef="let element">
+			<div class="image-container">
+				<img [src]="element.imageSourceURL" alt="{{element.titleEnglish}}" class="image"/>
+			</div>
+		</td>
+	</ng-container>
+
+	<!-- English title -->
+	<ng-container matColumnDef="titleEnglish">
+		<th mat-header-cell *matHeaderCellDef>Title (English)</th>
+		<td mat-cell *matCellDef="let element"> {{element.titleEnglish}} </td>
+	</ng-container>
+
+	<!-- Japan title -->
+	<ng-container matColumnDef="titleJapan">
+		<th mat-header-cell *matHeaderCellDef>Title (Japan)</th>
+		<td mat-cell *matCellDef="let element"> {{element.titleJapan}} </td>
+	</ng-container>
+
+	<!-- Aired start -->
+	<ng-container matColumnDef="airedStart">
+		<th mat-header-cell *matHeaderCellDef>Aired start</th>
+		<td mat-cell *matCellDef="let element"> {{element.airedStart | date: 'medium'}} </td>
+	</ng-container>
+
+	<!-- Film type -->
+	<ng-container matColumnDef="filmType">
+		<th mat-header-cell *matHeaderCellDef>Film type</th>
+		<td mat-cell *matCellDef="let element"> {{element.filmType}} </td>
+	</ng-container>
+
+	<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
