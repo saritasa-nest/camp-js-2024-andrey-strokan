@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { MatTableModule } from '@angular/material/table';
 
 /** App component. */
 @Component({
@@ -7,6 +8,6 @@ import { RouterModule } from '@angular/router';
 	templateUrl: './app.component.html',
 	styleUrls: ['./app.component.css'],
 	standalone: true,
-	imports: [RouterModule],
+	imports: [RouterModule, MatTableModule],
 })
 export class AppComponent {}
