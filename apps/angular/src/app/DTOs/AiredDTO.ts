@@ -2,8 +2,8 @@
 export type AiredDTO = {
 
 	/** Start. */
-	start: string;
+	readonly start: string;
 
 	/** End. */
-	end: string | null;
+	readonly end: string | null;
 };

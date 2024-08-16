@@ -4,14 +4,14 @@ import { AnimeDTO } from './AnimeDTO';
 export type AnimeResponseDTO = {
 
 	/** Count. */
-	count: number;
+	readonly count: number;
 
 	/** Next. */
-	next: string | null;
+	readonly next: string | null;
 
 	/** Previous. */
-	previous: string | null;
+	readonly previous: string | null;
 
 	/** Results. */
-	results: AnimeDTO[];
+	readonly results: AnimeDTO[];
 };

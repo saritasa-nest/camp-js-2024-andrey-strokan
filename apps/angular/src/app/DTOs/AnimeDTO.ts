@@ -4,41 +4,41 @@ import { AiredDTO } from './AiredDTO';
 export type AnimeDTO = {
 
 	/** Id. */
-	id: number;
+	readonly id: number;
 
 	/** Created. */
-	created: string;
+	readonly created: string;
 
 	/** Modified. */
-	modified: string;
+	readonly modified: string;
 
 	/** Title english. */
-	title_eng: string;
+	readonly title_eng: string;
 
 	/** Title Japan. */
-	title_jpn: string;
+	readonly title_jpn: string;
 
 	/** Anime image. */
-	image: string;
+	readonly image: string;
 
 	/** Aired. */
-	aired: AiredDTO;
+	readonly aired: AiredDTO;
 
 	/** Type. */
-	type: string;
+	readonly type: string;
 
 	/** Status. */
-	status: string;
+	readonly status: string;
 
 	/** Score. */
-	score: number | null;
+	readonly score: number | null;
 
 	/** User score. */
-	user_score: number | null;
+	readonly user_score: number | null;
 
 	/** Studios. */
-	studios: string[];
+	readonly studios: string[];
 
 	/** Genres. */
-	genres: number[];
+	readonly genres: number[];
 };
