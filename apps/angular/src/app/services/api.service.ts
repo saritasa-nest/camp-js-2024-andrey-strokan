@@ -5,7 +5,9 @@ import { Observable } from 'rxjs';
 import { AnimeResponseDTO } from '../DTOs/AnimeResponseDTO';
 
 /** Api service. */
-@Injectable()
+@Injectable({
+	providedIn: 'root',
+})
 export class ApiService {
 
 	private apiUrl = 'https://api.camp-js.saritasa.rocks';
