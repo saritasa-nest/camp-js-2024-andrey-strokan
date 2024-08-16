@@ -15,4 +15,7 @@ export type AnimeFilm = {
 
 	/** Film type. */
 	filmType: string;
+
+	/** Film status. */
+	filmStatus: string;
 };

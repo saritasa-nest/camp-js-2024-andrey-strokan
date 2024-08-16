@@ -18,7 +18,7 @@ import { AnimeFilm } from '../entities/animeFilm';
 export class AnimeDashboardComponent implements OnInit {
 
 	/** Displayed columns. */
-	public displayedColumns: string[] = ['imageSourceURL', 'titleEnglish', 'titleJapan', 'airedStart', 'filmType'];
+	public displayedColumns: string[] = ['imageSourceURL', 'titleEnglish', 'titleJapan', 'airedStart', 'filmType', 'filmStatus'];
 
 	/** Anime films. */
 	public animeFilms: AnimeFilm[] = [];
@@ -36,6 +36,7 @@ export class AnimeDashboardComponent implements OnInit {
 					titleJapan: item.title_jpn,
 					airedStart: new Date(item.aired.start),
 					filmType: item.type,
+					filmStatus: item.status,
 				} as AnimeFilm))),
 			)
 			.subscribe(
