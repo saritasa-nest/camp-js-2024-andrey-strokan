@@ -30,13 +30,13 @@
 	<!-- Film type -->
 	<ng-container matColumnDef="filmType">
 		<th mat-header-cell *matHeaderCellDef>Type</th>
-		<td mat-cell *matCellDef="let element"> {{element.filmType}} </td>
+		<td mat-cell *matCellDef="let element"> {{element.type}} </td>
 	</ng-container>
 
 	<!-- Film status -->
 	<ng-container matColumnDef="filmStatus">
 		<th mat-header-cell *matHeaderCellDef>Status</th>
-		<td mat-cell *matCellDef="let element"> {{element.filmStatus}} </td>
+		<td mat-cell *matCellDef="let element"> {{element.status}} </td>
 	</ng-container>
 
 	<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
