@@ -4,7 +4,7 @@ import { MatTableModule } from '@angular/material/table';
 
 import { map } from 'rxjs/operators';
 
-import { AnimeService } from '.././services/api.service';
+import { AnimeService } from '../services/anime.service';
 import { AnimeFilm } from '../entities/animeFilm';
 
 /** Anime dashboard. */
@@ -28,7 +28,7 @@ export class AnimeDashboardComponent implements OnInit {
 
 	/** @inheritdoc */
 	public ngOnInit(): void {
-		this.apiService.getAllAnimeFilms()
+		this.apiService.getAll()
 			.pipe(
 				map(response => response.results),
 				map(animeDtoArray => animeDtoArray.map(item => ({

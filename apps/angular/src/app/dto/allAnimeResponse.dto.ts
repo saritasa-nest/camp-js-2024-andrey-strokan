@@ -1,7 +1,7 @@
 import { AnimeDto } from './anime.dto';
 
-/** Anime Response DTO. */
-export type AnimeResponseDto = {
+/** All Anime Response DTO. */
+export type AllAnimeResponseDto = {
 
 	/** Count. */
 	readonly count: number;
