@@ -18,7 +18,7 @@ export type AnimeDto = {
 	/** Title Japan. */
 	readonly title_jpn: string;
 
-	/** Anime image. */
+	/** Image Url. */
 	readonly image: string;
 
 	/** Aired. */
