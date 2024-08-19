@@ -1,6 +1,6 @@
 import { ThrowButtonClickedEventData } from '../ui/events/throwButtonClickedEventData';
 
-import { randomRange } from '../utils/mathExtensions';
+import { randomRange } from '../utils/mathUtils';
 
 import { Notifier } from '../observer/notifier';
 import { ObserversRegistrar } from '../observer/observersRegistrar';
@@ -12,7 +12,7 @@ import { DiceThrownEventData } from './events/diceThrownEventData';
 /** Game dice. */
 export class Dice implements Observer<ThrowButtonClickedEventData> {
 
-	private readonly minValue: number = 1;
+	private readonly minValue = 1;
 
 	private readonly maxValue: number;
 
