@@ -29,8 +29,8 @@ export class AnimeService {
 				titleEnglish: item.title_eng,
 				titleJapan: item.title_jpn,
 				airedStart: new Date(item.aired.start),
-				filmType: item.type,
-				filmStatus: item.status,
+				type: item.type,
+				status: item.status,
 			} as AnimeFilm))),
 		);
 	}

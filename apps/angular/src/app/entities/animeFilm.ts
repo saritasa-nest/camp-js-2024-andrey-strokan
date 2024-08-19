@@ -14,8 +14,8 @@ export type AnimeFilm = {
 	airedStart: Date;
 
 	/** Film type. */
-	filmType: string;
+	type: string;
 
 	/** Film status. */
-	filmStatus: string;
+	status: string;
 };
