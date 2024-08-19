@@ -18,8 +18,8 @@ export class AnimeDashboardComponent {
 	private readonly apiService = inject(AnimeService);
 
 	/** Displayed columns. */
-	protected readonly displayedColumns = ['imageSourceURL', 'titleEnglish', 'titleJapan', 'airedStart', 'filmType', 'filmStatus'];
+	protected readonly displayedColumns = ['imageSourceURL', 'titleEnglish', 'titleJapan', 'airedStart', 'type', 'status'];
 
-	/** Anime films. */
-	protected readonly animeFilms$ = this.apiService.getAll();
+	/** All anime. */
+	protected readonly allAnime$ = this.apiService.getAll();
 }
