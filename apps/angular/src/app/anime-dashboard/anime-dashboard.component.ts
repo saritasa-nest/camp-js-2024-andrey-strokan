@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { MatTableModule } from '@angular/material/table';
 
@@ -13,7 +13,7 @@ import { AnimeFilm } from '../entities/animeFilm';
 	templateUrl: './anime-dashboard.component.html',
 	styleUrl: './anime-dashboard.component.css',
 })
-export class AnimeDashboardComponent implements OnInit {
+export class AnimeDashboardComponent {
 
 	/** Services. */
 	private readonly apiService = inject(AnimeService);
@@ -22,15 +22,5 @@ export class AnimeDashboardComponent implements OnInit {
 	public displayedColumns: string[] = ['imageSourceURL', 'titleEnglish', 'titleJapan', 'airedStart', 'filmType', 'filmStatus'];
 
 	/** Anime films. */
-	public animeFilms: AnimeFilm[] = [];
-
-	/** @inheritdoc */
-	public ngOnInit(): void {
-		this.apiService.getAll()
-			.subscribe(
-				animeFilms => {
-					this.animeFilms = animeFilms;
-				},
-			);
-	}
+	public readonly animeFilms$ = this.apiService.getAll();
 }
