@@ -1,4 +1,4 @@
-import { getElementBySelector } from '../../extensions/documentExtensions';
+import { getElementBySelector } from '../../utils/documentUtils';
 
 /** Debug info view. */
 export class DebugInfoView {

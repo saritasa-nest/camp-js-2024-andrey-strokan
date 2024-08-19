@@ -1,6 +1,6 @@
 import { ThrowButtonClickedEventData } from '../ui/events/throwButtonClickedEventData';
 
-import { randomRange } from '../extensions/mathExtensions';
+import { randomRange } from '../utils/mathExtensions';
 
 import { Notifier } from '../observer/notifier';
 import { ObserversRegistrar } from '../observer/observersRegistrar';

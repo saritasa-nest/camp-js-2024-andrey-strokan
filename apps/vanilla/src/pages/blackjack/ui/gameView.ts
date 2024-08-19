@@ -1,7 +1,7 @@
 import { ObserversRegistrar } from '../observer/observersRegistrar';
 import { Notifier } from '../observer/notifier';
 
-import { getElementBySelector } from '../extensions/documentExtensions';
+import { getElementBySelector } from '../utils/documentUtils';
 
 import { PassButtonClickedEventData } from './events/passButtonClickedEventData';
 import { ThrowButtonClickedEventData } from './events/throwButtonClickedEventData';

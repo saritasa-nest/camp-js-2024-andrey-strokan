@@ -1,6 +1,6 @@
 import { PlayerType } from '../game/enums/playerType';
 import { PlayerState } from '../game/enums/playerState';
-import { getElementBySelector } from '../extensions/documentExtensions';
+import { getElementBySelector } from '../utils/documentUtils';
 
 /** Player view. */
 export class PlayerView {
