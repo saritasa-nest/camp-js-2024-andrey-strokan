@@ -1,7 +1,7 @@
-import { AnimeDTO } from './anime.dto';
+import { AnimeDto } from './anime.dto';
 
 /** Anime Response DTO. */
-export type AnimeResponseDTO = {
+export type AnimeResponseDto = {
 
 	/** Count. */
 	readonly count: number;
@@ -13,5 +13,5 @@ export type AnimeResponseDTO = {
 	readonly previous: string | null;
 
 	/** Results. */
-	readonly results: AnimeDTO[];
+	readonly results: AnimeDto[];
 };

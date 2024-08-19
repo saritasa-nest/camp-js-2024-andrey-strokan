@@ -1,7 +1,7 @@
 import { AiredDto } from './aired.dto';
 
 /** Anime DTO. */
-export type AnimeDTO = {
+export type AnimeDto = {
 
 	/** Id. */
 	readonly id: number;

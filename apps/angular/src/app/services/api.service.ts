@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-import { AnimeResponseDTO } from '../dto/animeResponse.dto';
+import { AnimeResponseDto } from '../DTOs/animeResponse.dto';
 
 /** Api service. */
 @Injectable({
@@ -17,7 +17,7 @@ export class ApiService {
 	public constructor(private http: HttpClient) {}
 
 	/** Get all anime request. */
-	public getAllAnimeFilms(): Observable<AnimeResponseDTO> {
-		return this.http.get<AnimeResponseDTO>(`${this.apiUrl}/${this.allAnimeEndpoint}`);
+	public getAllAnimeFilms(): Observable<AnimeResponseDto> {
+		return this.http.get<AnimeResponseDto>(`${this.apiUrl}/${this.allAnimeEndpoint}`);
 	}
 }
