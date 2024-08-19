@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { MatTableModule } from '@angular/material/table';
 
@@ -17,13 +17,14 @@ import { AnimeFilm } from '../entities/animeFilm';
 })
 export class AnimeDashboardComponent implements OnInit {
 
+	/** Services. */
+	private readonly apiService = inject(ApiService);
+
 	/** Displayed columns. */
 	public displayedColumns: string[] = ['imageSourceURL', 'titleEnglish', 'titleJapan', 'airedStart', 'filmType', 'filmStatus'];
 
 	/** Anime films. */
-	protected animeFilms: AnimeFilm[] = [];
-
-	public constructor(private apiService: ApiService) {}
+	public animeFilms: AnimeFilm[] = [];
 
 	/** @inheritdoc */
 	public ngOnInit(): void {
