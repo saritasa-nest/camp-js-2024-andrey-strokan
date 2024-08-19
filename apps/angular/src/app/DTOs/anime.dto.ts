@@ -1,4 +1,4 @@
-import { AiredDTO } from './aired.dto';
+import { AireDto } from './aired.dto';
 
 /** Anime DTO. */
 export type AnimeDTO = {
@@ -22,7 +22,7 @@ export type AnimeDTO = {
 	readonly image: string;
 
 	/** Aired. */
-	readonly aired: AiredDTO;
+	readonly aired: AireDto;
 
 	/** Type. */
 	readonly type: string;
