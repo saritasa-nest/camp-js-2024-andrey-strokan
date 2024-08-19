@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-import { AnimeResponseDto } from '../DTOs/animeResponse.dto';
+import { AnimeResponseDto } from '../dto/animeResponse.dto';
 
-/** Api service. */
+/** Anime service. */
 @Injectable({
 	providedIn: 'root',
 })
