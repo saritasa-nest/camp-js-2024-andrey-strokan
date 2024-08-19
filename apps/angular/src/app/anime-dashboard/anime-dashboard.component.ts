@@ -4,7 +4,7 @@ import { MatTableModule } from '@angular/material/table';
 
 import { map } from 'rxjs/operators';
 
-import { ApiService } from '.././services/api.service';
+import { AnimeService } from '.././services/api.service';
 import { AnimeFilm } from '../entities/animeFilm';
 
 /** Anime dashboard. */
@@ -18,7 +18,7 @@ import { AnimeFilm } from '../entities/animeFilm';
 export class AnimeDashboardComponent implements OnInit {
 
 	/** Services. */
-	private readonly apiService = inject(ApiService);
+	private readonly apiService = inject(AnimeService);
 
 	/** Displayed columns. */
 	public displayedColumns: string[] = ['imageSourceURL', 'titleEnglish', 'titleJapan', 'airedStart', 'filmType', 'filmStatus'];

@@ -8,7 +8,7 @@ import { AnimeResponseDto } from '../dto/animeResponse.dto';
 @Injectable({
 	providedIn: 'root',
 })
-export class ApiService {
+export class AnimeService {
 
 	private apiUrl = 'https://api.camp-js.saritasa.rocks';
 
