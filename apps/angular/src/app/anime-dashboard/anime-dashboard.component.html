@@ -1,4 +1,4 @@
-<table mat-table [dataSource]="animeFilms$">
+<table mat-table [dataSource]="(animeFilms$ | async) ?? []">
 	<!-- Image -->
 	<ng-container matColumnDef="imageSourceURL">
 		<th mat-header-cell *matHeaderCellDef>Image</th>
