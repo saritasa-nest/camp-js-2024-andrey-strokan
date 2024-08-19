@@ -18,7 +18,7 @@ export class DebugInfoView {
 	 * @param diceValue Dice value.
 	 */
 	public addDiceValueToHistory(diceValue: number): void {
-		const historyOfDiceValuesElement = getElementBySelector(document, '.debug-info__history-of-dice-values');
+		const historyOfDiceValuesElement = getElementBySelector(document, '.debug-info__dice-history');
 
 		const newElement = document.createElement('p');
 		newElement.textContent = diceValue.toString();

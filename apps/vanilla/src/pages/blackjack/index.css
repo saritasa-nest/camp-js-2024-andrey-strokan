@@ -20,7 +20,7 @@
   text-align: center;
 }
 
-.debug-info__history-of-dice-values {
+.debug-info__dice-history {
   display: flex;
   align-items: center;
   height: 24px;
