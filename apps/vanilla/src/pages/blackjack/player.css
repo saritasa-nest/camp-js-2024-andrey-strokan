@@ -29,5 +29,5 @@
 }
 
 .makes_a_move {
-  background-color: var(--makes-a-move-player-color);
+  background-color: var(--current-player-color);
 }
