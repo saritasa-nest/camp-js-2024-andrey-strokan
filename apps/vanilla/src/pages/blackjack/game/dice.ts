@@ -1,4 +1,4 @@
-import { ThrowButtonClickedEventData } from '../ui/events/throwButtonClickedEventData';
+import { RollButtonClickedEventData } from '../ui/events/rollButtonClickedEventData';
 
 import { randomRange } from '../utils/mathUtils';
 
@@ -10,7 +10,7 @@ import { DiceRollEventData } from './events/diceRollEventData';
 
 
 /** Game dice. */
-export class Dice implements Observer<ThrowButtonClickedEventData> {
+export class Dice implements Observer<RollButtonClickedEventData> {
 
 	private readonly minValue = 1;
 

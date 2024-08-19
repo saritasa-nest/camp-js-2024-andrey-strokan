@@ -38,7 +38,7 @@ Observer<PlayerWonEventData> {
 		this.dice.observersRegistrar.attach(this.debugInfo);
 
 		this.gameView = new GameView();
-		this.gameView.throwButtonClickedEventObserverRegistrar.attach(this.dice);
+		this.gameView.rollButtonClickedEventObserverRegistrar.attach(this.dice);
 		this.gameView.passButtonClickedEventObserverRegistrar.attach(this);
 
 		this.players = players;
