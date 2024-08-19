@@ -1,7 +1,7 @@
 import { BaseEventData } from '../../observer/baseEventData';
 
 /**  Called when Dice thrown. */
-export class DiceThrownEventData extends BaseEventData {
+export class DiceRollEventData extends BaseEventData {
 
 	/**  @inheritdoc */
 	public override eventName: 'DiceThrown' = 'DiceThrown';

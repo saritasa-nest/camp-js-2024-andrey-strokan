@@ -1,9 +1,9 @@
 import { Observer } from '../../observer/observer';
 import { DebugInfoView } from '../../ui/debug/debugInfoView';
-import { DiceThrownEventData } from '../events/diceThrownEventData';
+import { DiceRollEventData } from '../events/diceRollEventData';
 
 /** Debug info. */
-export class DebugInfo implements Observer<DiceThrownEventData> {
+export class DebugInfo implements Observer<DiceRollEventData> {
 
 	private readonly view: DebugInfoView;
 
@@ -16,7 +16,7 @@ export class DebugInfo implements Observer<DiceThrownEventData> {
 	}
 
 	/** @inheritdoc */
-	public update(message: DiceThrownEventData): void {
+	public update(message: DiceRollEventData): void {
 		this.addScore(message.diceValue);
 	}
 

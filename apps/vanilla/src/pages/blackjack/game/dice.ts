@@ -6,7 +6,7 @@ import { Notifier } from '../observer/notifier';
 import { ObserversRegistrar } from '../observer/observersRegistrar';
 import { Observer } from '../observer/observer';
 
-import { DiceThrownEventData } from './events/diceThrownEventData';
+import { DiceRollEventData } from './events/diceRollEventData';
 
 
 /** Game dice. */
@@ -16,23 +16,23 @@ export class Dice implements Observer<ThrowButtonClickedEventData> {
 
 	private readonly maxValue: number;
 
-	private readonly diceThrownEventNotifier = new Notifier<DiceThrownEventData>();
+	private readonly rollEventNotifier = new Notifier<DiceRollEventData>();
 
 	/** @inheritdoc */
-	public readonly observersRegistrar: ObserversRegistrar<DiceThrownEventData> = this.diceThrownEventNotifier;
+	public readonly observersRegistrar: ObserversRegistrar<DiceRollEventData> = this.rollEventNotifier;
 
 	public constructor(maxValue: number) {
 		this.maxValue = maxValue;
 	}
 
-	/** Throw dice. */
-	public throw(): void {
+	/** Roll dice. */
+	public roll(): void {
 		const newDiceValue = randomRange(this.minValue, this.maxValue);
-		this.diceThrownEventNotifier.notify(new DiceThrownEventData(newDiceValue));
+		this.rollEventNotifier.notify(new DiceRollEventData(newDiceValue));
 	}
 
 	/** @inheritdoc */
 	public update(): void {
-		this.throw();
+		this.roll();
 	}
 }

@@ -54,7 +54,7 @@ Observer<PlayerWonEventData> {
 		this.players[this.currentPlayerIndex].setState(PlayerState.MakesAMove);
 
 		if (this.players[this.currentPlayerIndex].playerType === PlayerType.Computer) {
-			this.dice.throw();
+			this.dice.roll();
 		}
 	}
 
@@ -102,7 +102,7 @@ Observer<PlayerWonEventData> {
 		this.players[this.currentPlayerIndex].setState(PlayerState.MakesAMove);
 
 		if (this.players[this.currentPlayerIndex].playerType === PlayerType.Computer) {
-			this.dice.throw();
+			this.dice.roll();
 		}
 	}
 }

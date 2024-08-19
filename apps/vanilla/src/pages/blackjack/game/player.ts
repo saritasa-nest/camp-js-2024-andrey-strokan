@@ -7,12 +7,12 @@ import { PlayerView } from '../ui/playerView';
 import { PlayerType } from './enums/playerType';
 import { PlayerState } from './enums/playerState';
 
-import { DiceThrownEventData } from './events/diceThrownEventData';
+import { DiceRollEventData } from './events/diceRollEventData';
 import { PlayerScoreUpdatedEventData } from './events/playerScoreUpdatedEventData';
 import { PlayerWonEventData } from './events/playerWonEventData';
 
 /** Player. */
-export class Player implements Observer<DiceThrownEventData> {
+export class Player implements Observer<DiceRollEventData> {
 
 	private readonly view: PlayerView;
 
@@ -43,7 +43,7 @@ export class Player implements Observer<DiceThrownEventData> {
 	}
 
 	/** @inheritdoc */
-	public update(message: DiceThrownEventData): void {
+	public update(message: DiceRollEventData): void {
 		this.addScore(message.diceValue);
 
 		if (this.currentScore >= this.scoreToWin) {
