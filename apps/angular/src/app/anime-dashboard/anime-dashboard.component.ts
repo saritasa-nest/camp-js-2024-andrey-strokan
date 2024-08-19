@@ -21,7 +21,7 @@ export class AnimeDashboardComponent implements OnInit {
 	public displayedColumns: string[] = ['imageSourceURL', 'titleEnglish', 'titleJapan', 'airedStart', 'filmType', 'filmStatus'];
 
 	/** Anime films. */
-	public animeFilms: AnimeFilm[] = [];
+	protected animeFilms: AnimeFilm[] = [];
 
 	public constructor(private apiService: ApiService) {}
 
