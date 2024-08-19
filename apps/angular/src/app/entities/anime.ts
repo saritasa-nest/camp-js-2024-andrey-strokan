@@ -1,5 +1,5 @@
-/** Anime film. */
-export type AnimeFilm = {
+/** Anime. */
+export type Anime = {
 
 	/** Image source. */
 	imageSourceURL: string;

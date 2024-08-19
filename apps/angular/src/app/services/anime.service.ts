@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 
 import { map } from 'rxjs/operators';
 
-import { AnimeFilm } from '../entities/animeFilm';
+import { Anime } from '../entities/anime';
 
 import { AllAnimeResponseDto } from '../dto/allAnimeResponse.dto';
 
@@ -21,7 +21,7 @@ export class AnimeService {
 	public constructor(private http: HttpClient) {}
 
 	/** Get all anime request. */
-	public getAll(): Observable<AnimeFilm[]> {
+	public getAll(): Observable<Anime[]> {
 		return this.http.get<AllAnimeResponseDto>(`${this.apiUrl}/${this.allAnimeEndpoint}`).pipe(
 			map(response => response.results),
 			map(animeDtoArray => animeDtoArray.map(item => ({
@@ -31,7 +31,7 @@ export class AnimeService {
 				airedStart: new Date(item.aired.start),
 				type: item.type,
 				status: item.status,
-			} as AnimeFilm))),
+			} as Anime))),
 		);
 	}
 }
