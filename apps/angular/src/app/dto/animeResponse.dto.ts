@@ -1,4 +1,4 @@
-import { AnimeDTO } from './AnimeDTO';
+import { AnimeDTO } from './anime.dto';
 
 /** Anime Response DTO. */
 export type AnimeResponseDTO = {

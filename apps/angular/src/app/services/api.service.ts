@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-import { AnimeResponseDTO } from '../DTOs/AnimeResponseDTO';
+import { AnimeResponseDTO } from '../dto/animeResponse.dto';
 
 /** Api service. */
 @Injectable({
