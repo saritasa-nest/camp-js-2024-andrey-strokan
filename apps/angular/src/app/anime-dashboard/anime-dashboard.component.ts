@@ -2,8 +2,6 @@ import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { MatTableModule } from '@angular/material/table';
 
-import { map } from 'rxjs/operators';
-
 import { AnimeService } from '../services/anime.service';
 import { AnimeFilm } from '../entities/animeFilm';
 
@@ -29,17 +27,6 @@ export class AnimeDashboardComponent implements OnInit {
 	/** @inheritdoc */
 	public ngOnInit(): void {
 		this.apiService.getAll()
-			.pipe(
-				map(response => response.results),
-				map(animeDtoArray => animeDtoArray.map(item => ({
-					imageSourceURL: item.image,
-					titleEnglish: item.title_eng,
-					titleJapan: item.title_jpn,
-					airedStart: new Date(item.aired.start),
-					filmType: item.type,
-					filmStatus: item.status,
-				} as AnimeFilm))),
-			)
 			.subscribe(
 				animeFilms => {
 					this.animeFilms = animeFilms;
