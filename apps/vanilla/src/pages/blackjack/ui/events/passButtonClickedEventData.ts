@@ -4,5 +4,5 @@ import { BaseEventData } from '../../observer/baseEventData';
 export class PassButtonClickedEventData extends BaseEventData {
 
 	/** @inheritdoc */
-	public override eventName: 'PassButtonClicked' = 'PassButtonClicked';
+	public override readonly eventName = 'PassButtonClicked';
 }

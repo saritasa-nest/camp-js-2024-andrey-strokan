@@ -4,5 +4,5 @@ import { BaseEventData } from '../../observer/baseEventData';
 export class PlayerScoreUpdatedEventData extends BaseEventData {
 
 	/** @inheritdoc */
-	public override eventName: 'PlayerScoreUpdated' = 'PlayerScoreUpdated';
+	public override readonly eventName = 'PlayerScoreUpdated';
 }
