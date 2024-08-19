@@ -7,7 +7,7 @@
 export function getElementBySelector<E extends Element = Element>(from: ParentNode, selector: string): E {
 	const element = from.querySelector(selector);
 
-	if (!element) {
+	if (element == null) {
 		throw new Error(`${selector} not found.`);
 	}
 
