@@ -3,7 +3,6 @@ import { CommonModule, DatePipe } from '@angular/common';
 import { MatTableModule } from '@angular/material/table';
 
 import { AnimeService } from '../services/anime.service';
-import { AnimeFilm } from '../entities/animeFilm';
 
 /** Anime dashboard. */
 @Component({
