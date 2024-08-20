@@ -1,4 +1,4 @@
-<table mat-table [dataSource]="(allAnime$ | async) ?? []">
+<table mat-table [dataSource]="(visibleAnime$ | async) ?? []">
 	<!-- Image -->
 	<ng-container matColumnDef="imageSourceURL">
 		<th mat-header-cell *matHeaderCellDef>Image</th>
@@ -42,3 +42,14 @@
 	<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </table>
+
+<mat-paginator #paginator
+	class="demo-paginator"
+	aria-label="Select page"
+	[length]="animeCount"
+	[pageSizeOptions]="showPageSizeOptions ? pageSizeOptions : []"
+	(page)="handlePageEvent($event)"
+	[pageSize]="pageSize">
+</mat-paginator>
+
+<mat-progress-spinner	mode="indeterminate"></mat-progress-spinner>
