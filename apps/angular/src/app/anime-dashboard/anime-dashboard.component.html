@@ -47,9 +47,7 @@
 	class="demo-paginator"
 	aria-label="Select page"
 	[length]="animeCount"
-	[pageSizeOptions]="showPageSizeOptions ? pageSizeOptions : []"
+	[pageSizeOptions]="pageSizeOptions"
 	(page)="handlePageEvent($event)"
 	[pageSize]="pageSize">
 </mat-paginator>
-
-<mat-progress-spinner	mode="indeterminate"></mat-progress-spinner>
