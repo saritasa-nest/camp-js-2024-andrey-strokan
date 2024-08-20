@@ -1,8 +1,8 @@
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
-import { Observable, Subscription, map } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
-import { CommonModule, DatePipe } from '@angular/common';
+import { CommonModule, DatePipe, SlicePipe } from '@angular/common';
 import { MatTableModule } from '@angular/material/table';
 
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -51,9 +51,6 @@ export class AnimeDashboardComponent implements OnInit, OnDestroy {
 	/** Page sizes. */
 	protected pageSizeOptions = [5, 10, 25];
 
-	/** Show page size options. */
-	protected showPageSizeOptions = true;
-
 	private subscription: Subscription = new Subscription();
 
 	/** @inheritdoc */
@@ -63,7 +60,6 @@ export class AnimeDashboardComponent implements OnInit, OnDestroy {
 		});
 
 		this.pageSize = this.pageSizeOptions[0];
-		this.updateVisibleAnime();
 	}
 
 	/** @inheritdoc */
@@ -78,13 +74,5 @@ export class AnimeDashboardComponent implements OnInit, OnDestroy {
 	protected handlePageEvent(e: PageEvent): void {
 		this.pageSize = e.pageSize;
 		this.pageIndex = e.pageIndex;
-
-		this.updateVisibleAnime();
-	}
-
-	private updateVisibleAnime(): void {
-		this.visibleAnime$ = this.allAnime$.pipe(
-			map(allAnime => allAnime.slice(this.pageIndex * this.pageSize, this.pageIndex * this.pageSize + this.pageSize)),
-		);
 	}
 }
