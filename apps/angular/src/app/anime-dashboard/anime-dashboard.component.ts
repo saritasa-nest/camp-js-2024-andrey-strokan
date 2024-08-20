@@ -1,15 +1,13 @@
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
-import { Observable, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
-import { CommonModule, DatePipe, SlicePipe } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { MatTableModule } from '@angular/material/table';
 
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import { AnimeService } from '../services/anime.service';
-
-import { Anime } from '../entities/anime';
 
 /** Anime dashboard. */
 @Component({
@@ -35,9 +33,6 @@ export class AnimeDashboardComponent implements OnInit, OnDestroy {
 
 	/** All anime. */
 	protected readonly allAnime$ = this.apiService.getAll();
-
-	/** Visible anime. */
-	protected visibleAnime$ = new Observable<Anime[]>();
 
 	/** Count of anime. */
 	protected animeCount = 0;
