@@ -2,13 +2,13 @@ import { inject, Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-import { Sort } from '@angular/material/sort';
-
 import { map } from 'rxjs/operators';
 
 import { Anime } from '../entities/anime';
 
 import { AllAnimeResponseDto } from '../dto/allAnimeResponse.dto';
+
+import { SortConfig } from './types/sortConfig';
 
 /** Anime service. */
 @Injectable({
@@ -24,14 +24,14 @@ export class AnimeService {
 
 	/**
 	 * Get all anime request.
-	 * @param sort Sort.
+	 * @param sortConfig Sort config.
 	 * @param limit Limit.
 	 */
-	public getAll(sort: Sort, limit?: number): Observable<Anime[]> {
+	public getAll(sortConfig?: SortConfig, limit?: number): Observable<Anime[]> {
 		let params = new HttpParams();
 
-		if (sort.direction !== '') {
-			params = params.set('ordering', `${sort.direction === 'asc' ? '' : '-'}${sort.active}`);
+		if (sortConfig != null) {
+			params = params.set('ordering', `${sortConfig.sortOrder === 'asc' ? '' : '-'}${sortConfig.sortField}`);
 		}
 
 		if (limit != null) {

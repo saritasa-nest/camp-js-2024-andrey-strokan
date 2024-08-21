@@ -1,5 +1,5 @@
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
-import { BehaviorSubject, Observable, Subscription, switchMap } from 'rxjs';
+import { BehaviorSubject, Observable, switchMap, Subscription } from 'rxjs';
 
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
@@ -12,6 +12,7 @@ import { MatSortModule, Sort } from '@angular/material/sort';
 import { AnimeService } from '../services/anime.service';
 
 import { Anime } from '../entities/anime';
+import { SortConfig } from '../services/types/sortConfig';
 
 /** Anime dashboard. */
 @Component({
@@ -28,19 +29,24 @@ import { Anime } from '../entities/anime';
 	templateUrl: './anime-dashboard.component.html',
 	styleUrl: './anime-dashboard.component.css',
 })
-export class AnimeDashboardComponent implements OnInit {
+export class AnimeDashboardComponent implements OnInit, OnDestroy {
 
 	/** Services. */
 	private readonly apiService = inject(AnimeService);
 
 	/** Displayed columns. */
-	protected readonly displayedColumns = ['imageSourceURL', 'titleEnglish', 'titleJapan', 'airedStart', 'type', 'status'] as const;
+	protected readonly displayedColumns = ['imageSourceURL', 'title_eng', 'title_jpn', 'aired__startswith', 'type', 'status'] as const;
 
 	/** Subjects. */
-	private sortSubject$ = new BehaviorSubject<Sort>({ active: '', direction: '' });
+	private sortSubject$ = new BehaviorSubject<SortConfig | undefined>(undefined);
+
+	// private paginationSubject$ = new BehaviorSubject<>({ active: '', direction: '' });
 
 	/** Anime list. */
 	protected anime$ = new Observable<Anime[]>();
+
+	/** Subscriptions. */
+	private subscriptions = new Subscription();
 
 	/** Count of anime. */
 	protected animeCount = 0;
@@ -60,10 +66,18 @@ export class AnimeDashboardComponent implements OnInit {
 			switchMap(sortConfig => this.apiService.getAll(sortConfig)),
 		);
 
-		//	this.animeCount = list.length;
+		this.subscriptions.add(this.anime$.subscribe(animeList => {
+			this.animeCount = animeList.length;
+		}));
 
-		// this.loadAnime();
 		this.pageSize = this.pageSizeOptions[0];
+	}
+
+	/** @inheritdoc */
+	public ngOnDestroy(): void {
+		if (this.subscriptions != null) {
+			this.subscriptions.unsubscribe();
+		}
 	}
 
 	/**
@@ -80,6 +94,19 @@ export class AnimeDashboardComponent implements OnInit {
 	 * @param sort Sort.
 	 */
 	protected onSortClicked(sort: Sort): void {
-		this.sortSubject$.next(sort);
+
+		// Mapping Sort to SortConfig.
+
+		if (sort.direction === '') {
+			this.sortSubject$.next(undefined);
+			return;
+		}
+
+		const sortConfig: SortConfig = {
+			sortField: sort.active,
+			sortOrder: sort.direction,
+		};
+
+		this.sortSubject$.next(sortConfig);
 	}
 }
