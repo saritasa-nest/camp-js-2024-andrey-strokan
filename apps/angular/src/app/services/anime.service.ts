@@ -1,6 +1,8 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { inject, Injectable } from '@angular/core';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
+
+import { Sort } from '@angular/material/sort';
 
 import { map } from 'rxjs/operators';
 
@@ -14,15 +16,32 @@ import { AllAnimeResponseDto } from '../dto/allAnimeResponse.dto';
 })
 export class AnimeService {
 
-	private apiUrl = 'https://api.camp-js.saritasa.rocks';
+	private readonly baseUrl = 'https://api.camp-js.saritasa.rocks';
 
-	private allAnimeEndpoint = 'api/v1/anime/anime/';
+	private readonly animeEndpoint = 'api/v1/anime/anime/';
 
-	public constructor(private http: HttpClient) {}
+	private readonly http = inject(HttpClient);
 
-	/** Get all anime request. */
-	public getAll(): Observable<Anime[]> {
-		return this.http.get<AllAnimeResponseDto>(`${this.apiUrl}/${this.allAnimeEndpoint}`).pipe(
+	/**
+	 * Get all anime request.
+	 * @param sort Sort.
+	 * @param limit Limit.
+	 */
+	public getAll(sort: Sort, limit?: number): Observable<Anime[]> {
+		let params = new HttpParams();
+
+		if (sort.direction !== '') {
+			params = params.set('ordering', `${sort.direction === 'asc' ? '' : '-'}${sort.active}`);
+		}
+
+		if (limit != null) {
+			params = params.set('limit', limit);
+		}
+
+		const url = new URL(this.animeEndpoint, this.baseUrl);
+		url.search = params.toString();
+
+		return this.http.get<AllAnimeResponseDto>(url.toString()).pipe(
 			map(response => response.results),
 			map(animeDtoArray => animeDtoArray.map(item => ({
 				imageSourceURL: item.image,
