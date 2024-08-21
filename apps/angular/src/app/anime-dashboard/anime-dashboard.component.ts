@@ -1,5 +1,5 @@
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
-import { Subscription } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription, switchMap } from 'rxjs';
 
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
@@ -7,7 +7,11 @@ import { MatTableModule } from '@angular/material/table';
 
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
+import { MatSortModule, Sort } from '@angular/material/sort';
+
 import { AnimeService } from '../services/anime.service';
+import { Anime } from '../entities/anime';
+
 import { Anime } from '../entities/anime';
 
 /** Anime dashboard. */
@@ -20,11 +24,12 @@ import { Anime } from '../entities/anime';
 		DatePipe,
 		MatPaginatorModule,
 		MatProgressSpinnerModule,
+		MatSortModule,
 	],
 	templateUrl: './anime-dashboard.component.html',
 	styleUrl: './anime-dashboard.component.css',
 })
-export class AnimeDashboardComponent implements OnInit, OnDestroy {
+export class AnimeDashboardComponent implements OnInit {
 
 	/** Service. */
 	private readonly animeService = inject(AnimeService);
@@ -34,6 +39,11 @@ export class AnimeDashboardComponent implements OnInit, OnDestroy {
 
 	/** All anime. */
 	protected readonly allAnime$ = this.animeService.getAll();
+	/** Subjects. */
+	private sortSubject$ = new BehaviorSubject<Sort>({ active: '', direction: '' });
+
+	/** Anime list. */
+	protected anime$ = new Observable<Anime[]>();
 
 	/**
 	 * Serves to optimize the redrawing of table elements.
@@ -57,20 +67,16 @@ export class AnimeDashboardComponent implements OnInit, OnDestroy {
 	/** Page sizes. */
 	protected pageSizeOptions = [5, 10, 25];
 
-	private subscription: Subscription = new Subscription();
-
 	/** @inheritdoc */
 	public ngOnInit(): void {
-		this.subscription = this.allAnime$.subscribe(allAnime => {
-			this.animeCount = allAnime.length;
-		});
+		this.anime$ = this.sortSubject$.pipe(
+			switchMap(sortConfig => this.apiService.getAll(sortConfig)),
+		);
 
+		//	this.animeCount = list.length;
+
+		// this.loadAnime();
 		this.pageSize = this.pageSizeOptions[0];
-	}
-
-	/** @inheritdoc */
-	public ngOnDestroy(): void {
-		this.subscription.unsubscribe();
 	}
 
 	/**
@@ -80,5 +86,13 @@ export class AnimeDashboardComponent implements OnInit, OnDestroy {
 	protected handlePageEvent(e: PageEvent): void {
 		this.pageSize = e.pageSize;
 		this.pageIndex = e.pageIndex;
+	}
+
+	/**
+	 * On sort clicked.
+	 * @param sort Sort.
+	 */
+	protected onSortClicked(sort: Sort): void {
+		this.sortSubject$.next(sort);
 	}
 }

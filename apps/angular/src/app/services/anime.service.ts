@@ -1,6 +1,8 @@
 import { inject, Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
+
+import { Sort } from '@angular/material/sort';
 
 import { map } from 'rxjs/operators';
 
@@ -23,10 +25,28 @@ export class AnimeService {
 
 	private readonly httpClient = inject(HttpClient);
 
-	/** Get all anime request. */
-	public getAll(): Observable<Anime[]> {
-		const animeMapper = new AnimeMapper();
-		return this.httpClient.get<PaginationDto<AnimeDto>>(`${environment.animeApiUrl}/${this.allAnimeEndpoint}`).pipe(
+	private readonly http = inject(HttpClient);
+
+	/**
+	 * Get all anime request.
+	 * @param sort Sort.
+	 * @param limit Limit.
+	 */
+	public getAll(sort: Sort, limit?: number): Observable<Anime[]> {
+		let params = new HttpParams();
+
+		if (sort.direction !== '') {
+			params = params.set('ordering', `${sort.direction === 'asc' ? '' : '-'}${sort.active}`);
+		}
+
+		if (limit != null) {
+			params = params.set('limit', limit);
+		}
+
+		const url = new URL(this.animeEndpoint, this.baseUrl);
+		url.search = params.toString();
+
+		return this.http.get<AllAnimeResponseDto>(url.toString()).pipe(
 			map(response => response.results),
 			map(animeDtoArray => animeDtoArray.map(item => animeMapper.fromDto(item))),
 		);
