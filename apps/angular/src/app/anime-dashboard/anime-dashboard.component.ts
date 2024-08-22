@@ -13,7 +13,7 @@ import { AnimeService } from '../services/anime.service';
 
 import { Anime } from '../entities/anime';
 
-import { AnimeList } from '../entities/animeList';
+import { AnimeData } from '../entities/animeData';
 
 import { SortConfig } from '../types/sortConfig';
 import { PaginationConfig } from '../types/paginationConfig';
@@ -47,26 +47,23 @@ export class AnimeDashboardComponent implements OnInit {
 	/** Subjects. */
 	private sortSubject$ = new BehaviorSubject<SortConfig | undefined>(undefined);
 
+	/** Anime data. */
+	private animeData$ = new Observable<AnimeData>();
+
 	/** Pagination subject. */
 	protected paginationSubject$ = new BehaviorSubject<PaginationConfig>({ pageIndex: 0, pageSize: this.pageSizeOptions[0] });
 
 	/** Anime list. */
-	private animeList$ = new Observable<AnimeList>();
+	protected animeOnPage$ = new Observable<Anime[]>();
 
-	/** Anime list. */
-	protected anime$ = new Observable<Anime[]>();
-
-	/** Anime list. */
-	protected animeCount$ = new Observable<number>();
-
-	/** Subscriptions. */
-	private subscriptions = new Subscription();
+	/** Total count of Anime. */
+	protected totalAnimeCount$ = new Observable<number>();
 
 	/** @inheritdoc */
 	public ngOnInit(): void {
 
 		// Subjects.
-		this.animeList$ = combineLatest([
+		this.animeData$ = combineLatest([
 			this.sortSubject$,
 			this.paginationSubject$,
 		]).pipe(
@@ -76,12 +73,12 @@ export class AnimeDashboardComponent implements OnInit {
 			shareReplay({ bufferSize: 1, refCount: true }),
 		);
 
-		this.anime$ = this.animeList$.pipe(
+		this.animeOnPage$ = this.animeData$.pipe(
 			map(animeList => animeList.pageData),
 		);
 
-		this.animeCount$ = this.animeList$.pipe(
-			map(animeList => animeList.commonCount),
+		this.totalAnimeCount$ = this.animeData$.pipe(
+			map(animeList => animeList.totalCount),
 		);
 	}
 
@@ -90,6 +87,7 @@ export class AnimeDashboardComponent implements OnInit {
 	 * @param e PageEvent.
 	 */
 	protected handlePageEvent(e: PageEvent): void {
+		// Mapping PageEvent to PaginationConfig.
 		const paginationConfig: PaginationConfig = {
 			pageIndex: e.pageIndex,
 			pageSize: e.pageSize,
@@ -103,9 +101,7 @@ export class AnimeDashboardComponent implements OnInit {
 	 * @param sort Sort.
 	 */
 	protected onSortClicked(sort: Sort): void {
-
 		// Mapping Sort to SortConfig.
-
 		if (sort.direction === '') {
 			this.sortSubject$.next(undefined);
 			return;

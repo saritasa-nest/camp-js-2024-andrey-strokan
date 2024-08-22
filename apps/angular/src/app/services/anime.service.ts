@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 
 import { map } from 'rxjs/operators';
 
-import { AnimeList } from '../entities/animeList';
+import { AnimeData } from '../entities/animeData';
 import { Anime } from '../entities/anime';
 
 import { AllAnimeResponseDto } from '../dto/allAnimeResponse.dto';
@@ -29,7 +29,7 @@ export class AnimeService {
 	 * @param sortConfig Sort config.
 	 * @param paginationConfig Pagination config.
 	 */
-	public getAll(sortConfig?: SortConfig, paginationConfig?: PaginationConfig): Observable<AnimeList> {
+	public getAll(sortConfig?: SortConfig, paginationConfig?: PaginationConfig): Observable<AnimeData> {
 		let params = new HttpParams();
 
 		if (sortConfig != null) {
