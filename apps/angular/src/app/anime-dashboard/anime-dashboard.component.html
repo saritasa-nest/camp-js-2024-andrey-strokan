@@ -1,4 +1,4 @@
-<table mat-table [dataSource]="(anime$ | async) ?? []"
+<table mat-table [dataSource]="(animeOnPage$ | async) ?? []"
 			 matSort (matSortChange)="onSortClicked($event)">
 	<!-- Image -->
 	<ng-container matColumnDef="imageSourceURL">
@@ -47,7 +47,7 @@
 <mat-paginator #paginator
 	class="demo-paginator"
 	aria-label="Select page"
-	[length]="animeCount$ | async"
+	[length]="totalAnimeCount$ | async"
 	[pageSizeOptions]="pageSizeOptions"
 	(page)="handlePageEvent($event)"
 	[pageSize]="paginationSubject$.value.pageSize"

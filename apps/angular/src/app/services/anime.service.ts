@@ -46,7 +46,7 @@ export class AnimeService {
 
 		return this.http.get<AllAnimeResponseDto>(url.toString()).pipe(
 			map(response => {
-				const commonCount = response.count;
+				const totalCount = response.count;
 
 				const pageData = response.results.map(item => ({
 					imageSourceURL: item.image,
@@ -57,7 +57,7 @@ export class AnimeService {
 					status: item.status,
 				} as Anime));
 
-				return { commonCount, pageData };
+				return { totalCount, pageData };
 			}),
 		);
 	}
