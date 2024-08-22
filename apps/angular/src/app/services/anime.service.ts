@@ -2,8 +2,9 @@ import { inject, Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-import { map, tap } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 
+import { AnimeList } from '../entities/animeList';
 import { Anime } from '../entities/anime';
 
 import { AllAnimeResponseDto } from '../dto/allAnimeResponse.dto';
@@ -23,15 +24,12 @@ export class AnimeService {
 
 	private readonly http = inject(HttpClient);
 
-	/** Anime count. */
-	private animeCount = 0;
-
 	/**
 	 * Get all anime request.
 	 * @param sortConfig Sort config.
 	 * @param paginationConfig Pagination config.
 	 */
-	public getAll(sortConfig?: SortConfig, paginationConfig?: PaginationConfig): Observable<Anime[]> {
+	public getAll(sortConfig?: SortConfig, paginationConfig?: PaginationConfig): Observable<AnimeList> {
 		let params = new HttpParams();
 
 		if (sortConfig != null) {
@@ -47,23 +45,20 @@ export class AnimeService {
 		url.search = params.toString();
 
 		return this.http.get<AllAnimeResponseDto>(url.toString()).pipe(
-			tap(response => {
-				this.animeCount = response.count;
-			}),
-			map(response => response.results),
-			map(animeDtoArray => animeDtoArray.map(item => ({
-				imageSourceURL: item.image,
-				titleEnglish: item.title_eng,
-				titleJapan: item.title_jpn,
-				airedStart: new Date(item.aired.start),
-				type: item.type,
-				status: item.status,
-			} as Anime))),
-		);
-	}
+			map(response => {
+				const commonCount = response.count;
 
-	/** Get anime count. */
-	public getCount(): number {
-		return this.animeCount;
+				const pageData = response.results.map(item => ({
+					imageSourceURL: item.image,
+					titleEnglish: item.title_eng,
+					titleJapan: item.title_jpn,
+					airedStart: new Date(item.aired.start),
+					type: item.type,
+					status: item.status,
+				} as Anime));
+
+				return { commonCount, pageData };
+			}),
+		);
 	}
 }

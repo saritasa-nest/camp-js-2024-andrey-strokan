@@ -1,7 +1,7 @@
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
-import { BehaviorSubject, Observable, switchMap, tap, combineLatest, Subscription } from 'rxjs';
+import { BehaviorSubject, Observable, switchMap, map, shareReplay, combineLatest, Subscription } from 'rxjs';
 
-import { Component, inject, OnDestroy, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { MatTableModule } from '@angular/material/table';
 
@@ -12,6 +12,9 @@ import { MatSortModule, Sort } from '@angular/material/sort';
 import { AnimeService } from '../services/anime.service';
 
 import { Anime } from '../entities/anime';
+
+import { AnimeList } from '../entities/animeList';
+
 import { SortConfig } from '../types/sortConfig';
 import { PaginationConfig } from '../types/paginationConfig';
 
@@ -30,7 +33,7 @@ import { PaginationConfig } from '../types/paginationConfig';
 	templateUrl: './anime-dashboard.component.html',
 	styleUrl: './anime-dashboard.component.css',
 })
-export class AnimeDashboardComponent implements OnInit, OnDestroy {
+export class AnimeDashboardComponent implements OnInit {
 
 	/** Services. */
 	private readonly animeService = inject(AnimeService);
@@ -48,36 +51,38 @@ export class AnimeDashboardComponent implements OnInit, OnDestroy {
 	protected paginationSubject$ = new BehaviorSubject<PaginationConfig>({ pageIndex: 0, pageSize: this.pageSizeOptions[0] });
 
 	/** Anime list. */
+	private animeList$ = new Observable<AnimeList>();
+
+	/** Anime list. */
 	protected anime$ = new Observable<Anime[]>();
+
+	/** Anime list. */
+	protected animeCount$ = new Observable<number>();
 
 	/** Subscriptions. */
 	private subscriptions = new Subscription();
-
-	/** Count of anime. */
-	protected animeCount = 0;
 
 	/** @inheritdoc */
 	public ngOnInit(): void {
 
 		// Subjects.
-		this.anime$ = combineLatest([
+		this.animeList$ = combineLatest([
 			this.sortSubject$,
 			this.paginationSubject$,
 		]).pipe(
-			switchMap(([sortConfig, paginationConfig]) => this.animeService.getAll(sortConfig, paginationConfig)),
+			switchMap(
+				([sortConfig, paginationConfig]) => this.animeService.getAll(sortConfig, paginationConfig),
+			),
+			shareReplay({ bufferSize: 1, refCount: true }),
 		);
 
-		// Subscriptions.
-		this.subscriptions.add(this.anime$.subscribe(_animeList => {
-			this.animeCount = this.animeService.getCount();
-		}));
-	}
+		this.anime$ = this.animeList$.pipe(
+			map(animeList => animeList.pageData),
+		);
 
-	/** @inheritdoc */
-	public ngOnDestroy(): void {
-		if (this.subscriptions != null) {
-			this.subscriptions.unsubscribe();
-		}
+		this.animeCount$ = this.animeList$.pipe(
+			map(animeList => animeList.commonCount),
+		);
 	}
 
 	/**
