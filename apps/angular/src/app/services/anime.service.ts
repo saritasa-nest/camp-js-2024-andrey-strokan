@@ -38,10 +38,18 @@ export class AnimeService {
 			params = params.set('ordering', `${sortConfig.sortOrder === 'asc' ? '' : '-'}${sortConfig.sortField}`);
 		}
 
+		if (paginationConfig != null) {
+			params = params.set('limit', paginationConfig.pageSize);
+			params = params.set('offset', paginationConfig.pageIndex * paginationConfig.pageSize);
+		}
+
 		const url = new URL(this.animeEndpoint, this.baseUrl);
 		url.search = params.toString();
 
 		return this.http.get<AllAnimeResponseDto>(url.toString()).pipe(
+			tap(response => {
+				this.animeCount = response.count;
+			}),
 			map(response => response.results),
 			map(animeDtoArray => animeDtoArray.map(item => ({
 				imageSourceURL: item.image,
@@ -51,20 +59,6 @@ export class AnimeService {
 				type: item.type,
 				status: item.status,
 			} as Anime))),
-			tap(animeList => {
-				this.animeCount = animeList.length;
-			}),
-			map(animeList => {
-
-				if (paginationConfig === undefined) {
-					return animeList;
-				}
-
-				const start = paginationConfig.pageIndex * paginationConfig.pageSize;
-				const endCandidate = start + paginationConfig.pageSize;
-				const end = endCandidate > this.animeCount ? this.animeCount : endCandidate;
-				return animeList.slice(start, end);
-			}),
 		);
 	}
 
