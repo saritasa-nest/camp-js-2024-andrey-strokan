@@ -34,7 +34,7 @@ export class AnimeService {
 	 * @param sortConfig Sort config.
 	 * @param paginationConfig Pagination config.
 	 */
-	public getAll(sortConfig?: SortConfig, paginationConfig?: PaginationConfig): Observable<AnimeList> {
+	public getAll(sortConfig?: SortConfig, paginationConfig?: PaginationConfig): Observable<AnimeData> {
 		let params = new HttpParams();
 
 		if (sortConfig != null) {
