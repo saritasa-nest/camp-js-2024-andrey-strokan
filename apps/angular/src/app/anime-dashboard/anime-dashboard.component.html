@@ -50,5 +50,6 @@
 	[length]="animeCount"
 	[pageSizeOptions]="pageSizeOptions"
 	(page)="handlePageEvent($event)"
-	[pageSize]="pageSize">
+	[pageSize]="paginationSubject$.value.pageSize"
+	[pageIndex]="paginationSubject$.value.pageIndex">
 </mat-paginator>
