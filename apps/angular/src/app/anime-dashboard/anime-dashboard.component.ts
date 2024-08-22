@@ -1,5 +1,5 @@
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
-import { BehaviorSubject, Observable, switchMap, Subscription } from 'rxjs';
+import { BehaviorSubject, Observable, switchMap, tap, combineLatest, Subscription } from 'rxjs';
 
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
@@ -13,7 +13,8 @@ import { AnimeService } from '../services/anime.service';
 import { Anime } from '../entities/anime';
 
 import { Anime } from '../entities/anime';
-import { SortConfig } from '../services/types/sortConfig';
+import { SortConfig } from '../types/sortConfig';
+import { PaginationConfig } from '../types/paginationConfig';
 
 /** Anime dashboard. */
 @Component({
@@ -32,7 +33,7 @@ import { SortConfig } from '../services/types/sortConfig';
 })
 export class AnimeDashboardComponent implements OnInit, OnDestroy {
 
-	/** Service. */
+	/** Services. */
 	private readonly animeService = inject(AnimeService);
 
 	/** Displayed columns. */
@@ -40,10 +41,14 @@ export class AnimeDashboardComponent implements OnInit, OnDestroy {
 
 	/** All anime. */
 	protected readonly allAnime$ = this.animeService.getAll();
+	/** Page sizes. */
+	protected readonly pageSizeOptions = [5, 10, 25];
+
 	/** Subjects. */
 	private sortSubject$ = new BehaviorSubject<SortConfig | undefined>(undefined);
 
-	// private paginationSubject$ = new BehaviorSubject<>({ active: '', direction: '' });
+	/** Pagination subject. */
+	protected paginationSubject$ = new BehaviorSubject<PaginationConfig>({ pageIndex: 0, pageSize: this.pageSizeOptions[0] });
 
 	/** Anime list. */
 	protected anime$ = new Observable<Anime[]>();
@@ -64,26 +69,21 @@ export class AnimeDashboardComponent implements OnInit, OnDestroy {
 	/** Count of anime. */
 	protected animeCount = 0;
 
-	/** Page size. */
-	protected pageSize = 0;
-
-	/** Current page. */
-	protected pageIndex = 0;
-
-	/** Page sizes. */
-	protected pageSizeOptions = [5, 10, 25];
-
 	/** @inheritdoc */
 	public ngOnInit(): void {
-		this.anime$ = this.sortSubject$.pipe(
-			switchMap(sortConfig => this.apiService.getAll(sortConfig)),
+
+		// Subjects.
+		this.anime$ = combineLatest([
+			this.sortSubject$,
+			this.paginationSubject$,
+		]).pipe(
+			switchMap(([sortConfig, paginationConfig]) => this.animeService.getAll(sortConfig, paginationConfig)),
 		);
 
-		this.subscriptions.add(this.anime$.subscribe(animeList => {
-			this.animeCount = animeList.length;
+		// Subscriptions.
+		this.subscriptions.add(this.anime$.subscribe(_animeList => {
+			this.animeCount = this.animeService.getCount();
 		}));
-
-		this.pageSize = this.pageSizeOptions[0];
 	}
 
 	/** @inheritdoc */
@@ -98,8 +98,12 @@ export class AnimeDashboardComponent implements OnInit, OnDestroy {
 	 * @param e PageEvent.
 	 */
 	protected handlePageEvent(e: PageEvent): void {
-		this.pageSize = e.pageSize;
-		this.pageIndex = e.pageIndex;
+		const paginationConfig: PaginationConfig = {
+			pageIndex: e.pageIndex,
+			pageSize: e.pageSize,
+		};
+
+		this.paginationSubject$.next(paginationConfig);
 	}
 
 	/**
