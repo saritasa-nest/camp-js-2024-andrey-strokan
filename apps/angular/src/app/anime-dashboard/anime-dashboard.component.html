@@ -47,7 +47,7 @@
 <mat-paginator #paginator
 	class="demo-paginator"
 	aria-label="Select page"
-	[length]="animeCount$ | async"
+	[length]="totalAnimeCount$ | async"
 	[pageSizeOptions]="pageSizeOptions"
 	(page)="handlePageEvent($event)"
 	[pageSize]="paginationSubject$.value.pageSize"
