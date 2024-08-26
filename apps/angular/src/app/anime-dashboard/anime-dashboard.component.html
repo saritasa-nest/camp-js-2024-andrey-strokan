@@ -3,7 +3,7 @@
 	<h2 class="filters__title">Filters</h2>
 	<mat-form-field class="example-full-width">
 		<mat-label>Search</mat-label>
-		<input matInput placeholder="Search filter" value="">
+		<input matInput placeholder="Search filter" [formControl]="searchString">
 	</mat-form-field>
 	<mat-form-field>
 		<mat-label>Type</mat-label>
