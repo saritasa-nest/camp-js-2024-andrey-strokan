@@ -1,3 +1,20 @@
+
+<div class="filters">
+	<h2 class="filters__title">Filters</h2>
+	<mat-form-field class="example-full-width">
+		<mat-label>Search</mat-label>
+		<input matInput placeholder="Search filter" value="">
+	</mat-form-field>
+	<mat-form-field>
+		<mat-label>Type</mat-label>
+		<mat-select [formControl]="filteringTypes" multiple>
+			@for (animeType of displayedAnimeTypes; track animeType) {
+				<mat-option [value]="animeType">{{animeType}}</mat-option>
+			}
+		</mat-select>
+	</mat-form-field>
+</div>
+
 <table mat-table [dataSource]="(allAnime$ | async) ?? []" [trackBy]="trackAnimeById">
 			 matSort (matSortChange)="onSortClicked($event)">
 	<!-- Image -->

@@ -1,9 +1,13 @@
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
-import { BehaviorSubject, Observable, switchMap, map, shareReplay, combineLatest, Subscription } from 'rxjs';
+import { BehaviorSubject, Observable, switchMap, map, tap, shareReplay, combineLatest } from 'rxjs';
 
 import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { MatTableModule } from '@angular/material/table';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
@@ -18,6 +22,7 @@ import { AnimeData } from '../entities/animeData';
 
 import { SortConfig } from '../types/sortConfig';
 import { PaginationConfig } from '../types/paginationConfig';
+import { ApiSideKeyAnimeType, DisplayedAnimeType, toApiSideKey } from '../enums/animeType';
 
 /** Anime dashboard. */
 @Component({
@@ -30,11 +35,31 @@ import { PaginationConfig } from '../types/paginationConfig';
 		MatPaginatorModule,
 		MatProgressSpinnerModule,
 		MatSortModule,
+		MatSelectModule,
+		FormsModule,
+		MatFormFieldModule,
+		ReactiveFormsModule,
+		MatInputModule,
 	],
 	templateUrl: './anime-dashboard.component.html',
 	styleUrl: './anime-dashboard.component.css',
 })
 export class AnimeDashboardComponent implements OnInit {
+
+	/** Services. */
+	protected filteringTypes = new FormControl<DisplayedAnimeType[] | undefined>(undefined);
+
+	/** Displayed anime types. */
+	protected readonly displayedAnimeTypes: DisplayedAnimeType[] = [
+		DisplayedAnimeType.TV,
+		DisplayedAnimeType.OVA,
+		DisplayedAnimeType.Movie,
+		DisplayedAnimeType.Special,
+		DisplayedAnimeType.ONA,
+		DisplayedAnimeType.Music,
+		DisplayedAnimeType.PromotionalVideos,
+		DisplayedAnimeType.Unknown,
+	];
 
 	/** Services. */
 	private readonly animeService = inject(AnimeService);
@@ -55,6 +80,12 @@ export class AnimeDashboardComponent implements OnInit {
 
 	/** Pagination subject. */
 	protected paginationSubject$ = new BehaviorSubject<PaginationConfig>({ pageIndex: 0, pageSize: this.pageSizeOptions[0] });
+
+	/** Type Filter subject. */
+	private typeFilterSubject$ = new BehaviorSubject<ApiSideKeyAnimeType[] | undefined>(undefined);
+
+	/** Search subject. */
+	// protected searchSubject$ = new BehaviorSubject<string>();
 
 	/** Anime list. */
 	protected animeOnPage$ = new Observable<Anime[]>();
@@ -81,13 +112,30 @@ export class AnimeDashboardComponent implements OnInit {
 	/** @inheritdoc */
 	public ngOnInit(): void {
 
+		this.filteringTypes.valueChanges.subscribe(
+			() => {
+				if (this.filteringTypes.value == null) {
+					this.typeFilterSubject$.next(undefined);
+					return;
+				}
+
+				const apiKeys = this.filteringTypes.value.map<ApiSideKeyAnimeType>(item => toApiSideKey(item));
+				this.typeFilterSubject$.next(apiKeys);
+			},
+		);
+
 		// Subjects.
 		this.animeData$ = combineLatest([
 			this.sortSubject$,
 			this.paginationSubject$,
+			this.typeFilterSubject$,
 		]).pipe(
 			switchMap(
-				([sortConfig, paginationConfig]) => this.animeService.getAll(sortConfig, paginationConfig),
+				([
+					sortConfig,
+					paginationConfig,
+					typeFilterConfig,
+				]) => this.animeService.getAll(sortConfig, paginationConfig, typeFilterConfig),
 			),
 			shareReplay({ bufferSize: 1, refCount: true }),
 		);
