@@ -1,7 +1,7 @@
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
-import { BehaviorSubject, Observable, switchMap, map, tap, shareReplay, combineLatest } from 'rxjs';
+import { BehaviorSubject, Observable, switchMap, map, tap, shareReplay, combineLatest, Subscription } from 'rxjs';
 
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { MatTableModule } from '@angular/material/table';
 import { MatInputModule } from '@angular/material/input';
@@ -43,8 +43,7 @@ import { ApiSideKeyAnimeType, DisplayedAnimeType, toApiSideKey } from '../enums/
 	templateUrl: './anime-dashboard.component.html',
 	styleUrl: './anime-dashboard.component.css',
 })
-export class AnimeDashboardComponent implements OnInit {
-
+export class AnimeDashboardComponent implements OnInit, OnDestroy {
 	/** Services. */
 	protected filteringTypes = new FormControl<DisplayedAnimeType[] | undefined>(undefined);
 
@@ -75,8 +74,10 @@ export class AnimeDashboardComponent implements OnInit {
 	/** Anime data. */
 	private animeData$ = new Observable<AnimeData>();
 
+	private paginationConfig: PaginationConfig = { pageIndex: 0, pageSize: this.pageSizeOptions[0] };
+
 	/** Pagination subject. */
-	protected paginationSubject$ = new BehaviorSubject<PaginationConfig>({ pageIndex: 0, pageSize: this.pageSizeOptions[0] });
+	protected paginationSubject$ = new BehaviorSubject<PaginationConfig>(this.paginationConfig);
 
 	/** Type Filter subject. */
 	private typeFilterSubject$ = new BehaviorSubject<ApiSideKeyAnimeType[] | undefined>(undefined);
@@ -90,7 +91,7 @@ export class AnimeDashboardComponent implements OnInit {
 	/** Total count of Anime. */
 	protected totalAnimeCount$ = new Observable<number>();
 
-	/** Anime types. */
+	private subscription: Subscription = new Subscription();
 
 	/** @inheritdoc */
 	public ngOnInit(): void {
@@ -130,6 +131,16 @@ export class AnimeDashboardComponent implements OnInit {
 		this.totalAnimeCount$ = this.animeData$.pipe(
 			map(animeList => animeList.totalCount),
 		);
+
+		this.subscription.add(this.typeFilterSubject$.subscribe(() => {
+			this.paginationConfig.pageIndex = 0;
+			this.paginationSubject$.next(this.paginationConfig);
+		}));
+	}
+
+	/** @inheritdoc */
+	public ngOnDestroy(): void {
+		this.subscription.unsubscribe();
 	}
 
 	/**
@@ -138,12 +149,9 @@ export class AnimeDashboardComponent implements OnInit {
 	 */
 	protected handlePageEvent(e: PageEvent): void {
 		// Mapping PageEvent to PaginationConfig.
-		const paginationConfig: PaginationConfig = {
-			pageIndex: e.pageIndex,
-			pageSize: e.pageSize,
-		};
-
-		this.paginationSubject$.next(paginationConfig);
+		this.paginationConfig.pageIndex = e.pageIndex;
+		this.paginationConfig.pageSize = e.pageSize;
+		this.paginationSubject$.next(this.paginationConfig);
 	}
 
 	/**
