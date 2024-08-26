@@ -1,3 +1,5 @@
+import { ApiSideKeyAnimeType } from '../enums/animeType';
+
 import { AiredDto } from './aired.dto';
 
 /** Anime DTO. */
@@ -25,7 +27,7 @@ export type AnimeDto = {
 	readonly aired: AiredDto;
 
 	/** Type. */
-	readonly type: string;
+	readonly type: ApiSideKeyAnimeType;
 
 	/** Status. */
 	readonly status: string;

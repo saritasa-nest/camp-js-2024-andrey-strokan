@@ -1,3 +1,7 @@
+:host ::ng-deep .mdc-text-field--filled:not(.mdc-text-field--disabled) {
+  background-color: white;
+}
+
 .image-container {
   width: 150px;
   height: 150px;
@@ -11,4 +15,23 @@ img {
   max-height: 100%;
   width: auto;
   height: auto;
+}
+
+.filters__controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.filters {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  width: 240px;
+  padding-left: 24px;
+}
+
+.filters__title {
+  font-size: 18px;
+  height: 32px;
 }

@@ -4,6 +4,8 @@ import { Observable } from 'rxjs';
 
 import { map } from 'rxjs/operators';
 
+import { Dictionary } from '@reduxjs/toolkit/dist/entities/models';
+
 import { AnimeData } from '../entities/animeData';
 import { Anime } from '../entities/anime';
 
@@ -11,6 +13,7 @@ import { AllAnimeResponseDto } from '../dto/allAnimeResponse.dto';
 
 import { SortConfig } from '../types/sortConfig';
 import { PaginationConfig } from '../types/paginationConfig';
+import { ApiSideKeyAnimeType } from '../enums/animeType';
 
 /** Anime service. */
 @Injectable({
@@ -28,18 +31,33 @@ export class AnimeService {
 	 * Get all anime request.
 	 * @param sortConfig Sort config.
 	 * @param paginationConfig Pagination config.
+	 * @param typeFilterConfig Type filter config.
 	 */
-	public getAll(sortConfig?: SortConfig, paginationConfig?: PaginationConfig): Observable<AnimeData> {
+	public getAll(sortConfig?: SortConfig,
+		paginationConfig?: PaginationConfig,
+		typeFilterConfig?: ApiSideKeyAnimeType[]): Observable<AnimeData> {
+
 		let params = new HttpParams();
 
+		// Sort.
 		if (sortConfig != null) {
 			params = params.set('ordering', `${sortConfig.sortOrder === 'asc' ? '' : '-'}${sortConfig.sortField}`);
 		}
 
+		// Pagination.
 		if (paginationConfig != null) {
 			params = params.set('limit', paginationConfig.pageSize);
 			params = params.set('offset', paginationConfig.pageIndex * paginationConfig.pageSize);
 		}
+
+		// Filter.
+		if (typeFilterConfig) {
+
+			params = params.set('type__in', typeFilterConfig.join(','));
+		}
+
+		// Search.
+		// ...
 
 		const url = new URL(this.animeEndpoint, this.baseUrl);
 		url.search = params.toString();
@@ -57,7 +75,7 @@ export class AnimeService {
 					status: item.status,
 				} as Anime));
 
-				return { totalCount, pageData };
+				return { totalCount, types: [], pageData };
 			}),
 		);
 	}
