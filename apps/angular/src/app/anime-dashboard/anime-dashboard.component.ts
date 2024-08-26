@@ -45,9 +45,6 @@ import { ApiSideKeyAnimeType, DisplayedAnimeType, toApiSideKey } from '../enums/
 	styleUrl: './anime-dashboard.component.css',
 })
 export class AnimeDashboardComponent implements OnInit, OnDestroy {
-	/** Services. */
-	protected filteringTypes = new FormControl<DisplayedAnimeType[] | undefined>(undefined);
-
 	/** Displayed anime types. */
 	protected readonly displayedAnimeTypes: DisplayedAnimeType[] = [
 		DisplayedAnimeType.TV,
@@ -59,6 +56,12 @@ export class AnimeDashboardComponent implements OnInit, OnDestroy {
 		DisplayedAnimeType.PromotionalVideos,
 		DisplayedAnimeType.Unknown,
 	];
+
+	/** Filtering types Control. */
+	protected filteringTypes = new FormControl<DisplayedAnimeType[] | undefined>(undefined);
+
+	/** Search string Control. */
+	protected searchString = new FormControl<string>('');
 
 	/** Services. */
 	private readonly animeService = inject(AnimeService);
@@ -77,6 +80,7 @@ export class AnimeDashboardComponent implements OnInit, OnDestroy {
 	/** Anime data. */
 	private animeData$ = new Observable<AnimeData>();
 
+	/** Pagination. */
 	private paginationConfig: PaginationConfig = { pageIndex: 0, pageSize: this.pageSizeOptions[0] };
 
 	/** Pagination subject. */
@@ -86,7 +90,7 @@ export class AnimeDashboardComponent implements OnInit, OnDestroy {
 	private typeFilterSubject$ = new BehaviorSubject<ApiSideKeyAnimeType[] | undefined>(undefined);
 
 	/** Search subject. */
-	// protected searchSubject$ = new BehaviorSubject<string>();
+	protected searchSubject$ = new BehaviorSubject<string>('');
 
 	/** Anime list. */
 	protected animeOnPage$ = new Observable<Anime[]>();
@@ -114,7 +118,7 @@ export class AnimeDashboardComponent implements OnInit, OnDestroy {
 	/** @inheritdoc */
 	public ngOnInit(): void {
 
-		this.filteringTypes.valueChanges.subscribe(
+		this.subscription.add(this.filteringTypes.valueChanges.subscribe(
 			() => {
 				if (this.filteringTypes.value == null) {
 					this.typeFilterSubject$.next(undefined);
@@ -124,20 +128,30 @@ export class AnimeDashboardComponent implements OnInit, OnDestroy {
 				const apiKeys = this.filteringTypes.value.map<ApiSideKeyAnimeType>(item => toApiSideKey(item));
 				this.typeFilterSubject$.next(apiKeys);
 			},
-		);
+		));
+
+		this.subscription.add(this.searchString.valueChanges.subscribe(
+			() => {
+				if (this.searchString.value != null) {
+					this.searchSubject$.next(this.searchString.value);
+				}
+			},
+		));
 
 		// Subjects.
 		this.animeData$ = combineLatest([
 			this.sortSubject$,
 			this.paginationSubject$,
 			this.typeFilterSubject$,
+			this.searchSubject$,
 		]).pipe(
 			switchMap(
 				([
 					sortConfig,
 					paginationConfig,
 					typeFilterConfig,
-				]) => this.animeService.getAll(sortConfig, paginationConfig, typeFilterConfig),
+					searchString,
+				]) => this.animeService.getAll(sortConfig, paginationConfig, typeFilterConfig, searchString),
 			),
 			shareReplay({ bufferSize: 1, refCount: true }),
 		);
@@ -150,10 +164,18 @@ export class AnimeDashboardComponent implements OnInit, OnDestroy {
 			map(animeList => animeList.totalCount),
 		);
 
-		this.subscription.add(this.typeFilterSubject$.subscribe(() => {
-			this.paginationConfig.pageIndex = 0;
-			this.paginationSubject$.next(this.paginationConfig);
+		this.subscription.add(this.searchSubject$.subscribe(() => {
+			this.resetPageIndex();
 		}));
+
+		this.subscription.add(this.typeFilterSubject$.subscribe(() => {
+			this.resetPageIndex();
+		}));
+	}
+
+	private resetPageIndex(): void {
+		this.paginationConfig.pageIndex = 0;
+		this.paginationSubject$.next(this.paginationConfig);
 	}
 
 	/** @inheritdoc */

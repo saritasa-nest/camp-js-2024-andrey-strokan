@@ -35,10 +35,12 @@ export class AnimeService {
 	 * @param sortConfig Sort config.
 	 * @param paginationConfig Pagination config.
 	 * @param typeFilterConfig Type filter config.
+	 * @param searchString Search string.
 	 */
 	public getAll(sortConfig?: SortConfig,
 		paginationConfig?: PaginationConfig,
-		typeFilterConfig?: ApiSideKeyAnimeType[]): Observable<AnimeData> {
+		typeFilterConfig?: ApiSideKeyAnimeType[],
+		searchString?: string): Observable<AnimeData> {
 
 		let params = new HttpParams();
 
@@ -55,12 +57,13 @@ export class AnimeService {
 
 		// Filter.
 		if (typeFilterConfig) {
-
 			params = params.set('type__in', typeFilterConfig.join(','));
 		}
 
 		// Search.
-		// ...
+		if (searchString) {
+			params = params.set('search', searchString);
+		}
 
 		const url = new URL(this.animeEndpoint, this.baseUrl);
 		url.search = params.toString();
