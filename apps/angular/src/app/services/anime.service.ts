@@ -17,11 +17,11 @@ import { AnimeDto } from '../dto/anime.dto';
 })
 export class AnimeService {
 
-	private apiUrl = 'https://api.camp-js.saritasa.rocks';
+	private readonly apiUrl = 'https://api.camp-js.saritasa.rocks';
 
-	private allAnimeEndpoint = 'api/v1/anime/anime/';
+	private readonly allAnimeEndpoint = 'api/v1/anime/anime/';
 
-	private httpClient = inject(HttpClient);
+	private readonly httpClient = inject(HttpClient);
 
 	/** Get all anime request. */
 	public getAll(): Observable<Anime[]> {
