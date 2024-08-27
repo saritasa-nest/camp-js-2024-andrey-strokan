@@ -4,25 +4,24 @@ import { Observable } from 'rxjs';
 
 import { map } from 'rxjs/operators';
 
-import { AllAnime } from '../entities/allAnime';
-import { Anime } from '../entities/anime';
+import { AllAnime } from '../entities/all-anime';
 
 import { AnimeMapper } from '../mappers/anime-mapper';
 
-import { PaginationDto } from '../dto/pagination-dto';
+import { PaginationDto } from '../dto/pagination.dto';
 
-import { SortConfig } from '../types/sortConfig';
-import { PaginationConfig } from '../types/paginationConfig';
-import { ApiSideKeyAnimeType } from '../enums/animeType';
-import { AnimeDto } from '../dto/anime-dto';
+import { SortConfig } from '../types/sort-config';
+import { PaginationConfig } from '../types/pagination-config';
+import { ApiSideKeyAnimeType } from '../enums/anime-type';
+import { AnimeDto } from '../dto/anime.dto';
+
+import { environment } from '../../environments/environment';
 
 /** Anime service. */
 @Injectable({
 	providedIn: 'root',
 })
 export class AnimeService {
-
-	private readonly baseUrl = 'https://api.camp-js.saritasa.rocks';
 
 	private readonly animeEndpoint = 'api/v1/anime/anime/';
 
@@ -63,15 +62,13 @@ export class AnimeService {
 			params = params.set('search', searchString);
 		}
 
-		const url = new URL(this.animeEndpoint, this.baseUrl);
+		const url = new URL(this.animeEndpoint, environment.animeApiUrl);
 		url.search = params.toString();
-
-		const animeMapper = new AnimeMapper();
 
 		return this.http.get<PaginationDto<AnimeDto>>(url.toString()).pipe(
 			map(response => {
 				const totalCount = response.count;
-
+				const animeMapper = new AnimeMapper();
 				const pageData = response.results.map(animeDto => animeMapper.fromDto(animeDto));
 
 				return { totalCount, pageData };

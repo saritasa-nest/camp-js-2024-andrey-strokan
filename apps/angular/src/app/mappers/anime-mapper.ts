@@ -1,4 +1,4 @@
-import { AnimeDto } from '../dto/anime-dto';
+import { AnimeDto } from '../dto/anime.dto';
 import { Anime } from '../entities/anime';
 
 import { MapperBase } from './baseClasses/mapper-base';
@@ -33,6 +33,8 @@ export class AnimeMapper extends MapperBase<AnimeDto, Anime> {
 			aired: { start: model.airedStart.toString() },
 			type: model.type,
 			status: model.status,
+			score: 0,
+			user_score: 0,
 			studios: [],
 			genres: [],
 		};

@@ -1,6 +1,6 @@
-import { ApiSideKeyAnimeType } from '../enums/animeType';
+import { ApiSideKeyAnimeType } from '../enums/anime-type';
 
-import { AiredDto } from './aired.dto';
+import { DateRangeDto } from './date-range.dto';
 
 /** Anime DTO. */
 export type AnimeDto = {
@@ -8,37 +8,40 @@ export type AnimeDto = {
 	/** Id. */
 	readonly id: number;
 
-	/** Created. */
+	/** Date and time of record creation. */
 	readonly created: string;
 
-	/** Modified. */
+	/** Date and time of last edit of the entry. */
 	readonly modified: string;
 
-	/** Title english. */
+	/** English title. */
 	readonly title_eng: string;
 
-	/** Title Japan. */
+	/** Japanese title. */
 	readonly title_jpn: string;
 
 	/** Image Url. */
 	readonly image: string;
 
-	/** Aired. */
-	readonly aired: AiredDto;
+	/** When is this anime on air. */
+	readonly aired: DateRangeDto;
 
 	/** Type. */
 	readonly type: ApiSideKeyAnimeType;
 
-	/** Status. */
+	/**
+	 * The current status of the anime.
+	 * It can be Airing, Finished or Not yet aired.
+	 */
 	readonly status: string;
 
-	/** Score. */
+	/** World score of this anime. */
 	readonly score: number | null;
 
-	/** User score. */
+	/** How users rated this broadcast. */
 	readonly user_score: number | null;
 
-	/** Studios. */
+	/** Studios where the broadcast will take place. */
 	readonly studios: string[];
 
 	/** Genres. */

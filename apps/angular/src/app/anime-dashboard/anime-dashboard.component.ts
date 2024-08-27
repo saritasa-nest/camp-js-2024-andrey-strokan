@@ -1,5 +1,5 @@
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
-import { BehaviorSubject, Observable, switchMap, map, tap, shareReplay, combineLatest, Subscription } from 'rxjs';
+import { BehaviorSubject, Observable, switchMap, map, shareReplay, combineLatest, Subscription } from 'rxjs';
 
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
@@ -17,11 +17,11 @@ import { AnimeService } from '../services/anime.service';
 
 import { Anime } from '../entities/anime';
 
-import { AllAnime } from '../entities/allAnime';
+import { AllAnime } from '../entities/all-anime';
 
-import { SortConfig } from '../types/sortConfig';
-import { PaginationConfig } from '../types/paginationConfig';
-import { ApiSideKeyAnimeType, DisplayedAnimeType, toApiSideKey } from '../enums/animeType';
+import { SortConfig } from '../types/sort-config';
+import { PaginationConfig } from '../types/pagination-config';
+import { ApiSideKeyAnimeType, DisplayedAnimeType, toApiSideKey } from '../enums/anime-type';
 
 /** Anime dashboard. */
 @Component({
