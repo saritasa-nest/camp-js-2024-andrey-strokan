@@ -72,6 +72,8 @@ export class AnimeDashboardComponent implements OnInit, OnDestroy {
 
 	private readonly subscriptions = new Subscription();
 
+	private animeData$ = new Observable<AnimeData>();
+
 	/** Filtering types Control. */
 	protected readonly filteringTypes = new FormControl<DisplayedAnimeType[] | undefined>(undefined);
 
@@ -92,10 +94,6 @@ export class AnimeDashboardComponent implements OnInit, OnDestroy {
 
 	/** Total count of Anime. */
 	protected totalAnimeCount$ = new Observable<number>();
-
-	private animeData$ = new Observable<AnimeData>();
-
-	/** Subscriptions. */
 
 	/** @inheritdoc */
 	public ngOnInit(): void {
