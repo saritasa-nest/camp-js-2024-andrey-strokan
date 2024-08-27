@@ -27,7 +27,7 @@ export class AnimeService {
 			map(animeDtoArray => animeDtoArray.map(item => ({
 				imageSourceURL: item.image,
 				titleEnglish: item.title_eng,
-				titleJapan: item.title_jpn,
+				titleJapanese: item.title_jpn,
 				airedStart: new Date(item.aired.start),
 				type: item.type,
 				status: item.status,

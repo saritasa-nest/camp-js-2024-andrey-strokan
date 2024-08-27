@@ -12,10 +12,10 @@ export type AnimeDto = {
 	/** Modified. */
 	readonly modified: string;
 
-	/** Title english. */
+	/** Title English. */
 	readonly title_eng: string;
 
-	/** Title Japan. */
+	/** Title Japanese. */
 	readonly title_jpn: string;
 
 	/** Image Url. */

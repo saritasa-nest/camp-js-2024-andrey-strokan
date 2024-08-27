@@ -7,8 +7,8 @@ export type Anime = {
 	/** Title english. */
 	titleEnglish: string;
 
-	/** Title Japan. */
-	titleJapan: string;
+	/** Title Japanese. */
+	titleJapanese: string;
 
 	/** Aired start. */
 	airedStart: Date;
