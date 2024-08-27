@@ -1,5 +1,7 @@
 import { ApiSideKeyAnimeType } from '../enums/anime-type';
 
+import { DateRangeDto } from './date-range.dto';
+
 /** Anime DTO. */
 export type AnimeDto = {
 
@@ -25,7 +27,6 @@ export type AnimeDto = {
 	readonly aired: DateRangeDto;
 
 	/** Type. */
-	readonly type: string;
 	readonly type: ApiSideKeyAnimeType;
 
 	/**

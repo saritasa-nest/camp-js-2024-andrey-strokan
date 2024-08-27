@@ -6,7 +6,7 @@ import { map } from 'rxjs/operators';
 
 import { AllAnime } from '../entities/all-anime';
 
-import { AnimeMapper } from '../mappers/anime-mapper';
+import { AnimeMapper } from '../mappers/anime.mapper';
 
 import { PaginationDto } from '../dto/pagination.dto';
 
