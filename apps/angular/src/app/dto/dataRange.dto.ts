@@ -1,5 +1,5 @@
-/** Aired type. */
-export type AiredDto = {
+/** Data range type. */
+export type DataRangeDto = {
 
 	/** Start. */
 	readonly start: string;
