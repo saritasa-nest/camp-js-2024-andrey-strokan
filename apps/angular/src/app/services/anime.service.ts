@@ -4,16 +4,17 @@ import { Observable } from 'rxjs';
 
 import { map } from 'rxjs/operators';
 
-import { Dictionary } from '@reduxjs/toolkit/dist/entities/models';
-
-import { AnimeData } from '../entities/animeData';
+import { AllAnime } from '../entities/allAnime';
 import { Anime } from '../entities/anime';
 
-import { AllAnimeResponseDto } from '../dto/allAnimeResponse.dto';
+import { AnimeMapper } from '../mappers/anime-mapper';
+
+import { PaginationDto } from '../dto/pagination-dto';
 
 import { SortConfig } from '../types/sortConfig';
 import { PaginationConfig } from '../types/paginationConfig';
 import { ApiSideKeyAnimeType } from '../enums/animeType';
+import { AnimeDto } from '../dto/anime-dto';
 
 /** Anime service. */
 @Injectable({
@@ -37,7 +38,7 @@ export class AnimeService {
 	public getAll(sortConfig?: SortConfig,
 		paginationConfig?: PaginationConfig,
 		typeFilterConfig?: ApiSideKeyAnimeType[],
-		searchString?: string): Observable<AnimeData> {
+		searchString?: string): Observable<AllAnime> {
 
 		let params = new HttpParams();
 
@@ -65,20 +66,15 @@ export class AnimeService {
 		const url = new URL(this.animeEndpoint, this.baseUrl);
 		url.search = params.toString();
 
-		return this.http.get<AllAnimeResponseDto>(url.toString()).pipe(
+		const animeMapper = new AnimeMapper();
+
+		return this.http.get<PaginationDto<AnimeDto>>(url.toString()).pipe(
 			map(response => {
 				const totalCount = response.count;
 
-				const pageData = response.results.map(item => ({
-					imageSourceURL: item.image,
-					titleEnglish: item.title_eng,
-					titleJapan: item.title_jpn,
-					airedStart: new Date(item.aired.start),
-					type: item.type,
-					status: item.status,
-				} as Anime));
+				const pageData = response.results.map(animeDto => animeMapper.fromDto(animeDto));
 
-				return { totalCount, types: [], pageData };
+				return { totalCount, pageData };
 			}),
 		);
 	}

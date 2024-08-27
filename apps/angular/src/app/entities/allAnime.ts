@@ -1,13 +1,10 @@
 import { Anime } from './anime';
 
-/** Anime data. */
-export type AnimeData = {
+/** All Anime. */
+export type AllAnime = {
 
 	/** Anime total count. */
 	totalCount: number;
-
-	/** Types. */
-	types: string[];
 
 	/** Page's anime list. */
 	pageData: Anime[];

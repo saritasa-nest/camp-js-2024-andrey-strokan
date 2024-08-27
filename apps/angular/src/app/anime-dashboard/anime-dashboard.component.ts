@@ -17,7 +17,7 @@ import { AnimeService } from '../services/anime.service';
 
 import { Anime } from '../entities/anime';
 
-import { AnimeData } from '../entities/animeData';
+import { AllAnime } from '../entities/allAnime';
 
 import { SortConfig } from '../types/sortConfig';
 import { PaginationConfig } from '../types/paginationConfig';
@@ -75,7 +75,7 @@ export class AnimeDashboardComponent implements OnInit, OnDestroy {
 	private sortSubject$ = new BehaviorSubject<SortConfig | undefined>(undefined);
 
 	/** Anime data. */
-	private animeData$ = new Observable<AnimeData>();
+	private animeData$ = new Observable<AllAnime>();
 
 	/** Pagination. */
 	private paginationConfig: PaginationConfig = { pageIndex: 0, pageSize: this.pageSizeOptions[0] };
@@ -193,5 +193,15 @@ export class AnimeDashboardComponent implements OnInit, OnDestroy {
 		};
 
 		this.sortSubject$.next(sortConfig);
+	}
+
+	/**
+	 * Serves to optimize the redrawing of table elements.
+	 * @param _index Anime index.
+	 * @param anime Anime.
+	 * @returns Anime's id.
+	 */
+	protected trackAnimeById(_index: number, anime: Anime): number {
+		return anime.id;
 	}
 }
