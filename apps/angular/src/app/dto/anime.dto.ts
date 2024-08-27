@@ -1,7 +1,6 @@
-import { DateRangeDto } from './date-range.dto';
 import { ApiSideKeyAnimeType } from '../enums/animeType';
 
-import { AiredDto } from './aired.dto';
+import { DateRangeDto } from './date-range.dto';
 
 /** Anime DTO. */
 export type AnimeDto = {

@@ -1,3 +1,5 @@
+import { ApiSideKeyAnimeType } from '../enums/animeType';
+
 /** Anime. */
 export type Anime = {
 
@@ -17,7 +19,7 @@ export type Anime = {
 	readonly airedStart: Date;
 
 	/** Type. */
-	readonly type: string;
+	readonly type: ApiSideKeyAnimeType;
 
 	/** Status. */
 	readonly status: string;

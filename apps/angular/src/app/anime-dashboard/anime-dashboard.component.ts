@@ -1,5 +1,5 @@
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
-import { BehaviorSubject, Observable, switchMap, map, tap, shareReplay, combineLatest, Subscription } from 'rxjs';
+import { BehaviorSubject, Observable, switchMap, map, shareReplay, combineLatest, Subscription } from 'rxjs';
 
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
@@ -14,8 +14,6 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSortModule, Sort } from '@angular/material/sort';
 
 import { AnimeService } from '../services/anime.service';
-import { Anime } from '../entities/anime';
-
 import { Anime } from '../entities/anime';
 
 import { AnimeData } from '../entities/animeData';
@@ -45,6 +43,7 @@ import { ApiSideKeyAnimeType, DisplayedAnimeType, toApiSideKey } from '../enums/
 	styleUrl: './anime-dashboard.component.css',
 })
 export class AnimeDashboardComponent implements OnInit, OnDestroy {
+
 	/** Displayed anime types. */
 	protected readonly displayedAnimeTypes: DisplayedAnimeType[] = [
 		DisplayedAnimeType.TV,
@@ -55,7 +54,7 @@ export class AnimeDashboardComponent implements OnInit, OnDestroy {
 		DisplayedAnimeType.Music,
 		DisplayedAnimeType.PromotionalVideos,
 		DisplayedAnimeType.Unknown,
-	];
+	] as const;
 
 	/** Filtering types Control. */
 	protected filteringTypes = new FormControl<DisplayedAnimeType[] | undefined>(undefined);
@@ -69,8 +68,6 @@ export class AnimeDashboardComponent implements OnInit, OnDestroy {
 	/** Displayed columns. */
 	protected readonly displayedColumns = ['imageSourceURL', 'titleEnglish', 'titleJapanese', 'airedStart', 'type', 'status'] as const;
 
-	/** All anime. */
-	protected readonly allAnime$ = this.animeService.getAll();
 	/** Page sizes. */
 	protected readonly pageSizeOptions = [5, 10, 25];
 
@@ -78,7 +75,7 @@ export class AnimeDashboardComponent implements OnInit, OnDestroy {
 	private sortSubject$ = new BehaviorSubject<SortConfig | undefined>(undefined);
 
 	/** Anime data. */
-	private animeData$ = new Observable<AnimeData>();
+	protected animeData$ = new Observable<AnimeData>();
 
 	/** Pagination. */
 	private paginationConfig: PaginationConfig = { pageIndex: 0, pageSize: this.pageSizeOptions[0] };
@@ -99,15 +96,6 @@ export class AnimeDashboardComponent implements OnInit, OnDestroy {
 	protected totalAnimeCount$ = new Observable<number>();
 
 	private subscription: Subscription = new Subscription();
-	/**
-	 * Serves to optimize the redrawing of table elements.
-	 * @param _index Anime index.
-	 * @param anime Anime.
-	 * @returns Anime's id.
-	 */
-	protected trackAnimeById(_index: number, anime: Anime): number {
-		return anime.id;
-	}
 
 	/** Anime list. */
 	protected animeCount$ = new Observable<number>();
@@ -211,5 +199,15 @@ export class AnimeDashboardComponent implements OnInit, OnDestroy {
 		};
 
 		this.sortSubject$.next(sortConfig);
+	}
+
+	/**
+	 * Serves to optimize the redrawing of table elements.
+	 * @param _index Anime index.
+	 * @param anime Anime.
+	 * @returns Anime's id.
+	 */
+	protected trackAnimeById(_index: number, anime: Anime): number {
+		return anime.id;
 	}
 }

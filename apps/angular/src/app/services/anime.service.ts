@@ -8,10 +8,11 @@ import { environment } from '../../environments/environment';
 
 import { AnimeMapper } from '../mappers/anime.mapper';
 
-import { AnimeList } from '../entities/animeList';
+import { PaginationDto } from '../dto/pagination.dto';
+
+import { AnimeData } from '../entities/animeData';
 import { Anime } from '../entities/anime';
 
-import { PaginationDto } from '../dto/pagination.dto';
 import { AnimeDto } from '../dto/anime.dto';
 
 import { SortConfig } from '../types/sortConfig';
@@ -27,8 +28,6 @@ export class AnimeService {
 	private readonly allAnimeEndpoint = 'api/v1/anime/anime/';
 
 	private readonly httpClient = inject(HttpClient);
-
-	private readonly http = inject(HttpClient);
 
 	/**
 	 * Get all anime request.
@@ -65,26 +64,16 @@ export class AnimeService {
 			params = params.set('search', searchString);
 		}
 
-		const url = new URL(this.animeEndpoint, this.baseUrl);
+		const url = new URL(this.allAnimeEndpoint, environment.animeApiUrl);
 		url.search = params.toString();
 
-		return this.http.get<AllAnimeResponseDto>(url.toString()).pipe(
+		return this.httpClient.get<PaginationDto<AnimeDto>>(url.toString()).pipe(
 			map(response => {
 				const totalCount = response.count;
-
-				const pageData = response.results.map(item => ({
-					imageSourceURL: item.image,
-					titleEnglish: item.title_eng,
-					titleJapan: item.title_jpn,
-					airedStart: new Date(item.aired.start),
-					type: item.type,
-					status: item.status,
-				} as Anime));
-
-				return { totalCount, types: [], pageData };
+				const animeMapper = new AnimeMapper();
+				const pageData = response.results.map(animeDto => animeMapper.fromDto(animeDto));
+				return { totalCount, pageData };
 			}),
-			map(response => response.results),
-			map(animeDtoArray => animeDtoArray.map(item => animeMapper.fromDto(item))),
 		);
 	}
 }
