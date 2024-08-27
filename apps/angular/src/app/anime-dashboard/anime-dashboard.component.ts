@@ -9,8 +9,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-
+import { AnimeService } from '../services/anime-service';
 import { MatSortModule, Sort } from '@angular/material/sort';
 
 import { AnimeService } from '../services/anime.service';

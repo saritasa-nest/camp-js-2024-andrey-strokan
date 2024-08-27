@@ -1,7 +1,5 @@
 import { ApiSideKeyAnimeType } from '../enums/anime-type';
 
-import { DateRangeDto } from './date-range.dto';
-
 /** Anime DTO. */
 export type AnimeDto = {
 
@@ -20,13 +18,14 @@ export type AnimeDto = {
 	/** Japanese title. */
 	readonly title_jpn: string;
 
-	/** Image Url. */
+	/** Image URL. */
 	readonly image: string;
 
 	/** When is this anime on air. */
 	readonly aired: DateRangeDto;
 
 	/** Type. */
+	readonly type: string;
 	readonly type: ApiSideKeyAnimeType;
 
 	/**
@@ -36,10 +35,10 @@ export type AnimeDto = {
 	readonly status: string;
 
 	/** World score of this anime. */
-	readonly score: number | null;
+	readonly score?: number;
 
 	/** How users rated this broadcast. */
-	readonly user_score: number | null;
+	readonly user_score?: number;
 
 	/** Studios where the broadcast will take place. */
 	readonly studios: string[];
