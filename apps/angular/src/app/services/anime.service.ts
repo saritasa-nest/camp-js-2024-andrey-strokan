@@ -25,6 +25,7 @@ export class AnimeService {
 		return this.http.get<AllAnimeResponseDto>(`${this.apiUrl}/${this.allAnimeEndpoint}`).pipe(
 			map(response => response.results),
 			map(animeDtoArray => animeDtoArray.map(item => ({
+				id: item.id,
 				imageSourceURL: item.image,
 				titleEnglish: item.title_eng,
 				titleJapanese: item.title_jpn,

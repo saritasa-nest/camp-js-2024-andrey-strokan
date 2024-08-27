@@ -1,4 +1,4 @@
-<table mat-table [dataSource]="(allAnime$ | async) ?? []">
+<table mat-table [dataSource]="(allAnime$ | async) ?? []" [trackBy]="trackAnimeById">
 	<!-- Image -->
 	<ng-container matColumnDef="imageSourceURL">
 		<th mat-header-cell *matHeaderCellDef>Image</th>

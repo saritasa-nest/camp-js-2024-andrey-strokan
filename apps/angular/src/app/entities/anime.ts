@@ -1,6 +1,9 @@
 /** Anime. */
 export type Anime = {
 
+	/** Id. */
+	id: number;
+
 	/** Image source. */
 	imageSourceURL: string;
 
