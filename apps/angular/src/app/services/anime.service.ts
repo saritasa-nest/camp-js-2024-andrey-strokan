@@ -6,7 +6,8 @@ import { map } from 'rxjs/operators';
 
 import { Anime } from '../entities/anime';
 
-import { AllAnimeResponseDto } from '../dto/allAnimeResponse.dto';
+import { PaginatedDataDto } from '../dto/paginatedData.dto';
+import { AnimeDto } from '../dto/anime.dto';
 
 /** Anime service. */
 @Injectable({
@@ -22,7 +23,7 @@ export class AnimeService {
 
 	/** Get all anime request. */
 	public getAll(): Observable<Anime[]> {
-		return this.http.get<AllAnimeResponseDto>(`${this.apiUrl}/${this.allAnimeEndpoint}`).pipe(
+		return this.http.get<PaginatedDataDto<AnimeDto>>(`${this.apiUrl}/${this.allAnimeEndpoint}`).pipe(
 			map(response => response.results),
 			map(animeDtoArray => animeDtoArray.map(item => ({
 				id: item.id,
