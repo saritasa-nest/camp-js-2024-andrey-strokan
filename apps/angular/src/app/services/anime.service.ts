@@ -33,7 +33,7 @@ export class AnimeService {
 				airedStart: new Date(item.aired.start),
 				type: item.type,
 				status: item.status,
-			} as Anime))),
+			}))),
 		);
 	}
 }
