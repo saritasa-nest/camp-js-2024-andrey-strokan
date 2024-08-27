@@ -12,13 +12,13 @@ export type AnimeDto = {
 	/** Date and time of last edit of the entry. */
 	readonly modified: string;
 
-	/** Title English. */
+	/** English title. */
 	readonly title_eng: string;
 
-	/** Title Japanese. */
+	/** Japanese title. */
 	readonly title_jpn: string;
 
-	/** Image Url. */
+	/** Image URL. */
 	readonly image: string;
 
 	/** When is this anime on air. */
@@ -27,13 +27,16 @@ export type AnimeDto = {
 	/** Type. */
 	readonly type: string;
 
-	/** Status. */
+	/**
+	 * The current status of the anime.
+	 * It can be Airing, Finished or Not yet aired.
+	 */
 	readonly status: string;
 
-	/** Score. */
+	/** World score of this anime. */
 	readonly score?: number;
 
-	/** User score. */
+	/** How users rated this broadcast. */
 	readonly user_score?: number;
 
 	/** Studios where the broadcast will take place. */
