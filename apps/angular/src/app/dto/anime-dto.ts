@@ -1,4 +1,4 @@
-import { DataRangeDto } from './data-range-dto';
+import { DateRangeDto } from './date-range-dto';
 
 /** Anime DTO. */
 export type AnimeDto = {
@@ -22,7 +22,7 @@ export type AnimeDto = {
 	readonly image: string;
 
 	/** When is this anime on air. */
-	readonly aired: DataRangeDto;
+	readonly aired: DateRangeDto;
 
 	/** Type. */
 	readonly type: string;

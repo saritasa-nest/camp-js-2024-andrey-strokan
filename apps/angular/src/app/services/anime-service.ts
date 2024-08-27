@@ -10,7 +10,7 @@ import { AnimeMapper } from '../mappers/anime-mapper';
 
 import { Anime } from '../entities/anime';
 
-import { PaginatedDataDto } from '../dto/paginated-data.dto';
+import { PaginationDto } from '../dto/pagination-dto';
 import { AnimeDto } from '../dto/anime-dto';
 
 /** Anime service. */
@@ -26,7 +26,7 @@ export class AnimeService {
 	/** Get all anime request. */
 	public getAll(): Observable<Anime[]> {
 		const animeMapper = new AnimeMapper();
-		return this.httpClient.get<PaginatedDataDto<AnimeDto>>(`${environment.animeApiUrl}/${this.allAnimeEndpoint}`).pipe(
+		return this.httpClient.get<PaginationDto<AnimeDto>>(`${environment.animeApiUrl}/${this.allAnimeEndpoint}`).pipe(
 			map(response => response.results),
 			map(animeDtoArray => animeDtoArray.map(item => animeMapper.fromDto(item))),
 		);

@@ -1,5 +1,5 @@
-/** Paginated data DTO. */
-export type PaginatedDataDto<T> = {
+/** Pagination DTO. */
+export type PaginationDto<T> = {
 
 	/** Count. */
 	readonly count: number;
