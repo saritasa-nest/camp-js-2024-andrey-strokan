@@ -4,6 +4,8 @@ import { Observable } from 'rxjs';
 
 import { map } from 'rxjs/operators';
 
+import { environment } from '../../environments/environment';
+
 import { AnimeMapper } from '../mappers/anime-mapper';
 
 import { Anime } from '../entities/anime';
@@ -17,8 +19,6 @@ import { AnimeDto } from '../dto/anime-dto';
 })
 export class AnimeService {
 
-	private readonly apiUrl = 'https://api.camp-js.saritasa.rocks';
-
 	private readonly allAnimeEndpoint = 'api/v1/anime/anime/';
 
 	private readonly httpClient = inject(HttpClient);
@@ -26,7 +26,7 @@ export class AnimeService {
 	/** Get all anime request. */
 	public getAll(): Observable<Anime[]> {
 		const animeMapper = new AnimeMapper();
-		return this.httpClient.get<PaginatedDataDto<AnimeDto>>(`${this.apiUrl}/${this.allAnimeEndpoint}`).pipe(
+		return this.httpClient.get<PaginatedDataDto<AnimeDto>>(`${environment.animeApiUrl}/${this.allAnimeEndpoint}`).pipe(
 			map(response => response.results),
 			map(animeDtoArray => animeDtoArray.map(item => animeMapper.fromDto(item))),
 		);

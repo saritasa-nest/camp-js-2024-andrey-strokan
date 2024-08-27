@@ -5,6 +5,7 @@
 /** Default environment configuration. */
 export const environment = {
 	production: false,
+	animeApiUrl: 'https://api.camp-js.saritasa.rocks',
 };
 
 /*
