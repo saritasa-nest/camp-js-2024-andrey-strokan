@@ -4,6 +4,8 @@ import { Observable } from 'rxjs';
 
 import { map } from 'rxjs/operators';
 
+import { AnimeMapper } from '../mappers/animeMapper';
+
 import { Anime } from '../entities/anime';
 
 import { PaginatedDataDto } from '../dto/paginatedData.dto';
@@ -23,17 +25,10 @@ export class AnimeService {
 
 	/** Get all anime request. */
 	public getAll(): Observable<Anime[]> {
+		const animeMapper = new AnimeMapper();
 		return this.http.get<PaginatedDataDto<AnimeDto>>(`${this.apiUrl}/${this.allAnimeEndpoint}`).pipe(
 			map(response => response.results),
-			map(animeDtoArray => animeDtoArray.map(item => ({
-				id: item.id,
-				imageSourceURL: item.image,
-				titleEnglish: item.title_eng,
-				titleJapanese: item.title_jpn,
-				airedStart: new Date(item.aired.start),
-				type: item.type,
-				status: item.status,
-			}))),
+			map(animeDtoArray => animeDtoArray.map(item => animeMapper.fromDto(item))),
 		);
 	}
 }
