@@ -11,7 +11,6 @@ import { AnimeMapper } from '../mappers/anime.mapper';
 import { PaginationDto } from '../dto/pagination.dto';
 
 import { AnimeData } from '../entities/animeData';
-import { Anime } from '../entities/anime';
 
 import { AnimeDto } from '../dto/anime.dto';
 
