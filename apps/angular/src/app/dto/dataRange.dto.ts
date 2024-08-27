@@ -5,5 +5,5 @@ export type DataRangeDto = {
 	readonly start: string;
 
 	/** End. */
-	readonly end: string | null;
+	readonly end?: string;
 };

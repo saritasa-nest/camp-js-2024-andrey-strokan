@@ -7,10 +7,10 @@ export type AllAnimeResponseDto = {
 	readonly count: number;
 
 	/** Next. */
-	readonly next: string | null;
+	readonly next?: string;
 
 	/** Previous. */
-	readonly previous: string | null;
+	readonly previous?: string;
 
 	/** Results. */
 	readonly results: AnimeDto[];

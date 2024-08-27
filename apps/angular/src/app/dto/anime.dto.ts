@@ -31,10 +31,10 @@ export type AnimeDto = {
 	readonly status: string;
 
 	/** Score. */
-	readonly score: number | null;
+	readonly score?: number;
 
 	/** User score. */
-	readonly user_score: number | null;
+	readonly user_score?: number;
 
 	/** Studios. */
 	readonly studios: string[];
