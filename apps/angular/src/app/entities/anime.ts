@@ -2,23 +2,23 @@
 export type Anime = {
 
 	/** Id. */
-	id: number;
+	readonly id: number;
 
 	/** Image source. */
-	imageSourceURL: string;
+	readonly imageSourceURL: string;
 
 	/** Title english. */
-	titleEnglish: string;
+	readonly titleEnglish: string;
 
 	/** Title Japanese. */
-	titleJapanese: string;
+	readonly titleJapanese: string;
 
 	/** Aired start. */
-	airedStart: Date;
+	readonly airedStart: Date;
 
 	/** Type. */
-	type: string;
+	readonly type: string;
 
 	/** Status. */
-	status: string;
+	readonly status: string;
 };
