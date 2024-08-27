@@ -56,57 +56,51 @@ export class AnimeDashboardComponent implements OnInit, OnDestroy {
 		DisplayedAnimeType.Unknown,
 	] as const;
 
-	/** Filtering types Control. */
-	protected filteringTypes = new FormControl<DisplayedAnimeType[] | undefined>(undefined);
-
-	/** Search string Control. */
-	protected searchString = new FormControl<string>('');
-
-	/** Services. */
-	private readonly animeService = inject(AnimeService);
+	/** Page sizes. */
+	protected readonly pageSizeOptions = [5, 10, 25] as const;
 
 	/** Displayed columns. */
 	protected readonly displayedColumns = ['imageSourceURL', 'titleEnglish', 'titleJapanese', 'airedStart', 'type', 'status'] as const;
 
-	/** Page sizes. */
-	protected readonly pageSizeOptions = [5, 10, 25];
+	private readonly animeService = inject(AnimeService);
 
-	/** Subjects. */
-	private sortSubject$ = new BehaviorSubject<SortConfig | undefined>(undefined);
+	private readonly sortSubject$ = new BehaviorSubject<SortConfig | undefined>(undefined);
 
-	/** Anime data. */
-	protected animeData$ = new Observable<AnimeData>();
+	private readonly paginationConfig: PaginationConfig = { pageIndex: 0, pageSize: this.pageSizeOptions[0] };
 
-	/** Pagination. */
-	private paginationConfig: PaginationConfig = { pageIndex: 0, pageSize: this.pageSizeOptions[0] };
+	private readonly typeFilterSubject$ = new BehaviorSubject<ApiSideKeyAnimeType[] | undefined>(undefined);
+
+	private readonly subscriptions = new Subscription();
+
+	/** Filtering types Control. */
+	protected readonly filteringTypes = new FormControl<DisplayedAnimeType[] | undefined>(undefined);
+
+	/** Search string Control. */
+	protected readonly searchString = new FormControl<string>('');
 
 	/** Pagination subject. */
-	protected paginationSubject$ = new BehaviorSubject<PaginationConfig>(this.paginationConfig);
-
-	/** Type Filter subject. */
-	private typeFilterSubject$ = new BehaviorSubject<ApiSideKeyAnimeType[] | undefined>(undefined);
+	protected readonly paginationSubject$ = new BehaviorSubject<PaginationConfig>(this.paginationConfig);
 
 	/** Search subject. */
-	protected searchSubject$ = new BehaviorSubject<string>('');
+	protected readonly searchSubject$ = new BehaviorSubject<string>('');
 
-	/** Anime list. */
+	/** Anime count. */
+	protected readonly animeCount$ = new Observable<number>();
+
+	/** Anime list on page. */
 	protected animeOnPage$ = new Observable<Anime[]>();
 
 	/** Total count of Anime. */
 	protected totalAnimeCount$ = new Observable<number>();
 
-	private subscription: Subscription = new Subscription();
-
-	/** Anime list. */
-	protected animeCount$ = new Observable<number>();
+	private animeData$ = new Observable<AnimeData>();
 
 	/** Subscriptions. */
-	private subscriptions = new Subscription();
 
 	/** @inheritdoc */
 	public ngOnInit(): void {
 
-		this.subscription.add(this.filteringTypes.valueChanges.subscribe(
+		this.subscriptions.add(this.filteringTypes.valueChanges.subscribe(
 			() => {
 				if (this.filteringTypes.value == null) {
 					this.typeFilterSubject$.next(undefined);
@@ -118,7 +112,7 @@ export class AnimeDashboardComponent implements OnInit, OnDestroy {
 			},
 		));
 
-		this.subscription.add(this.searchString.valueChanges.subscribe(
+		this.subscriptions.add(this.searchString.valueChanges.subscribe(
 			() => {
 				if (this.searchString.value != null) {
 					this.searchSubject$.next(this.searchString.value);
@@ -152,11 +146,11 @@ export class AnimeDashboardComponent implements OnInit, OnDestroy {
 			map(animeList => animeList.totalCount),
 		);
 
-		this.subscription.add(this.searchSubject$.subscribe(() => {
+		this.subscriptions.add(this.searchSubject$.subscribe(() => {
 			this.resetPageIndex();
 		}));
 
-		this.subscription.add(this.typeFilterSubject$.subscribe(() => {
+		this.subscriptions.add(this.typeFilterSubject$.subscribe(() => {
 			this.resetPageIndex();
 		}));
 	}
@@ -168,7 +162,7 @@ export class AnimeDashboardComponent implements OnInit, OnDestroy {
 
 	/** @inheritdoc */
 	public ngOnDestroy(): void {
-		this.subscription.unsubscribe();
+		this.subscriptions.unsubscribe();
 	}
 
 	/**
