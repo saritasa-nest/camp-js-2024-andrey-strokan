@@ -6,12 +6,12 @@ import { map } from 'rxjs/operators';
 
 import { environment } from '../../environments/environment';
 
-import { AnimeMapper } from '../mappers/anime-mapper';
+import { AnimeMapper } from '../mappers/anime.mapper';
 
 import { Anime } from '../entities/anime';
 
-import { PaginationDto } from '../dto/pagination-dto';
-import { AnimeDto } from '../dto/anime-dto';
+import { PaginationDto } from '../dto/pagination.dto';
+import { AnimeDto } from '../dto/anime.dto';
 
 /** Anime service. */
 @Injectable({
