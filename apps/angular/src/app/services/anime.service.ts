@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
@@ -21,12 +21,12 @@ export class AnimeService {
 
 	private allAnimeEndpoint = 'api/v1/anime/anime/';
 
-	public constructor(private http: HttpClient) {}
+	private httpClient = inject(HttpClient);
 
 	/** Get all anime request. */
 	public getAll(): Observable<Anime[]> {
 		const animeMapper = new AnimeMapper();
-		return this.http.get<PaginatedDataDto<AnimeDto>>(`${this.apiUrl}/${this.allAnimeEndpoint}`).pipe(
+		return this.httpClient.get<PaginatedDataDto<AnimeDto>>(`${this.apiUrl}/${this.allAnimeEndpoint}`).pipe(
 			map(response => response.results),
 			map(animeDtoArray => animeDtoArray.map(item => animeMapper.fromDto(item))),
 		);
