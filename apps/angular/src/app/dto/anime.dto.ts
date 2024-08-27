@@ -6,10 +6,10 @@ export type AnimeDto = {
 	/** Id. */
 	readonly id: number;
 
-	/** Created. */
+	/** Date and time of record creation. */
 	readonly created: string;
 
-	/** Modified. */
+	/** Date and time of last edit of the entry. */
 	readonly modified: string;
 
 	/** Title English. */
@@ -21,7 +21,7 @@ export type AnimeDto = {
 	/** Image Url. */
 	readonly image: string;
 
-	/** Aired. */
+	/** When is this anime on air. */
 	readonly aired: DataRangeDto;
 
 	/** Type. */
@@ -36,7 +36,7 @@ export type AnimeDto = {
 	/** User score. */
 	readonly user_score?: number;
 
-	/** Studios. */
+	/** Studios where the broadcast will take place. */
 	readonly studios: string[];
 
 	/** Genres. */
