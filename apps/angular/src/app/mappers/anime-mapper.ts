@@ -1,7 +1,7 @@
-import { AnimeDto } from '../dto/anime.dto';
+import { AnimeDto } from '../dto/anime-dto';
 import { Anime } from '../entities/anime';
 
-import { MapperBase } from './baseClasses/mapperBase';
+import { MapperBase } from './baseClasses/mapper-base';
 
 /**
  * Anime mapper.

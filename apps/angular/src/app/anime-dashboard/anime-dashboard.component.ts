@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { MatTableModule } from '@angular/material/table';
 
-import { AnimeService } from '../services/anime.service';
+import { AnimeService } from '../services/anime-service';
 import { Anime } from '../entities/anime';
 
 /** Anime dashboard. */

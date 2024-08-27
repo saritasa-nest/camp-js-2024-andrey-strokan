@@ -4,12 +4,12 @@ import { Observable } from 'rxjs';
 
 import { map } from 'rxjs/operators';
 
-import { AnimeMapper } from '../mappers/animeMapper';
+import { AnimeMapper } from '../mappers/anime-mapper';
 
 import { Anime } from '../entities/anime';
 
-import { PaginatedDataDto } from '../dto/paginatedData.dto';
-import { AnimeDto } from '../dto/anime.dto';
+import { PaginatedDataDto } from '../dto/paginated-data.dto';
+import { AnimeDto } from '../dto/anime-dto';
 
 /** Anime service. */
 @Injectable({

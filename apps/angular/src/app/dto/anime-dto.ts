@@ -1,4 +1,4 @@
-import { DataRangeDto } from './dataRange.dto';
+import { DataRangeDto } from './data-range-dto';
 
 /** Anime DTO. */
 export type AnimeDto = {
