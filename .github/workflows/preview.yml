@@ -12,24 +12,24 @@ concurrency: preview-${{ github.ref }}
 
 jobs:
   deploy-preview:
-    runs-on: saritasa-rocks-eks
+    runs-on: ubuntu-latest
     steps:
-    - name: Check out repository code
-      uses: actions/checkout@v3
+      - name: Check out repository code
+        uses: actions/checkout@v3
 
-    - name: Install nodejs
-      uses: actions/setup-node@v3
-      with:
-        node-version: ">=20.15.0"
+      - name: Install nodejs
+        uses: actions/setup-node@v3
+        with:
+          node-version-file: "/package.json"
 
-    - name: Install and Build
-      run: |
-        npm ci
-        PR_NUMBER=$(echo $GITHUB_REF | awk 'BEGIN { FS = "/" } ; { print $3 }')
-        REPO_NAME=saritasa-frontend-boilerplate-camp
-        npm run vanilla:build
+      - name: Install and Build
+        run: |
+          npm ci
+          PR_NUMBER=$(echo $GITHUB_REF | awk 'BEGIN { FS = "/" } ; { print $3 }')
+          REPO_NAME=camp-js-2024-maxim-sherstkov
+          npm run react:build -- --base=/$REPO_NAME/pr-preview/pr-$PR_NUMBER/
 
-    - name: Deploy preview
-      uses: rossjrw/pr-preview-action@v1
-      with:
-        source-dir: dist/apps/vanilla
+      - name: Deploy preview
+        uses: rossjrw/pr-preview-action@v1
+        with:
+          source-dir: dist/apps/react
