@@ -1,0 +1,42 @@
+@import url("colors.css");
+
+.game-view {
+  width: 600px;
+  height: 800px;
+  margin: auto;
+}
+
+.debug-info {
+  border-bottom: 2px solid black;
+  border-top: 2px solid black;
+}
+
+.debug-info__name,
+.debug-info__name-score-separator,
+.debug-info__current-score {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  text-align: center;
+}
+
+.debug-info__dice-history {
+  display: flex;
+  align-items: center;
+  height: 24px;
+  gap: 8px;
+}
+
+.debug-info__dice-value {
+  margin: 0;
+}
+
+.debug-info__general-info {
+  display: flex;
+  height: 24px;
+  gap: 8px;
+}
+
+.players {
+  margin-top: 24px;
+}
