@@ -23,12 +23,13 @@ export class AnimeService {
 
 	private readonly httpClient = inject(HttpClient);
 
+	private readonly animeMapper = inject(AnimeMapper);
+
 	/** Get all anime request. */
 	public getAll(): Observable<Anime[]> {
-		const animeMapper = new AnimeMapper();
 		return this.httpClient.get<PaginationDto<AnimeDto>>(`${environment.animeApiUrl}/${this.allAnimeEndpoint}`).pipe(
 			map(response => response.results),
-			map(animeDtoArray => animeDtoArray.map(item => animeMapper.fromDto(item))),
+			map(animeDtoArray => animeDtoArray.map(item => this.animeMapper.fromDto(item))),
 		);
 	}
 }
