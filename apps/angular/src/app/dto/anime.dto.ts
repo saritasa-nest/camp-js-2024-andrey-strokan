@@ -9,7 +9,10 @@ export type AnimeDto = {
 	/** Id. */
 	readonly id: number;
 
-	/** Date and time of record creation. */
+	/**
+	 * Date and time of record creation.
+	 * @example 2024-08-01
+	 */
 	readonly created: string;
 
 	/** Date and time of last edit of the entry. */
