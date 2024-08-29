@@ -1,3 +1,6 @@
+import { AnimeStatus } from '../enums/anime-status';
+import { AnimeType } from '../enums/anime-type';
+
 /** Anime. */
 export type Anime = {
 
@@ -7,18 +10,21 @@ export type Anime = {
 	/** Image source. */
 	readonly imageSourceURL: string;
 
-	/** Title english. */
+	/** English title. */
 	readonly titleEnglish: string;
 
-	/** Title Japanese. */
+	/** Japanese title. */
 	readonly titleJapanese: string;
 
 	/** Aired start. */
 	readonly airedStart: Date;
 
 	/** Type. */
-	readonly type: string;
+	readonly type: AnimeType;
 
-	/** Status. */
-	readonly status: string;
+	/**
+	 * The current status of the anime.
+	 * It can be Airing, Finished or Not yet aired.
+	 */
+	readonly status: AnimeStatus;
 };

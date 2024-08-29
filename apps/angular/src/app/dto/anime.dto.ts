@@ -1,3 +1,6 @@
+import { AnimeStatus } from '../enums/anime-status';
+import { AnimeType } from '../enums/anime-type';
+
 import { DateRangeDto } from './date-range.dto';
 
 /** Anime DTO. */
@@ -25,13 +28,13 @@ export type AnimeDto = {
 	readonly aired: DateRangeDto;
 
 	/** Type. */
-	readonly type: string;
+	readonly type: AnimeType;
 
 	/**
 	 * The current status of the anime.
 	 * It can be Airing, Finished or Not yet aired.
 	 */
-	readonly status: string;
+	readonly status: AnimeStatus;
 
 	/** World score of this anime. */
 	readonly score?: number;
