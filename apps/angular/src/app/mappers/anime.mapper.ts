@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { AnimeDto } from '../dto/anime.dto';
 import { Anime } from '../entities/anime';
 
-import { MapperBase } from './baseClasses/mapper-base';
+import { Mapper } from './baseClasses/mapper';
 
 /**
  * Anime mapper.
@@ -11,7 +11,7 @@ import { MapperBase } from './baseClasses/mapper-base';
 @Injectable({
 	providedIn: 'root',
 })
-export class AnimeMapper extends MapperBase<AnimeDto, Anime> {
+export class AnimeMapper implements Mapper<AnimeDto, Anime> {
 
 	/** @inheritdoc */
 	public fromDto(dto: AnimeDto): Anime {
