@@ -17,6 +17,7 @@
         "polyfills": "apps/angular/src/polyfills.ts",
         "tsConfig": "apps/angular/tsconfig.app.json",
         "assets": [
+          "apps/angular/src/favicon.ico",
           "apps/angular/src/assets"
         ],
         "styles": [
