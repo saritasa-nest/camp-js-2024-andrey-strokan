@@ -20,7 +20,7 @@ jobs:
     - name: Install nodejs
       uses: actions/setup-node@v4
       with:
-        node-version: "package-lock.json"
+        node-version: "package.json"
 
     - name: Install and Build
       run: |
