@@ -8,7 +8,7 @@ import { AnimeMapper } from '../mappers/anime.mapper';
 
 import { PaginationDto } from '../dto/pagination.dto';
 
-import { AnimeData } from '../entities/animeData';
+import { AnimeData } from '../entities/anime-data';
 
 import { AnimeDto } from '../dto/anime.dto';
 

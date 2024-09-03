@@ -16,12 +16,15 @@ import { MatSortModule, Sort } from '@angular/material/sort';
 import { AnimeService } from '../services/anime.service';
 import { Anime } from '../entities/anime';
 
-import { AnimeData } from '../entities/animeData';
+import { AnimeData } from '../entities/anime-data';
 
 import { SortConfig } from '../types/sortConfig';
 import { PaginationConfig } from '../types/paginationConfig';
 import { ApiSideKeyAnimeType, DisplayedAnimeType } from '../enums/anime-type';
 import { AnimeTypeMapper } from '../mappers/anime-type.mapper';
+import { AnimeTableColumn } from '../enums/anime-table-column';
+import { AnimeSortFieldMapper } from '../mappers/anime-sort-field.mapper';
+import { AnimeTableColumnMapper } from '../mappers/anime-table-column.mapper';
 
 /** Anime dashboard. */
 @Component({
@@ -46,6 +49,9 @@ import { AnimeTypeMapper } from '../mappers/anime-type.mapper';
 })
 export class AnimeDashboardComponent implements OnInit, OnDestroy {
 
+	/** Anime table column.  */
+	protected animeTableColumn = AnimeTableColumn;
+
 	/** Displayed anime types. */
 	protected readonly displayedAnimeTypes: DisplayedAnimeType[] = [
 		DisplayedAnimeType.TV,
@@ -62,11 +68,22 @@ export class AnimeDashboardComponent implements OnInit, OnDestroy {
 	protected readonly pageSizeOptions = [5, 10, 25] as const;
 
 	/** Displayed columns. */
-	protected readonly displayedColumns = ['imageSourceURL', 'titleEnglish', 'titleJapanese', 'airedStart', 'type', 'status'] as const;
+	protected readonly displayedColumns = [
+		AnimeTableColumn.ImageSourceURL,
+		AnimeTableColumn.TitleEnglish,
+		AnimeTableColumn.TitleJapanese,
+		AnimeTableColumn.AiredStart,
+		AnimeTableColumn.Type,
+		AnimeTableColumn.Status,
+	] as const;
 
 	private readonly animeService = inject(AnimeService);
 
 	private readonly animeTypeMapper = inject(AnimeTypeMapper);
+
+	private readonly animeSortFieldMapper = inject(AnimeSortFieldMapper);
+
+	private readonly animeTableColumnMapper = inject(AnimeTableColumnMapper);
 
 	private readonly sortSubject$ = new BehaviorSubject<SortConfig | undefined>(undefined);
 
@@ -190,7 +207,7 @@ export class AnimeDashboardComponent implements OnInit, OnDestroy {
 		}
 
 		const sortConfig: SortConfig = {
-			sortField: sort.active,
+			sortField: this.animeSortFieldMapper.map(this.animeTableColumnMapper.map(sort.active)),
 			sortOrder: sort.direction,
 		};
 
