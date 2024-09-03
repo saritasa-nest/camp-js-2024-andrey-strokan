@@ -1,11 +1,11 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { Routes } from '@angular/router';
 
-const routes: Routes = [];
+import { AnimeDashboardComponent } from './anime-dashboard/anime-dashboard.component';
 
-/** App routing module. */
-@NgModule({
-	imports: [RouterModule.forRoot(routes)],
-	exports: [RouterModule],
-})
-export class AppRoutingModule {}
+/** Routes. */
+export const routes: Routes = [
+	{
+		path: '',
+		component: AnimeDashboardComponent,
+	},
+];
