@@ -8,7 +8,6 @@ import { Observer } from '../observer/observer';
 
 import { DiceRollEventData } from './events/diceRollEventData';
 
-
 /** Game dice. */
 export class Dice implements Observer<RollButtonClickedEventData> {
 
