@@ -3,6 +3,7 @@ import { Genre } from '@js-camp/core/models/genre';
 
 import styles from './GenreCard.module.css';
 
+/** Props. */
 interface Props {
 
 	/** Genre. */
@@ -17,4 +18,5 @@ const GenreCardComponent: FC<Props> = ({ genre }) => (
 	</div>
 );
 
+/** Genre Card. */
 export const GenreCard = memo(GenreCardComponent);
