@@ -14,7 +14,7 @@ import { AnimeDto } from '../dto/anime.dto';
 
 import { SortConfig } from '../types/sortConfig';
 import { PaginationConfig } from '../types/paginationConfig';
-import { ApiSideKeyAnimeType } from '../enums/animeType';
+import { ApiSideKeyAnimeType } from '../enums/anime-type';
 
 /** Anime service. */
 @Injectable({
@@ -25,6 +25,8 @@ export class AnimeService {
 	private readonly allAnimeEndpoint = 'api/v1/anime/anime/';
 
 	private readonly httpClient = inject(HttpClient);
+
+	private readonly animeMapper = inject(AnimeMapper);
 
 	/**
 	 * Get all anime request.
@@ -67,8 +69,7 @@ export class AnimeService {
 		return this.httpClient.get<PaginationDto<AnimeDto>>(url.toString()).pipe(
 			map(response => {
 				const totalCount = response.count;
-				const animeMapper = new AnimeMapper();
-				const pageData = response.results.map(animeDto => animeMapper.fromDto(animeDto));
+				const pageData = response.results.map(animeDto => this.animeMapper.map(animeDto));
 				return { totalCount, pageData };
 			}),
 		);

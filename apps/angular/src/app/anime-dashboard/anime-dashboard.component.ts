@@ -20,7 +20,8 @@ import { AnimeData } from '../entities/animeData';
 
 import { SortConfig } from '../types/sortConfig';
 import { PaginationConfig } from '../types/paginationConfig';
-import { ApiSideKeyAnimeType, DisplayedAnimeType, toApiSideKey } from '../enums/animeType';
+import { ApiSideKeyAnimeType, DisplayedAnimeType } from '../enums/anime-type';
+import { AnimeTypeMapper } from '../mappers/anime-type.mapper';
 
 /** Anime dashboard. */
 @Component({
@@ -65,6 +66,8 @@ export class AnimeDashboardComponent implements OnInit, OnDestroy {
 
 	private readonly animeService = inject(AnimeService);
 
+	private readonly animeTypeMapper = inject(AnimeTypeMapper);
+
 	private readonly sortSubject$ = new BehaviorSubject<SortConfig | undefined>(undefined);
 
 	private readonly paginationConfig: PaginationConfig = { pageIndex: 0, pageSize: this.pageSizeOptions[0] };
@@ -106,7 +109,7 @@ export class AnimeDashboardComponent implements OnInit, OnDestroy {
 					return;
 				}
 
-				const apiKeys = this.filteringTypes.value.map<ApiSideKeyAnimeType>(item => toApiSideKey(item));
+				const apiKeys = this.filteringTypes.value.map<ApiSideKeyAnimeType>(item => this.animeTypeMapper.map(item));
 				this.typeFilterSubject$.next(apiKeys);
 			},
 		));

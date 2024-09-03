@@ -1,17 +1,10 @@
 /** Mapper base. */
-export type Mapper<TDto, TDomain> = {
+export type Mapper<TIn, TOut> = {
 
 	/**
-	 * Map from Dto to Domain.
-	 * @param dto Dto.
-	 * @returns Domain.
+	 * Map from In type to Out type.
+	 * @param object In type.
+	 * @returns Out type.
 	 */
-	fromDto(dto: TDto): TDomain;
-
-	/**
-	 * Map from Domain to Dto.
-	 * @param dto Domain.
-	 * @returns Dto.
-	 */
-	toDto(model: TDomain): TDto;
+	map(original: TIn): TOut;
 };

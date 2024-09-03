@@ -1,9 +1,10 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 
 import { AnimeDto } from '../dto/anime.dto';
 import { Anime } from '../entities/anime';
 
 import { Mapper } from './baseClasses/mapper';
+import { AnimeTypeMapper } from './anime-type.mapper';
 
 /**
  * Anime mapper.
@@ -13,8 +14,10 @@ import { Mapper } from './baseClasses/mapper';
 })
 export class AnimeMapper implements Mapper<AnimeDto, Anime> {
 
+	private readonly animeTypeMapper = inject(AnimeTypeMapper);
+
 	/** @inheritdoc */
-	public fromDto(dto: AnimeDto): Anime {
+	public map(dto: AnimeDto): Anime {
 		return {
 			id: dto.id,
 			created: dto.created,
@@ -23,31 +26,12 @@ export class AnimeMapper implements Mapper<AnimeDto, Anime> {
 			titleJapanese: dto.title_jpn,
 			imageSourceURL: dto.image,
 			aired: { start: dto.aired.start, end: dto.aired.end },
-			type: dto.type,
+			type: this.animeTypeMapper.map(dto.type),
 			status: dto.status,
 			score: dto.score,
 			userScore: dto.user_score,
 			studios: dto.studios,
 			genres: dto.genres,
-		};
-	}
-
-	/** @inheritdoc */
-	public toDto(model: Anime): AnimeDto {
-		return {
-			id: model.id,
-			created: model.created,
-			modified: model.modified,
-			title_eng: model.titleEnglish,
-			title_jpn: model.titleJapanese,
-			image: model.imageSourceURL,
-			aired: { start: model.aired.start, end: model.aired.end },
-			type: model.type,
-			status: model.status,
-			score: model.score,
-			user_score: model.userScore,
-			studios: model.studios,
-			genres: model.genres,
 		};
 	}
 }

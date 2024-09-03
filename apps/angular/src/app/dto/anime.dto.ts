@@ -1,4 +1,4 @@
-import { ApiSideKeyAnimeType } from '../enums/animeType';
+import { ApiSideKeyAnimeType } from '../enums/anime-type';
 import { AnimeStatus } from '../enums/anime-status';
 
 import { DateRangeDto } from './date-range.dto';

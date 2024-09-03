@@ -1,5 +1,5 @@
 import { AnimeStatus } from '../enums/anime-status';
-import { AnimeType } from '../enums/anime-type';
+import { DisplayedAnimeType } from '../enums/anime-type';
 
 import { DateRange } from './date-range';
 
@@ -31,7 +31,7 @@ export type Anime = {
 	readonly aired: DateRange;
 
 	/** Type. */
-	readonly type: AnimeType;
+	readonly type: DisplayedAnimeType;
 
 	/**
 	 * The current status of the anime.
