@@ -1,4 +1,5 @@
 import { ApiSideKeyAnimeType } from '../enums/animeType';
+import { AnimeStatus } from '../enums/anime-status';
 
 import { DateRangeDto } from './date-range.dto';
 
@@ -8,7 +9,10 @@ export type AnimeDto = {
 	/** Id. */
 	readonly id: number;
 
-	/** Date and time of record creation. */
+	/**
+	 * Date and time of record creation.
+	 * @example 2024-08-01
+	 */
 	readonly created: string;
 
 	/** Date and time of last edit of the entry. */
@@ -33,7 +37,7 @@ export type AnimeDto = {
 	 * The current status of the anime.
 	 * It can be Airing, Finished or Not yet aired.
 	 */
-	readonly status: string;
+	readonly status: AnimeStatus;
 
 	/** World score of this anime. */
 	readonly score?: number;

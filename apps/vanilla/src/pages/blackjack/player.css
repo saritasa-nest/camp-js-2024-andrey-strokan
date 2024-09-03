@@ -1,0 +1,33 @@
+.player__name,
+.player__name-score-separator,
+.player__current-score {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  text-align: center;
+}
+
+.player__history-of-dice-values {
+  display: flex;
+  align-items: center;
+  height: 24px;
+  gap: 8px;
+}
+
+.player__dice-value {
+  margin: 0;
+}
+
+.player__general-info {
+  display: flex;
+  height: 24px;
+  gap: 8px;
+}
+
+.winner {
+  background-color: var(--winner-color);
+}
+
+.makes_a_move {
+  background-color: var(--current-player-color);
+}

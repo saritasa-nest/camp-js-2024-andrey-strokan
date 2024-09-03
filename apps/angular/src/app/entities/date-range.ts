@@ -1,5 +1,5 @@
 /** Date range type. */
-export type DateRangeDto = {
+export type DateRange = {
 
 	/** Start. */
 	readonly start: string;

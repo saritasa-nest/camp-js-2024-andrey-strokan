@@ -2,7 +2,7 @@ import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { BehaviorSubject, Observable, switchMap, map, shareReplay, combineLatest, Subscription } from 'rxjs';
 
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
-import { CommonModule, DatePipe } from '@angular/common';
+import { CommonModule, DatePipe, NgOptimizedImage } from '@angular/common';
 import { MatTableModule } from '@angular/material/table';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
@@ -38,6 +38,7 @@ import { ApiSideKeyAnimeType, DisplayedAnimeType, toApiSideKey } from '../enums/
 		MatFormFieldModule,
 		ReactiveFormsModule,
 		MatInputModule,
+		NgOptimizedImage,
 	],
 	templateUrl: './anime-dashboard.component.html',
 	styleUrl: './anime-dashboard.component.css',
