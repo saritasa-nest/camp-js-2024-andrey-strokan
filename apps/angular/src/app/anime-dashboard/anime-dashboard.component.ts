@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { CommonModule, DatePipe } from '@angular/common';
+import { CommonModule, DatePipe, NgOptimizedImage } from '@angular/common';
 import { MatTableModule } from '@angular/material/table';
 
 import { AnimeService } from '../services/anime.service';
@@ -9,7 +9,7 @@ import { Anime } from '../entities/anime';
 @Component({
 	selector: 'camp-anime-dashboard',
 	standalone: true,
-	imports: [CommonModule, MatTableModule, DatePipe],
+	imports: [CommonModule, MatTableModule, DatePipe, NgOptimizedImage],
 	templateUrl: './anime-dashboard.component.html',
 	styleUrl: './anime-dashboard.component.css',
 })
