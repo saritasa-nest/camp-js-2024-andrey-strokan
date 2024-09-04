@@ -1,5 +1,5 @@
+import { ApiSideKeyAnimeType } from '../enums/anime-type';
 import { AnimeStatus } from '../enums/anime-status';
-import { AnimeType } from '../enums/anime-type';
 
 import { DateRangeDto } from './date-range.dto';
 
@@ -31,7 +31,7 @@ export type AnimeDto = {
 	readonly aired: DateRangeDto;
 
 	/** Type. */
-	readonly type: AnimeType;
+	readonly type: ApiSideKeyAnimeType;
 
 	/**
 	 * The current status of the anime.

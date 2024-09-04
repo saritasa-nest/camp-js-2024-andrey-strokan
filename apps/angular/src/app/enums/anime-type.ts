@@ -1,5 +1,5 @@
 /** Api side key type. */
-export enum AnimeType {
+export enum ApiSideKeyAnimeType {
 	TV = 'TV',
 	OVA = 'OVA',
 	Movie = 'MOVIE',
@@ -8,4 +8,16 @@ export enum AnimeType {
 	Music = 'MUSIC',
 	PromotionalVideos = 'PROMOTIONAL_VIDEOS',
 	Unknown = 'UNKNOWN',
+}
+
+/** Displayed anime type. */
+export enum DisplayedAnimeType {
+	TV = 'TV',
+	OVA = 'OVA',
+	Movie = 'Movie',
+	Special = 'Special',
+	ONA = 'ONA',
+	Music = 'Music',
+	PromotionalVideos = 'Promotional Videos',
+	Unknown = 'Unknown',
 }

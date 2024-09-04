@@ -1,15 +1,20 @@
 import { inject, Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, map } from 'rxjs';
 
 import { environment } from '../../environments/environment';
 
 import { AnimeMapper } from '../mappers/anime.mapper';
 
-import { Anime } from '../entities/anime';
-
 import { PaginationDto } from '../dto/pagination.dto';
+
+import { AnimeData } from '../entities/anime-data';
+
 import { AnimeDto } from '../dto/anime.dto';
+
+import { SortConfig } from '../types/sortConfig';
+import { PaginationConfig } from '../types/paginationConfig';
+import { ApiSideKeyAnimeType } from '../enums/anime-type';
 
 /** Anime service. */
 @Injectable({
@@ -23,11 +28,50 @@ export class AnimeService {
 
 	private readonly animeMapper = inject(AnimeMapper);
 
-	/** Get all anime request. */
-	public getAll(): Observable<Anime[]> {
-		return this.httpClient.get<PaginationDto<AnimeDto>>(`${environment.animeApiUrl}/${this.allAnimeEndpoint}`).pipe(
-			map(response => response.results),
-			map(animeDtoArray => animeDtoArray.map(item => this.animeMapper.fromDto(item))),
+	/**
+	 * Get all anime request.
+	 * @param sortConfig Sort config.
+	 * @param paginationConfig Pagination config.
+	 * @param typeFilterConfig Type filter config.
+	 * @param searchString Search string.
+	 */
+	public getAll(sortConfig?: SortConfig,
+		paginationConfig?: PaginationConfig,
+		typeFilterConfig?: ApiSideKeyAnimeType[],
+		searchString?: string): Observable<AnimeData> {
+
+		let params = new HttpParams();
+
+		// Sort.
+		if (sortConfig != null) {
+			params = params.set('ordering', `${sortConfig.sortOrder === 'asc' ? '' : '-'}${sortConfig.sortField}`);
+		}
+
+		// Pagination.
+		if (paginationConfig != null) {
+			params = params.set('limit', paginationConfig.pageSize);
+			params = params.set('offset', paginationConfig.pageIndex * paginationConfig.pageSize);
+		}
+
+		// Filter.
+		if (typeFilterConfig) {
+			params = params.set('type__in', typeFilterConfig.join(','));
+		}
+
+		// Search.
+		if (searchString) {
+			params = params.set('search', searchString);
+		}
+
+		const url = new URL(this.allAnimeEndpoint, environment.animeApiUrl);
+		url.search = params.toString();
+
+		return this.httpClient.get<PaginationDto<AnimeDto>>(url.toString()).pipe(
+			map(response => {
+				const totalCount = response.count;
+				const pageData = response.results.map(animeDto => this.animeMapper.map(animeDto));
+				return { totalCount, pageData };
+			}),
 		);
 	}
 }

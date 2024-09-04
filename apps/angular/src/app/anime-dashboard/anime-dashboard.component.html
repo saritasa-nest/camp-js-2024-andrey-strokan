@@ -1,44 +1,70 @@
-<table mat-table [dataSource]="(allAnime$ | async) ?? []" [trackBy]="trackAnimeById">
+
+<div class="filters">
+	<h2 class="filters__title">Filters</h2>
+	<mat-form-field class="example-full-width">
+		<mat-label>Search</mat-label>
+		<input matInput placeholder="Search filter" [formControl]="searchString">
+	</mat-form-field>
+	<mat-form-field>
+		<mat-label>Type</mat-label>
+		<mat-select [formControl]="filteringTypes" multiple>
+			@for (animeType of displayedAnimeTypes; track animeType) {
+				<mat-option [value]="animeType">{{animeType}}</mat-option>
+			}
+		</mat-select>
+	</mat-form-field>
+</div>
+
+<table mat-table matSort [dataSource]="(animeOnPage$ | async) ?? []"	[trackBy]="trackAnimeById" (matSortChange)="onSortClicked($event)">
 	<!-- Image -->
-	<ng-container matColumnDef="imageSourceURL">
+	<ng-container [matColumnDef]="animeTableColumn.ImageSourceURL">
 		<th mat-header-cell *matHeaderCellDef>Image</th>
 		<td mat-cell *matCellDef="let anime">
 			<div class="image-container">
-				<img class="image" [ngSrc]="anime.imageSourceURL" fill [alt]="anime.titleEnglish"/>
+				<img class="image" [ngSrc]="anime.imageSourceURL" fill priority [alt]="anime.titleEnglish"/>
 			</div>
 		</td>
 	</ng-container>
 
 	<!-- English title -->
-	<ng-container matColumnDef="titleEnglish">
-		<th mat-header-cell *matHeaderCellDef>Title (English)</th>
+	<ng-container [matColumnDef]="animeTableColumn.TitleEnglish">
+		<th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by Title (English)">Title (English)</th>
 		<td mat-cell *matCellDef="let anime"> {{anime.titleEnglish}} </td>
 	</ng-container>
 
 	<!-- Japanese title -->
-	<ng-container matColumnDef="titleJapanese">
+	<ng-container [matColumnDef]="animeTableColumn.TitleJapanese">
 		<th mat-header-cell *matHeaderCellDef>Title (Japanese)</th>
 		<td mat-cell *matCellDef="let anime"> {{anime.titleJapanese}} </td>
 	</ng-container>
 
 	<!-- Aired start -->
-	<ng-container matColumnDef="airedStart">
-		<th mat-header-cell *matHeaderCellDef>Aired start</th>
+	<ng-container [matColumnDef]="animeTableColumn.AiredStart">
+		<th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by Aired start">Aired start</th>
 		<td mat-cell *matCellDef="let anime"> {{anime.aired.start | date: 'medium'}} </td>
 	</ng-container>
 
 	<!-- Type -->
-	<ng-container matColumnDef="type">
+	<ng-container [matColumnDef]="animeTableColumn.Type">
 		<th mat-header-cell *matHeaderCellDef>Type</th>
 		<td mat-cell *matCellDef="let anime"> {{anime.type}} </td>
 	</ng-container>
 
 	<!-- Status -->
-	<ng-container matColumnDef="status">
-		<th mat-header-cell *matHeaderCellDef>Status</th>
+	<ng-container [matColumnDef]="animeTableColumn.Status">
+		<th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by Status">Status</th>
 		<td mat-cell *matCellDef="let anime"> {{anime.status}} </td>
 	</ng-container>
 
 	<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </table>
+
+<mat-paginator #paginator
+	aria-label="Select page"
+	[length]="totalAnimeCount$ | async"
+	[pageSizeOptions]="pageSizeOptions"
+	(page)="handlePageEvent($event)"
+	[pageSize]="paginationSubject$.value.pageSize"
+	[pageIndex]="paginationSubject$.value.pageIndex">
+</mat-paginator>
